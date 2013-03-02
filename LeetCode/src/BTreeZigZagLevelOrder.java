@@ -7,6 +7,8 @@
  *     TreeNode(int x) { val = x; }
  * }
  */
+import java.util.*;
+
 public class BTreeZigZagLevelOrder {
     public ArrayList<ArrayList<Integer>> zigzagLevelOrder(TreeNode root) {
         ArrayList<ArrayList<Integer>> ret = new ArrayList<ArrayList<Integer>>();
