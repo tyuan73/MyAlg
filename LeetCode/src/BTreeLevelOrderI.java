@@ -7,6 +7,8 @@
  *     TreeNode(int x) { val = x; }
  * }
  */
+import java.util.*;
+
 public class BTreeLevelOrderI {
     public ArrayList<ArrayList<Integer>> levelOrder(TreeNode root) {
         ArrayList<ArrayList<Integer>> ret = new ArrayList<ArrayList<Integer>> ();
