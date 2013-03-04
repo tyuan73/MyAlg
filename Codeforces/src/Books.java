@@ -24,12 +24,11 @@ public class Books {
         for(int i : a) {
             total += i;
             cur++;
-            if(total > t) {
-                while(total > t) {
-                    total -= a[head++];
-                    cur--;
-                }
+            while(total > t) {
+                total -= a[head++];
+                cur--;
             }
+
             max = Math.max(max, cur);
         }
 
