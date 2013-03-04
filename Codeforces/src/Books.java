@@ -19,17 +19,17 @@ public class Books {
 
         int max = 0;
         int total = 0;
-        int cur = 0;
+        int len = 0;
         int head = 0;
         for(int i : a) {
             total += i;
-            cur++;
+            len++;
             while(total > t) {
                 total -= a[head++];
-                cur--;
+                len--;
             }
 
-            max = Math.max(max, cur);
+            max = Math.max(max, len);
         }
 
         System.out.println(max);
