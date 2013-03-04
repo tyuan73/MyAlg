@@ -5,8 +5,7 @@
  * Time: 1:36 AM
  * To change this template use File | Settings | File Templates.
  */
-
-import java.util.*;
+ import java.util.*;
 
 public class CombinationSumII {
     static int count = 0;
@@ -17,8 +16,10 @@ public class CombinationSumII {
     public static void main(String[] args) {
         //int[] a = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,42,41,43,44};
         //int t = 100;
-        int[] a = {1,2,4,8,16,32};
-        int t = 24;
+        //int[] a = {1,2,4,8,16,32};
+        //int t = 24;
+        int[] a = {4,4,2,1,4,2,2,1,3};
+        int t= 6;
 
         CombinationSumII test = new CombinationSumII();
         test.combinationSum2(a, t);
@@ -27,17 +28,13 @@ public class CombinationSumII {
 
     /**
      *  combinationSumRecursive is backtracking solution which has a running time at about O(n!)
-     *
-     * @param num
-     * @param target
-     * @return
      */
     public ArrayList<ArrayList<Integer>> combinationSumRecursive(int[] num, int
             target) {
         ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
         ArrayList<Integer> item = new ArrayList<Integer>();
         Arrays.sort(num);
-        if (num != null || num.length > 0)
+        if (num != null && num.length > 0)
             combinations(num, target, result, item, 0);
 
         /*
@@ -82,10 +79,6 @@ public class CombinationSumII {
      * then employs backing tracking to search through the dp table. I think the running time is
      * about O(n*target) for dp, and O(m*len) where m is the total number of unique combinations and
      * len is the average length of all combinations.
-     *
-     * @param num
-     * @param target
-     * @return
      */
     public ArrayList<ArrayList<Integer>> combinationSum2(int[] num, int target) {
         ArrayList<ArrayList<Integer>> ret = new ArrayList<ArrayList<Integer>>();
