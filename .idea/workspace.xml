@@ -1,0 +1,950 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="dcaada33-120b-407c-8a59-5814c428d5d3" name="Default" comment="" />
+    <ignored path="MyAlg.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <file path="/test.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1362204926176" ignored="false" />
+    <file path="/MonstersValleyDP.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1362205412124" ignored="false" />
+    <file path="/Dummy.txt" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1363213388912" ignored="false" />
+    <file path="/ThreeSum.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1362206249561" ignored="false" />
+    <file path="/BTreeZigZagLevelOrder.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1362206292271" ignored="false" />
+    <file path="/BTreeInorderTraversal.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1362206817527" ignored="false" />
+    <file path="/CombinationSumII.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1362431702443" ignored="false" />
+    <file path="/CodeParsing.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1362294503896" ignored="false" />
+    <file path="/CircleOfNumbers.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1362382352641" ignored="false" />
+    <file path="/K_MultipleFreeSet.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1362600367153" ignored="false" />
+    <file path="/PointonSpiral.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1362413156334" ignored="false" />
+    <file path="/Books.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1362418905436" ignored="false" />
+    <file path="/Ladder.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1362418412461" ignored="false" />
+    <file path="/LearnLanguage.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1362424948442" ignored="false" />
+    <file path="/GregWorkout.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1362425460459" ignored="false" />
+    <file path="/Sockets.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1362426119986" ignored="false" />
+    <file path="/PlayingCubes.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1362428098317" ignored="false" />
+    <file path="/LittleElephantBits.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1362428800743" ignored="false" />
+    <file path="/LittleElephantChess.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1362429857400" ignored="false" />
+    <file path="/LittleElephantMagicSquare.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1362430889107" ignored="false" />
+    <file path="/DecodeWays.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1362505299100" ignored="false" />
+    <file path="/DistinctSubsequence.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1362508021107" ignored="false" />
+    <file path="/EditDistance.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1362509362852" ignored="false" />
+    <file path="/FirstMissingPositive.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1362514545173" ignored="false" />
+    <file path="/GenerateParentheses.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1362515478940" ignored="false" />
+    <file path="/GrayCode.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1362516698986" ignored="false" />
+    <file path="/ImplementStrStr.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1362519694078" ignored="false" />
+    <file path="/JumpGameII.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1362525112862" ignored="false" />
+    <file path="/LongestPalindromicSubstring.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1362552455537" ignored="false" />
+    <file path="/AddingDigits.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1362592437912" ignored="false" />
+    <file path="/MaximandDiscounts.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1362601995067" ignored="false" />
+    <file path="/Main.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1362604309838" ignored="false" />
+    <file path="/WalkingOnGrids.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1362605311500" ignored="false" />
+    <file path="/Candies.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1362607633864" ignored="false" />
+    <file path="/StockMaximize.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1362608704743" ignored="false" />
+    <file path="/MaximAndRestaurant.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1362638649378" ignored="false" />
+    <file path="/DimaAndSequence.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1362725011001" ignored="false" />
+    <file path="/RomaAndLuckyNumbers.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1362725514148" ignored="false" />
+    <file path="/ColorfulStonesSimplifiedEdition.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1362725908232" ignored="false" />
+    <file path="/RoadsideTreesSimplifiedEdition.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1362726586311" ignored="false" />
+    <file path="/ChoosingBalls.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1362978650772" ignored="false" />
+    <file path="/MaximumXorSecondary.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1362981471763" ignored="false" />
+    <file path="/FancyFence.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1363061839371" ignored="false" />
+    <file path="/BrickTiling.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1363066166563" ignored="false" />
+    <file path="/ArrangeStones.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1363152340912" ignored="false" />
+    <file path="/BitPlusPlus.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1363188917443" ignored="false" />
+    <file path="/PascalsTriangle.java" changelist="dcaada33-120b-407c-8a59-5814c428d5d3" time="1363194600907" ignored="false" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="DaemonCodeAnalyzer">
+    <disable_hints />
+  </component>
+  <component name="DebuggerManager">
+    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
+    <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
+      <breakpoint>
+        <option name="NOTIFY_CAUGHT" value="true" />
+        <option name="NOTIFY_UNCAUGHT" value="true" />
+        <option name="ENABLED" value="false" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint>
+        <option name="NOTIFY_CAUGHT" value="true" />
+        <option name="NOTIFY_UNCAUGHT" value="true" />
+        <option name="ENABLED" value="false" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+    </breakpoint_any>
+    <breakpoint_rules />
+    <ui_properties />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="MyAlg" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="BrickTiling.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/HackerRank/src/BrickTiling.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="156" column="110" selection-start="4365" selection-end="4365" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ArrangeStones.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/HackerRank/src/ArrangeStones.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="22" column="10" selection-start="597" selection-end="597" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BitPlusPlus.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Codeforces/src/BitPlusPlus.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="18" column="37" selection-start="444" selection-end="444" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PascalsTriangle.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/HackerRank/src/PascalsTriangle.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="15" column="19" selection-start="360" selection-end="360" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PlusOne.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/LeetCode/src/PlusOne.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="26" column="5" selection-start="654" selection-end="654" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TreeLinkNode.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/LeetCode/src/TreeLinkNode.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="6" column="3" selection-start="155" selection-end="155" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="docComment;class#TreeLinkNode#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PopulatingNextRightPointers.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/LeetCode/src/PopulatingNextRightPointers.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="11" column="44" selection-start="265" selection-end="265" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PopulatingNextRightPointersII.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/LeetCode/src/PopulatingNextRightPointersII.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="40" column="5" selection-start="1139" selection-end="1139" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PowOfX.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/LeetCode/src/PowOfX.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="27" column="5" selection-start="551" selection-end="551" vertical-scroll-proportion="0.64681727">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Main.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/HackerRank/src/Main.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="9" column="0" selection-start="104" selection-end="145" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindManager">
+    <FindUsagesManager>
+      <setting name="OPEN_NEW_TAB" value="false" />
+    </FindUsagesManager>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitLogSettings">
+    <option name="myDateState">
+      <MyDateState />
+    </option>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="changedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/Codeforces/src/RomaAndLuckyNumbers.java" />
+        <option value="$PROJECT_DIR$/Codeforces/src/ColorfulStonesSimplifiedEdition.java" />
+        <option value="$PROJECT_DIR$/Codeforces/src/RoadsideTreesSimplifiedEdition.java" />
+        <option value="$PROJECT_DIR$/Codeforces/src/ChoosingBalls.java" />
+        <option value="$PROJECT_DIR$/Codeforces/src/MaximumXorSecondary.java" />
+        <option value="$PROJECT_DIR$/Codeforces/src/FancyFence.java" />
+        <option value="$PROJECT_DIR$/HackerRank/src/Main.java" />
+        <option value="$PROJECT_DIR$/HackerRank/src/BrickTiling.java" />
+        <option value="$PROJECT_DIR$/HackerRank/src/ArrangeStones.java" />
+        <option value="$PROJECT_DIR$/Codeforces/src/BitPlusPlus.java" />
+        <option value="$PROJECT_DIR$/HackerRank/src/PascalsTriangle.java" />
+        <option value="$PROJECT_DIR$/LeetCode/src/PlusOne.java" />
+        <option value="$PROJECT_DIR$/LeetCode/src/TreeLinkNode.java" />
+        <option value="$PROJECT_DIR$/LeetCode/src/PopulatingNextRightPointers.java" />
+        <option value="$PROJECT_DIR$/LeetCode/src/PopulatingNextRightPointersII.java" />
+        <option value="$PROJECT_DIR$/LeetCode/src/PowOfX.java" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="width" value="1440" />
+    <option name="height" value="900" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="2" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectReloadState">
+    <option name="STATE" value="0" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MyAlg" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MyAlg" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Topcoder" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MyAlg" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Others" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MyAlg" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="LeetCode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MyAlg" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HackerRank" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MyAlg" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Codeforces" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="138" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="140" />
+    <property name="options.splitter.main.proportions" value="0.3" />
+    <property name="recentsLimit" value="5" />
+    <property name="MemberChooser.sorted" value="false" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="139" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="149" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="939" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="937" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="145" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="141" />
+    <property name="GoToClass.toSaveIncludeLibraries" value="false" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder3" value="3" />
+    <property name="FullScreen" value="true" />
+    <property name="MemberChooser.showClasses" value="true" />
+    <property name="GoToClass.includeLibraries" value="false" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="GoToFile.includeJavaFiles" value="false" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder0" value="0" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder1" value="1" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
+    <property name="options.lastSelected" value="fileTemplates" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="options.searchVisible" value="true" />
+    <property name="dynamic.classpath" value="false" />
+  </component>
+  <component name="RunManager" selected="Application.PascalsTriangle">
+    <configuration default="false" name="FancyFence" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="FancyFence" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="Codeforces" />
+      <envs />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="BrickTiling" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="BrickTiling" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="HackerRank" />
+      <envs />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="ArrangeStones" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="ArrangeStones" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="HackerRank" />
+      <envs />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="BitPlusPlus" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="BitPlusPlus" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="Codeforces" />
+      <envs />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="PascalsTriangle" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="PascalsTriangle" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="HackerRank" />
+      <envs />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m" />
+      <option name="PROGRAM_PARAMETERS" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
+      <method />
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="ANNOTATION_TYPE" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <envs />
+      <properties />
+      <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <list size="5">
+      <item index="0" class="java.lang.String" itemvalue="Application.FancyFence" />
+      <item index="1" class="java.lang.String" itemvalue="Application.BrickTiling" />
+      <item index="2" class="java.lang.String" itemvalue="Application.ArrangeStones" />
+      <item index="3" class="java.lang.String" itemvalue="Application.BitPlusPlus" />
+      <item index="4" class="java.lang.String" itemvalue="Application.PascalsTriangle" />
+    </list>
+    <recent_temporary>
+      <list size="5">
+        <item index="0" class="java.lang.String" itemvalue="Application.PascalsTriangle" />
+        <item index="1" class="java.lang.String" itemvalue="Application.BitPlusPlus" />
+        <item index="2" class="java.lang.String" itemvalue="Application.ArrangeStones" />
+        <item index="3" class="java.lang.String" itemvalue="Application.BrickTiling" />
+        <item index="4" class="java.lang.String" itemvalue="Application.FancyFence" />
+      </list>
+    </recent_temporary>
+    <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
+      <Host>localhost</Host>
+      <Port>5050</Port>
+    </configuration>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SvnConfiguration" maxAnnotateRevisions="500" myUseAcceleration="nothing" myAutoUpdateAfterCommit="false" cleanupOnStartRun="false">
+    <option name="USER" value="" />
+    <option name="PASSWORD" value="" />
+    <option name="mySSHConnectionTimeout" value="30000" />
+    <option name="mySSHReadTimeout" value="30000" />
+    <option name="LAST_MERGED_REVISION" />
+    <option name="MERGE_DRY_RUN" value="false" />
+    <option name="MERGE_DIFF_USE_ANCESTRY" value="true" />
+    <option name="UPDATE_LOCK_ON_DEMAND" value="false" />
+    <option name="IGNORE_SPACES_IN_MERGE" value="false" />
+    <option name="DETECT_NESTED_COPIES" value="true" />
+    <option name="CHECK_NESTED_FOR_QUICK_MERGE" value="false" />
+    <option name="IGNORE_SPACES_IN_ANNOTATE" value="true" />
+    <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="true" />
+    <option name="FORCE_UPDATE" value="false" />
+    <option name="IGNORE_EXTERNALS" value="false" />
+    <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="dcaada33-120b-407c-8a59-5814c428d5d3" name="Default" comment="" />
+      <created>1362203868852</created>
+      <updated>1362203868852</updated>
+    </task>
+    <task id="LOCAL-00001" summary="add import">
+      <created>1362206564316</created>
+      <updated>1362206564317</updated>
+    </task>
+    <task id="LOCAL-00002" summary="add import java.util.*&#10;and created ListNode &amp; TreeNode class">
+      <created>1362206967400</created>
+      <updated>1362206967400</updated>
+    </task>
+    <task id="LOCAL-00003" summary="more codeforces problems added">
+      <created>1362419018986</created>
+      <updated>1362419018986</updated>
+    </task>
+    <task id="LOCAL-00004" summary="add combination sum II">
+      <created>1362419049244</created>
+      <updated>1362419049245</updated>
+    </task>
+    <task id="LOCAL-00005" summary="minor improvement">
+      <created>1362419233413</created>
+      <updated>1362419233413</updated>
+    </task>
+    <task id="LOCAL-00006" summary="rename variable from cur to len">
+      <created>1362419437182</created>
+      <updated>1362419437182</updated>
+    </task>
+    <task id="LOCAL-00007" summary="add 6 more solutions to leetcode&#10;">
+      <created>1362437876131</created>
+      <updated>1362437876131</updated>
+    </task>
+    <task id="LOCAL-00008" summary="updated with more questions solved.">
+      <created>1362437927356</created>
+      <updated>1362437927356</updated>
+    </task>
+    <task id="LOCAL-00009" summary="4 more questions solved.">
+      <created>1362508543791</created>
+      <updated>1362508543791</updated>
+    </task>
+    <task id="LOCAL-00010" summary="10 more solved.">
+      <created>1362525178875</created>
+      <updated>1362525178875</updated>
+    </task>
+    <task id="LOCAL-00011" summary="7 more solved.">
+      <created>1362553346323</created>
+      <updated>1362553346323</updated>
+    </task>
+    <task id="LOCAL-00012" summary="7 more solved.">
+      <created>1362808341378</created>
+      <updated>1362808341378</updated>
+    </task>
+    <task id="LOCAL-00013" summary="3 more solved.">
+      <created>1362981556787</created>
+      <updated>1362981556787</updated>
+    </task>
+    <task id="LOCAL-00014" summary="2 more solved.">
+      <created>1362981575450</created>
+      <updated>1362981575450</updated>
+    </task>
+    <task id="LOCAL-00015" summary="update&#10;">
+      <created>1363209796313</created>
+      <updated>1363209796313</updated>
+    </task>
+    <task id="LOCAL-00016" summary="update&#10;">
+      <created>1363213403850</created>
+      <updated>1363213403850</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <editor active="false" />
+    <layout>
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32917705" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32917705" sideWeight="0.4978479" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32917705" sideWeight="0.49713057" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32917705" sideWeight="0.43974176" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24964131" sideWeight="0.6708229" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33291772" sideWeight="0.633429" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="CHECK_NEW_TODO" value="true" />
+    <option name="myTodoPanelSettings">
+      <value>
+        <are-packages-shown value="false" />
+        <are-modules-shown value="false" />
+        <flatten-packages value="false" />
+        <is-autoscroll-to-source value="false" />
+      </value>
+    </option>
+    <option name="PERFORM_UPDATE_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_COMMIT_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_EDIT_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_CHECKOUT_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_ADD_REMOVE_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_ROLLBACK_IN_BACKGROUND" value="false" />
+    <option name="CHECK_LOCALLY_CHANGED_CONFLICTS_IN_BACKGROUND" value="false" />
+    <option name="CHANGED_ON_SERVER_INTERVAL" value="60" />
+    <option name="SHOW_ONLY_CHANGED_IN_SELECTION_DIFF" value="true" />
+    <option name="CHECK_COMMIT_MESSAGE_SPELLING" value="true" />
+    <option name="DEFAULT_PATCH_EXTENSION" value="patch" />
+    <option name="SHORT_DIFF_HORISONTALLY" value="true" />
+    <option name="SHORT_DIFF_EXTRA_LINES" value="2" />
+    <option name="SOFT_WRAPS_IN_SHORT_DIFF" value="true" />
+    <option name="INCLUDE_TEXT_INTO_PATCH" value="false" />
+    <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
+    <option name="SHOW_FILE_HISTORY_DETAILS" value="true" />
+    <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
+    <option name="SHOW_DIRTY_RECURSIVELY" value="false" />
+    <option name="LIMIT_HISTORY" value="true" />
+    <option name="MAXIMUM_HISTORY_ROWS" value="1000" />
+    <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
+    <option name="LAST_COMMIT_MESSAGE" value="update&#10;" />
+    <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="REFORMAT_BEFORE_FILE_COMMIT" value="false" />
+    <option name="FILE_HISTORY_DIALOG_COMMENTS_SPLITTER_PROPORTION" value="0.8" />
+    <option name="FILE_HISTORY_DIALOG_SPLITTER_PROPORTION" value="0.5" />
+    <option name="ACTIVE_VCS_NAME" />
+    <option name="UPDATE_GROUP_BY_PACKAGES" value="false" />
+    <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
+    <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
+    <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
+    <MESSAGE value="add import" />
+    <MESSAGE value="add import java.util.*&#10;and created ListNode &amp; TreeNode class" />
+    <MESSAGE value="solve duplicate combination problem" />
+    <MESSAGE value="more codeforces problems added" />
+    <MESSAGE value="add combination sum II" />
+    <MESSAGE value="minor improvement" />
+    <MESSAGE value="rename variable from cur to len" />
+    <MESSAGE value="add 6 more solutions to leetcode&#10;" />
+    <MESSAGE value="updated with more questions solved." />
+    <MESSAGE value="4 more questions solved." />
+    <MESSAGE value="10 more solved." />
+    <MESSAGE value="7 more solved." />
+    <MESSAGE value="3 more solved." />
+    <MESSAGE value="2 more solved." />
+    <MESSAGE value="update&#10;" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager />
+  </component>
+  <component name="antWorkspaceConfiguration">
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="FILTER_TARGETS" value="false" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/Codeforces/src/RomaAndLuckyNumbers.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="40" selection-start="655" selection-end="655" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Codeforces/src/ColorfulStonesSimplifiedEdition.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="43" selection-start="587" selection-end="587" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Codeforces/src/RoadsideTreesSimplifiedEdition.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="67" selection-start="533" selection-end="533" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Codeforces/src/ChoosingBalls.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="33" selection-start="811" selection-end="811" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Codeforces/src/MaximumXorSecondary.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="18" selection-start="729" selection-end="729" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#371#380#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Codeforces/src/FancyFence.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="60" selection-start="384" selection-end="384" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/HackerRank/src/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="0" selection-start="104" selection-end="145" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/HackerRank/src/BrickTiling.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="156" column="110" selection-start="4365" selection-end="4365" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/HackerRank/src/ArrangeStones.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="10" selection-start="597" selection-end="597" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Codeforces/src/BitPlusPlus.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="37" selection-start="444" selection-end="444" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/HackerRank/src/PascalsTriangle.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="19" selection-start="360" selection-end="360" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LeetCode/src/PlusOne.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="5" selection-start="654" selection-end="654" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LeetCode/src/TreeLinkNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="3" selection-start="155" selection-end="155" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="docComment;class#TreeLinkNode#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LeetCode/src/PopulatingNextRightPointers.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="44" selection-start="265" selection-end="265" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LeetCode/src/PopulatingNextRightPointersII.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="40" column="5" selection-start="1139" selection-end="1139" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LeetCode/src/PowOfX.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="5" selection-start="551" selection-end="551" vertical-scroll-proportion="0.64681727">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.6</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>Leetcode</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.5" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>
+
