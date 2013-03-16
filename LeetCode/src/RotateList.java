@@ -18,6 +18,7 @@ public class RotateList {
         }
 
         n = n%len;
+        /***** the following check is not necessary ******/
         //if(n == 0)
         //    return head;
 
