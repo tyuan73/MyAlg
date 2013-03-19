@@ -7,23 +7,23 @@
  */
 public class RotateList {
     public ListNode rotateRight(ListNode head, int n) {
-        if(head == null)
+        if (head == null)
             return null;
 
         int len = 1;
         ListNode p = head;
-        while(p.next!=null) {
+        while (p.next != null) {
             len++;
             p = p.next;
         }
 
-        n = n%len;
+        n = n % len;
         /***** the following check is not necessary ******/
         //if(n == 0)
         //    return head;
 
         p.next = head;
-        for(int i = 0; i < len-n; i++) {
+        for (int i = 0; i < len - n; i++) {
             p = p.next;
         }
 

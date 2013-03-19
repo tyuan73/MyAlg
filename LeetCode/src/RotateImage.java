@@ -8,11 +8,11 @@
 public class RotateImage {
     public void rotate(int[][] matrix) {
         int n = matrix.length;
-        for(int l = 0; l < n/2; l++) {
-            int e = n-1-l;
+        for (int l = 0; l < n / 2; l++) {
+            int e = n - 1 - l;
             int low = l, high = e, left = l, right = e;
-            for(int s1 = l, s2 = l, s3 = e, s4 = e;
-                s1 < e; s1++, s2++, s3--, s4--) {
+            for (int s1 = l, s2 = l, s3 = e, s4 = e;
+                 s1 < e; s1++, s2++, s3--, s4--) {
                 int x = matrix[low][s1];
                 matrix[low][s1] = matrix[s4][left];
                 matrix[s4][left] = matrix[high][s3];

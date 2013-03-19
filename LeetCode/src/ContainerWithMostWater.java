@@ -6,7 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-import java.util.*;
+import java.util.Scanner;
 
 public class ContainerWithMostWater {
     public static void main(String[] args) {
@@ -16,12 +16,12 @@ public class ContainerWithMostWater {
 
     public int maxArea(int[] height) {
         int max = 0;
-        int l = 0, r = height.length-1;
-        while(l < r) {
+        int l = 0, r = height.length - 1;
+        while (l < r) {
             int lx = height[l];
             int rx = height[r];
-            max = Math.max(max, (r-l) * Math.min(lx, rx));
-            if(lx <= rx)
+            max = Math.max(max, (r - l) * Math.min(lx, rx));
+            if (lx <= rx)
                 l++;
             else
                 r--;

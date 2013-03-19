@@ -6,28 +6,28 @@
  * To change this template use File | Settings | File Templates.
  */
 
-import java.util.*;
+import java.util.ArrayList;
 
 public class GrayCode {
     public static void main(String[] args) {
         GrayCode gc = new GrayCode();
         ArrayList<Integer> ret = gc.grayCode(8);
-        for(int i : ret) {
+        for (int i : ret) {
             System.out.println(Integer.toBinaryString(i));
         }
     }
 
     /**
-     *  a straight forward solution
+     * a straight forward solution
      */
     public ArrayList<Integer> grayCode(int n) {
         ArrayList<Integer> ret = new ArrayList<Integer>();
 
         ret.add(0);
-        for(int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++) {
             int x = 1 << i;
-            for(int j = ret.size()-1; j >= 0; j--) {
-                ret.add(ret.get(j)+x);
+            for (int j = ret.size() - 1; j >= 0; j--) {
+                ret.add(ret.get(j) + x);
             }
         }
 
@@ -35,12 +35,12 @@ public class GrayCode {
     }
 
     /**
-     *  a better and fater solution.
+     * a better and fater solution.
      */
     public ArrayList<Integer> grayCode2(int n) {
         ArrayList<Integer> ret = new ArrayList<Integer>();
 
-        int size = 1<<n;
+        int size = 1 << n;
         for (int i = 0; i < size; ++i)
             ret.add((i >> 1) ^ i);
 

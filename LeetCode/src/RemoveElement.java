@@ -7,9 +7,9 @@
  */
 public class RemoveElement {
     public int removeElement(int[] A, int elem) {
-        int l = 0, r = A.length-1;
-        while(l <= r) {
-            if(A[l] != elem)
+        int l = 0, r = A.length - 1;
+        while (l <= r) {
+            if (A[l] != elem)
                 l++;
             else
                 A[l] = A[r--];

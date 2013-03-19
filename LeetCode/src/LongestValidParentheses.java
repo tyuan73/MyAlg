@@ -12,13 +12,13 @@ public class LongestValidParentheses {
      */
 
     public int longestValidParentheses(String s) {
-        int[] dp = new int[s.length()+1];
+        int[] dp = new int[s.length() + 1];
         int max = 0;
-        for(int i = s.length()-2; i >= 0; i--) {
-            if(s.charAt(i) == '(') {
-                int pre = i + dp[i+1] + 1;
-                if(pre < s.length() && s.charAt(pre) == ')') {
-                    dp[i] = dp[i+1] + dp[pre+1] + 2;
+        for (int i = s.length() - 2; i >= 0; i--) {
+            if (s.charAt(i) == '(') {
+                int pre = i + dp[i + 1] + 1;
+                if (pre < s.length() && s.charAt(pre) == ')') {
+                    dp[i] = dp[i + 1] + dp[pre + 1] + 2;
                     max = Math.max(max, dp[i]);
                 }
             }

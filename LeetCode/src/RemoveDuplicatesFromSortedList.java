@@ -7,7 +7,7 @@
  */
 public class RemoveDuplicatesFromSortedList {
     public ListNode deleteDuplicates(ListNode head) {
-        if(head == null)
+        if (head == null)
             return null;
 
         head.next = delete(head.next, head.val);
@@ -16,9 +16,9 @@ public class RemoveDuplicatesFromSortedList {
     }
 
     ListNode delete(ListNode head, int t) {
-        if(head == null)
+        if (head == null)
             return null;
-        if(head.val == t)
+        if (head.val == t)
             return delete(head.next, t);
         head.next = delete(head.next, head.val);
         return head;

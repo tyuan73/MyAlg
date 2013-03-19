@@ -6,7 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-import java.util.*;
+import java.util.ArrayList;
 
 public class RestoreIPAddresses {
     public ArrayList<String> restoreIpAddresses(String s) {

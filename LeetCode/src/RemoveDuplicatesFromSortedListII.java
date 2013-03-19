@@ -7,10 +7,10 @@
  */
 public class RemoveDuplicatesFromSortedListII {
     public ListNode deleteDuplicates(ListNode head) {
-        if(head == null || head.next == null)
+        if (head == null || head.next == null)
             return head;
 
-        if(head.val == head.next.val)
+        if (head.val == head.next.val)
             return delete(head, head.val);
 
         head.next = deleteDuplicates(head.next);
@@ -19,13 +19,13 @@ public class RemoveDuplicatesFromSortedListII {
 
     ListNode delete(ListNode head, int t) {
         ListNode n = head.next;
-        while(n != null && n.val == t) {
+        while (n != null && n.val == t) {
             n = n.next;
         }
-        if(n == null || n.next == null)
+        if (n == null || n.next == null)
             return n;
 
-        if(n.val == n.next.val)
+        if (n.val == n.next.val)
             return delete(n, n.val);
 
         n.next = deleteDuplicates(n.next);

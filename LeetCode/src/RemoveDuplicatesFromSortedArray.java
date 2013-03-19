@@ -7,11 +7,11 @@
  */
 public class RemoveDuplicatesFromSortedArray {
     public int removeDuplicates(int[] A) {
-        if(A.length <= 1)
+        if (A.length <= 1)
             return A.length;
         int len = 1;
-        for(int i = 1; i < A.length; i++) {
-            if(A[i] != A[i-1])
+        for (int i = 1; i < A.length; i++) {
+            if (A[i] != A[i - 1])
                 A[len++] = A[i];
         }
 

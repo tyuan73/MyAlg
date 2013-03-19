@@ -5,7 +5,9 @@
  * Time: 1:36 AM
  * To change this template use File | Settings | File Templates.
  */
- import java.util.*;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class CombinationSumII {
     static int count = 0;
@@ -18,8 +20,8 @@ public class CombinationSumII {
         //int t = 100;
         //int[] a = {1,2,4,8,16,32};
         //int t = 24;
-        int[] a = {4,4,2,1,4,2,2,1,3};
-        int t= 6;
+        int[] a = {4, 4, 2, 1, 4, 2, 2, 1, 3};
+        int t = 6;
 
         CombinationSumII test = new CombinationSumII();
         test.combinationSum2(a, t);
@@ -27,7 +29,7 @@ public class CombinationSumII {
     }
 
     /**
-     *  combinationSumRecursive is backtracking solution which has a running time at about O(n!)
+     * combinationSumRecursive is backtracking solution which has a running time at about O(n!)
      */
     public ArrayList<ArrayList<Integer>> combinationSumRecursive(int[] num, int
             target) {
@@ -148,7 +150,7 @@ public class CombinationSumII {
             getSum(i - 1, j - num[i - 1], num, dp, path, ret);
             path.remove(path.size() - 1);
         }
-        if(dp[i-1][j] > 0)
+        if (dp[i - 1][j] > 0)
             getSum(i - 1, j, num, dp, path, ret);
     }
 }

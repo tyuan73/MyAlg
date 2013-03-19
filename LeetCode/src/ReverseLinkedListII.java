@@ -11,13 +11,13 @@ public class ReverseLinkedListII {
         p1.next = head;
         head = p1;
         ListNode p2 = p1;
-        for(int i = 0; i < n; i++) {
-            if(i < m-1)
+        for (int i = 0; i < n; i++) {
+            if (i < m - 1)
                 p1 = p1.next;
             p2 = p2.next;
         }
 
-        for(int i = 0; i < n-m; i++) {
+        for (int i = 0; i < n - m; i++) {
             ListNode p3 = p1.next;
             p1.next = p3.next;
             p3.next = p2.next;

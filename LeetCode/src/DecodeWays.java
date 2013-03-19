@@ -6,7 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-import java.util.*;
+import java.util.Scanner;
 
 public class DecodeWays {
     public static void main(String[] args) {
@@ -18,20 +18,20 @@ public class DecodeWays {
      * DP version
      */
     public int numDecodings(String s) {
-        if(s == null || s.length() == 0)
+        if (s == null || s.length() == 0)
             return 0;
 
         int n = s.length();
         s = s + "0";
-        int[] dp = new int[n+2];
+        int[] dp = new int[n + 2];
         dp[n] = 1;
-        for(int i = n-1; i >= 0; i--) {
+        for (int i = n - 1; i >= 0; i--) {
             char ch = s.charAt(i);
-            if(ch != '0') {
-                dp[i] = dp[i+1];
+            if (ch != '0') {
+                dp[i] = dp[i + 1];
             }
-            if(ch == '1' || (ch == '2' && s.charAt(i+1) <= '6')) {
-                dp[i] += dp[i+2];
+            if (ch == '1' || (ch == '2' && s.charAt(i + 1) <= '6')) {
+                dp[i] += dp[i + 2];
             }
         }
 
@@ -40,26 +40,25 @@ public class DecodeWays {
 
     /**
      * Recursive ways. not efficient. Will over time limit if s is considerable long.
-     *
      */
     public int numDecodingsRecursive(String s) {
-        if(s == null || s.length() == 0)
+        if (s == null || s.length() == 0)
             return 0;
         return decode(s.toCharArray(), 0);
     }
 
     int decode(char[] s, int index) {
-        if(index == s.length)
+        if (index == s.length)
             return 1;
 
-        if(s[index] == '0')
+        if (s[index] == '0')
             return 0;
 
-        int ret = decode(s, index+1);
-        if(s[index] == '1' && index < s.length-1)
-            ret += decode(s, index+2);
-        else if(index < s.length-1 && s[index] == '2' && s[index+1] <= '6')
-            ret += decode(s, index+2);
+        int ret = decode(s, index + 1);
+        if (s[index] == '1' && index < s.length - 1)
+            ret += decode(s, index + 2);
+        else if (index < s.length - 1 && s[index] == '2' && s[index + 1] <= '6')
+            ret += decode(s, index + 2);
         return ret;
     }
 }
