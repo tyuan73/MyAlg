@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Codeforces/Codeforces.iml" filepath="$PROJECT_DIR$/Codeforces/Codeforces.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HackerRank/HackerRank.iml" filepath="$PROJECT_DIR$/HackerRank/HackerRank.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LeetCode/LeetCode.iml" filepath="$PROJECT_DIR$/LeetCode/LeetCode.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Others/Others.iml" filepath="$PROJECT_DIR$/Others/Others.iml" />
+      <module fileurl="file://$PROJECT_DIR$/POJ/POJ.iml" filepath="$PROJECT_DIR$/POJ/POJ.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Topcoder/Topcoder.iml" filepath="$PROJECT_DIR$/Topcoder/Topcoder.iml" />
+      <module fileurl="file://$PROJECT_DIR$/USACO/USACO.iml" filepath="$PROJECT_DIR$/USACO/USACO.iml" />
+    </modules>
+  </component>
+</project>
+
