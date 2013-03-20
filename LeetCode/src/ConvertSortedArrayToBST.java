@@ -6,7 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-import java.util.*;
+import java.util.Scanner;
 
 public class ConvertSortedArrayToBST {
     public static void main(String[] args) {
@@ -15,17 +15,17 @@ public class ConvertSortedArrayToBST {
     }
 
     public TreeNode sortedArrayToBST(int[] num) {
-        return convert(num, 0, num.length-1);
+        return convert(num, 0, num.length - 1);
     }
 
     TreeNode convert(int[] num, int l, int r) {
-        if(l > r)
+        if (l > r)
             return null;
 
-        int mid = (l+r)/2;
+        int mid = (l + r) / 2;
         TreeNode n = new TreeNode(num[mid]);
-        n.left = convert(num, l, mid-1);
-        n.right = convert(num, mid+1, r);
+        n.left = convert(num, l, mid - 1);
+        n.right = convert(num, mid + 1, r);
         return n;
     }
 }

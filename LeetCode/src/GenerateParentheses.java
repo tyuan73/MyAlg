@@ -6,14 +6,14 @@
  * To change this template use File | Settings | File Templates.
  */
 
-import java.util.*;
+import java.util.ArrayList;
 
 public class GenerateParentheses {
     public static void main(String[] args) {
         GenerateParentheses g = new GenerateParentheses();
         ArrayList<String> ret = g.generateParenthesis(4);
 
-        for(String s : ret)
+        for (String s : ret)
             System.out.println(s);
     }
 
@@ -24,21 +24,21 @@ public class GenerateParentheses {
     }
 
     void helper(int open, int close, StringBuilder sb, ArrayList<String> ret) {
-        if(open == 0 && close == 0) {
+        if (open == 0 && close == 0) {
             ret.add(sb.toString());
             return;
         }
 
-        if(open > 0) {
+        if (open > 0) {
             sb.append('(');
-            helper(open-1, close+1, sb, ret);
-            sb.setLength(sb.length()-1);
+            helper(open - 1, close + 1, sb, ret);
+            sb.setLength(sb.length() - 1);
         }
 
-        if(close > 0) {
+        if (close > 0) {
             sb.append(')');
-            helper(open, close-1, sb, ret);
-            sb.setLength(sb.length()-1);
+            helper(open, close - 1, sb, ret);
+            sb.setLength(sb.length() - 1);
         }
     }
 }

@@ -6,20 +6,20 @@
  * To change this template use File | Settings | File Templates.
  */
 
-import java.util.*;
+import java.util.Arrays;
 
 public class LongestCommonPrefix {
     public String longestCommonPrefix(String[] strs) {
-        if(strs == null || strs.length == 0)
+        if (strs == null || strs.length == 0)
             return "";
 
         StringBuilder sb = new StringBuilder();
         Arrays.sort(strs);
         String s1 = strs[0];
-        String s2 = strs[strs.length-1];
+        String s2 = strs[strs.length - 1];
         int i = 0;
-        while(i < s1.length() && i < s2.length()) {
-            if(s1.charAt(i) != s2.charAt(i))
+        while (i < s1.length() && i < s2.length()) {
+            if (s1.charAt(i) != s2.charAt(i))
                 break;
             i++;
         }

@@ -6,7 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-import java.util.*;
+import java.util.Scanner;
 
 public class JumpGame {
     public static void main(String[] args) {
@@ -16,10 +16,10 @@ public class JumpGame {
 
     public boolean canJump(int[] A) {
         int max = 0;
-        for(int i= 0; i <= max && i < A.length; i++) {
-            max = Math.max(max, i+A[i]);
+        for (int i = 0; i <= max && i < A.length; i++) {
+            max = Math.max(max, i + A[i]);
         }
 
-        return max >= A.length-1 ? true : false;
+        return max >= A.length - 1 ? true : false;
     }
 }

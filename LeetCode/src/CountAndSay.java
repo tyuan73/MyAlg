@@ -6,8 +6,6 @@
  * To change this template use File | Settings | File Templates.
  */
 
-import java.util.*;
-
 public class CountAndSay {
     public static void main(String[] args) {
         //Scanner in = new Scanner(System.in);
@@ -16,12 +14,12 @@ public class CountAndSay {
 
     public String countAndSay(int n) {
         String str = "1";
-        while(n-- > 1) {
+        while (n-- > 1) {
             int count = 1;
             char pre = str.charAt(0);
             StringBuilder sb = new StringBuilder();
-            for(int i = 1; i < str.length(); i++) {
-                if(str.charAt(i) == pre) {
+            for (int i = 1; i < str.length(); i++) {
+                if (str.charAt(i) == pre) {
                     count++;
                 } else {
                     sb.append(count).append(pre);

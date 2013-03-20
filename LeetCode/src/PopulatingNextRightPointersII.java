@@ -6,19 +6,16 @@
  * To change this template use File | Settings | File Templates.
  */
 
-import java.util.*;
-
 public class PopulatingNextRightPointersII {
     public void connect(TreeLinkNode root) {
         TreeLinkNode p;
-        while((p = getNext(root)) != null) {
+        while ((p = getNext(root)) != null) {
             TreeLinkNode q = root;
-            while(q != null) {
-                if(q.left != null && q.right != null) {
+            while (q != null) {
+                if (q.left != null && q.right != null) {
                     q.left.next = q.right;
                     q.right.next = getNext(q.next);
-                }
-                else if(q.left != null || q.right != null) {
+                } else if (q.left != null || q.right != null) {
                     TreeLinkNode child = q.left != null ? q.left : q.right;
                     child.next = getNext(q.next);
                 }
@@ -30,10 +27,10 @@ public class PopulatingNextRightPointersII {
     }
 
     TreeLinkNode getNext(TreeLinkNode root) {
-        while(root != null) {
-            if(root.left != null)
+        while (root != null) {
+            if (root.left != null)
                 return root.left;
-            if(root.right != null)
+            if (root.right != null)
                 return root.right;
             root = root.next;
         }

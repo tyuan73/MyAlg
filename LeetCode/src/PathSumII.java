@@ -5,7 +5,8 @@
  * Time: 3:26 PM
  * To change this template use File | Settings | File Templates.
  */
-import java.util.*;
+
+import java.util.ArrayList;
 
 public class PathSumII {
     public static void main(String[] args) {
@@ -23,14 +24,14 @@ public class PathSumII {
     }
 
     void helper(TreeNode root, int sum, ArrayList<Integer> list, ArrayList<ArrayList<Integer>> ret) {
-        if(root == null)
+        if (root == null)
             return;
 
-        if(root.left == null && root.right == null) {
-            if(sum == root.val) {
+        if (root.left == null && root.right == null) {
+            if (sum == root.val) {
                 list.add(root.val);
                 ret.add((ArrayList<Integer>) list.clone());
-                list.remove(list.size()-1);
+                list.remove(list.size() - 1);
             }
             return;
         }
@@ -39,6 +40,6 @@ public class PathSumII {
         helper(root.left, sum - root.val, list, ret);
 
         helper(root.right, sum - root.val, list, ret);
-        list.remove(list.size()-1);
+        list.remove(list.size() - 1);
     }
 }

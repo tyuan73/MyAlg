@@ -6,7 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-import java.util.*;
+import java.util.ArrayList;
 
 public class LetterCombinationsPhoneNumber {
     final static String[] map = {
@@ -29,19 +29,19 @@ public class LetterCombinationsPhoneNumber {
     }
 
     void helper(String digits, int index, StringBuilder sb, ArrayList<String> ret) {
-        if(index == digits.length()) {
+        if (index == digits.length()) {
             ret.add(sb.toString());
             return;
         }
 
         String s = map[digits.charAt(index) - '0'];
-        if(s.length() == 0)
-            helper(digits, index+1, sb, ret);
+        if (s.length() == 0)
+            helper(digits, index + 1, sb, ret);
         else {
-            for(int i = 0; i < s.length(); i++) {
+            for (int i = 0; i < s.length(); i++) {
                 sb.append(s.charAt(i));
-                helper(digits, index+1, sb, ret);
-                sb.setLength(sb.length()-1);
+                helper(digits, index + 1, sb, ret);
+                sb.setLength(sb.length() - 1);
             }
         }
     }

@@ -9,8 +9,8 @@ public class PalindromeNumber {
     public boolean isPalindrome(int x) {
         long reversed = 0;
         long orig = x;
-        while(x > 0) {
-            reversed = reversed * 10 + (x%10);
+        while (x > 0) {
+            reversed = reversed * 10 + (x % 10);
             x /= 10;
         }
 

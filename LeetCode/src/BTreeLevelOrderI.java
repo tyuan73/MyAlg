@@ -7,32 +7,33 @@
  *     TreeNode(int x) { val = x; }
  * }
  */
-import java.util.*;
+
+import java.util.ArrayList;
 
 public class BTreeLevelOrderI {
     public ArrayList<ArrayList<Integer>> levelOrder(TreeNode root) {
-        ArrayList<ArrayList<Integer>> ret = new ArrayList<ArrayList<Integer>> ();
-        
-        if( root == null)
+        ArrayList<ArrayList<Integer>> ret = new ArrayList<ArrayList<Integer>>();
+
+        if (root == null)
             return ret;
-        
+
         ArrayList<TreeNode> level = new ArrayList<TreeNode>();
         level.add(root);
-        while(level.size() > 0) {
+        while (level.size() > 0) {
             ArrayList<Integer> x = new ArrayList<Integer>();
             ArrayList<TreeNode> l1 = new ArrayList<TreeNode>();
-            for(TreeNode tn : level) {
+            for (TreeNode tn : level) {
                 x.add(tn.val);
-                if(tn.left != null)
+                if (tn.left != null)
                     l1.add(tn.left);
-                if(tn.right != null)
+                if (tn.right != null)
                     l1.add(tn.right);
             }
             ret.add(x);
-            
+
             level = l1;
         }
-        
+
         return ret;
     }
 }

@@ -10,17 +10,17 @@ public class LongestSubstringWithoutRepeatingCharacters {
         boolean[] set = new boolean[26];
         int max = 0;
         int start = 0;
-        for(int i = 0; i < s.length(); i++) {
+        for (int i = 0; i < s.length(); i++) {
             int index = s.charAt(i) - 'a';
-            if(set[index]) {
+            if (set[index]) {
                 int i1;
                 do {
-                    i1 = s.charAt(start++)-'a';
+                    i1 = s.charAt(start++) - 'a';
                     set[i1] = false;
-                } while(i1 != index);
+                } while (i1 != index);
             }
             set[index] = true;
-            max = Math.max(max, i-start+1);
+            max = Math.max(max, i - start + 1);
         }
         return max;
     }
