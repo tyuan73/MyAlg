@@ -1,11 +1,11 @@
 import java.util.*;
 public class TwoConvexShapes {
 	public int countWays(String[] grid) {
-		
+		return 2;
 	}
 	public static void main(String[] args) {
 		TwoConvexShapes temp = new TwoConvexShapes();
-		System.out.println(temp.countWays(String[] grid));
+		//System.out.println(temp.countWays(String[] grid));
 	}
 }
 
