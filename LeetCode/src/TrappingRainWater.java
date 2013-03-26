@@ -6,18 +6,18 @@
  * Copyright (c) 2013 All Right Reserved, http://github.com/tyuan73
  */
 
-import java.util.*;
+import java.util.Scanner;
 
 public class TrappingRainWater {
     public int trap(int[] A) {
-        if(A == null || A.length < 3)
+        if (A == null || A.length < 3)
             return 0;
 
         int ret = 0;
-        int l = 0, r = A.length-1;
+        int l = 0, r = A.length - 1;
         int maxL = A[l], maxR = A[r];
-        while(l < r) {
-            if(maxL < maxR) {
+        while (l < r) {
+            if (maxL < maxR) {
                 l++;
                 maxL = Math.max(maxL, A[l]);
                 ret += maxL - A[l];

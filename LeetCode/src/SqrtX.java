@@ -6,7 +6,7 @@
  * Copyright (c) 2013 All Right Reserved, http://github.com/tyuan73
  */
 
-import java.util.*;
+import java.util.Scanner;
 
 public class SqrtX {
     public int sqrt(int x) {
@@ -47,6 +47,7 @@ public class SqrtX {
 
     /**
      * The best solution which is based on Newton method.
+     *
      * @param x
      * @return
      */
@@ -55,7 +56,7 @@ public class SqrtX {
         while (Math.abs(r - x / r) > 0.0001) {
             r = (x / r + r) / 2;
         }
-        return (int)r;
+        return (int) r;
     }
 
     public static void main(String[] args) {

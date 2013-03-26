@@ -6,7 +6,9 @@
  * Copyright (c) 2013 All Right Reserved, http://github.com/tyuan73
  */
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
 
 public class SubsetsII {
     public ArrayList<ArrayList<Integer>> subsetsWithDup(int[] num) {
@@ -39,6 +41,7 @@ public class SubsetsII {
 
     /**
      * A more elegant solution
+     *
      * @param num
      * @return
      */
@@ -51,21 +54,21 @@ public class SubsetsII {
     }
 
     void helper1(int[] num, int index, ArrayList<Integer> list, ArrayList<ArrayList<Integer>> ret) {
-        ret.add((ArrayList<Integer>)list.clone());
-        int pre = num[0]-1;
-        for(int i = index; i < num.length; i++) {
-            if(num[i] != pre) {
+        ret.add((ArrayList<Integer>) list.clone());
+        int pre = num[0] - 1;
+        for (int i = index; i < num.length; i++) {
+            if (num[i] != pre) {
                 pre = num[i];
                 list.add(num[i]);
-                helper1(num,i+1,list, ret);
-                list.remove(list.size()-1);
+                helper1(num, i + 1, list, ret);
+                list.remove(list.size() - 1);
             }
         }
     }
 
     /**
      * Iterative version.
-     *
+     * <p/>
      * The basic idea is to add the same element (repeated "len" times) to each one of the previous unique subsets one
      * by one.
      *
@@ -82,8 +85,8 @@ public class SubsetsII {
         Arrays.sort(num);
         ArrayList<Integer> next = new ArrayList<Integer>();
         next.add(0);
-        for(int i = 1; i < num.length; i++)
-            if(num[i] != num[i-1])
+        for (int i = 1; i < num.length; i++)
+            if (num[i] != num[i - 1])
                 next.add(i);
         next.add(num.length);
 
@@ -92,12 +95,12 @@ public class SubsetsII {
          * and save the subsets along the way.
          */
         ret.add(new ArrayList<Integer>());
-        for(int i = 0; i < next.size()-1; i++) {
-            int len = next.get(i+1) - next.get(i);
+        for (int i = 0; i < next.size() - 1; i++) {
+            int len = next.get(i + 1) - next.get(i);
             int cursize = ret.size();     // note: this is a fixed value while "ret.size()" is growing.
-            for(int j = 0; j < cursize; j++) {  // don't use ret.size() here!!!
+            for (int j = 0; j < cursize; j++) {  // don't use ret.size() here!!!
                 ArrayList<Integer> list = ret.get(j);
-                for(int k = 0; k < len; k++) {
+                for (int k = 0; k < len; k++) {
                     list = new ArrayList<Integer>(list);
                     list.add(num[next.get(i)]);
                     ret.add(list);

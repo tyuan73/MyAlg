@@ -6,8 +6,6 @@
  * Copyright (c) 2013 All Right Reserved, http://github.com/tyuan73
  */
 
-import java.util.*;
-
 public class SortColors {
 
     /**

@@ -6,7 +6,9 @@
  * Copyright (c) 2013 All Right Reserved, http://github.com/tyuan73
  */
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
 
 public class Subsets {
     public ArrayList<ArrayList<Integer>> subsets(int[] S) {
@@ -14,11 +16,11 @@ public class Subsets {
 
         Arrays.sort(S);
         int n = 1 << S.length;
-        for(int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++) {
             int x = 0;
             ArrayList<Integer> list = new ArrayList<Integer>();
-            while((1<<x) <= i) {
-                if((i & (1<<x)) > 0)
+            while ((1 << x) <= i) {
+                if ((i & (1 << x)) > 0)
                     list.add(S[x]);
                 x++;
             }
