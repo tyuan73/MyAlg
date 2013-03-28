@@ -6,35 +6,23 @@
  * Copyright (c) 2013 All Right Reserved, http://github.com/tyuan73
  */
 
-import java.util.ArrayList;
-
 public class SumRootToLeafNumbers {
     int total = 0;
 
     public int sumNumbers(TreeNode root) {
         total = 0;
-        dfs(root, new ArrayList<TreeNode>());
+        sumup(root, 0);
         return total;
     }
 
-    void dfs(TreeNode root, ArrayList<TreeNode> list) {
+    void sumup(TreeNode root, int pre) {
         if (root == null)
             return;
-
-        list.add(root);
+        int num = pre * 10 + root.val;
         if (root.left == null && root.right == null)
-            add(list);
+            total += num;
 
-        dfs(root.left, list);
-        dfs(root.right, list);
-        list.remove(list.size() - 1);
-    }
-
-    void add(ArrayList<TreeNode> list) {
-        int num = 0;
-        for (int i = 0; i < list.size(); i++) {
-            num = num * 10 + list.get(i).val;
-        }
-        total += num;
+        sumup(root.left, num);
+        sumup(root.right, num);
     }
 }
