@@ -1,14 +1,13 @@
 public class BestTimeStockI {
     public int maxProfit(int[] prices) {
-        if (prices == null | prices.length == 0)
-            return 0;
+        //if (prices == null | prices.length == 0)
+        //    return 0;
 
-        int low = prices[0];
-        int ret = 0;
+        int max = 0, low = Integer.MAX_VALUE;
         for (int i : prices) {
             low = Math.min(low, i);
-            ret = Math.max(ret, i - low);
+            max = Math.max(max, i - low);
         }
-        return ret;
+        return max;
     }
 }

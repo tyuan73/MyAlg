@@ -22,24 +22,17 @@ public class EditDistance {
 
         for (int i = 0; i <= n; i++) {
             for (int j = 0; j <= m; j++) {
-                if (i == 0) {
-                    dp[0][j] = j;
+                if (i == 0 || j == 0) {
+                    dp[i][j] = i == 0 ? j : i;
                     continue;
                 }
-                if (j == 0) {
-                    dp[i][0] = i;
-                    continue;
-                }
-
                 int min = Math.min(dp[i - 1][j], dp[i][j - 1]) + 1;
                 if (word1.charAt(i - 1) == word2.charAt(j - 1))
-                    min = Math.min(min, dp[i - 1][j - 1]);
+                    dp[i][j] = Math.min(min, dp[i - 1][j - 1]);
                 else
-                    min = Math.min(min, dp[i - 1][j - 1] + 1);
-                dp[i][j] = min;
+                    dp[i][j] = Math.min(min, dp[i - 1][j - 1] + 1);
             }
         }
-
         return dp[n][m];
     }
 }
