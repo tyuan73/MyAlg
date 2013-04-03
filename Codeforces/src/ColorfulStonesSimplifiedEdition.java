@@ -15,10 +15,10 @@ public class ColorfulStonesSimplifiedEdition {
         String stones = in.next();
         String inst = in.next();
         int step = 0;
-        for(int i = 0; i < inst.length(); i++) {
-            if(inst.charAt(i) == stones.charAt(step))
+        for (int i = 0; i < inst.length(); i++) {
+            if (inst.charAt(i) == stones.charAt(step))
                 step++;
         }
-        System.out.println(step+1);
+        System.out.println(step + 1);
     }
 }

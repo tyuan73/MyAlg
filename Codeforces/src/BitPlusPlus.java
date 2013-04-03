@@ -14,9 +14,9 @@ public class BitPlusPlus {
 
         int n = in.nextInt();
         int x = 0;
-        while(n-- >0) {
+        while (n-- > 0) {
             String line = in.next();
-            if(line.indexOf("+") >= 0)
+            if (line.indexOf("+") >= 0)
                 x++;
             else
                 x--;

@@ -15,12 +15,12 @@ public class MaximumXorSecondary {
         int n = in.nextInt();
         Stack<Integer> S = new Stack<Integer>();
         int ret = 0;
-        while(n-- > 0) {
+        while (n-- > 0) {
             int x = in.nextInt();
-            while(!S.empty() && S.peek() < x) {
+            while (!S.empty() && S.peek() < x) {
                 ret = Math.max(ret, S.pop() ^ x);
             }
-            if(!S.empty())
+            if (!S.empty())
                 ret = Math.max(ret, S.peek() ^ x);
             S.push(x);
         }

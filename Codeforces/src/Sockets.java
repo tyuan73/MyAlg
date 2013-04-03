@@ -17,15 +17,15 @@ public class Sockets {
         int k = in.nextInt();
 
         int[] a = new int[n];
-        for(int i = 0; i < n; i++)
+        for (int i = 0; i < n; i++)
             a[i] = in.nextInt();
 
         Arrays.sort(a);
         int total = k;
-        while(total < m && n > 0) {
-            total += a[--n] -  1;
+        while (total < m && n > 0) {
+            total += a[--n] - 1;
         }
-        if(total >= m) {
+        if (total >= m) {
             System.out.println(a.length - n);
         } else
             System.out.println(-1);

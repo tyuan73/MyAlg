@@ -5,7 +5,8 @@
  * Time: 10:15 AM
  * To change this template use File | Settings | File Templates.
  */
-import  java.util.*;
+
+import java.util.*;
 
 public class Books {
     public static void main(String[] args) {
@@ -14,17 +15,17 @@ public class Books {
         int n = in.nextInt();
         int t = in.nextInt();
         int[] a = new int[n];
-        for(int i = 0; i < n; i++)
+        for (int i = 0; i < n; i++)
             a[i] = in.nextInt();
 
         int max = 0;
         int total = 0;
         int len = 0;
         int head = 0;
-        for(int i : a) {
+        for (int i : a) {
             total += i;
             len++;
-            while(total > t) {
+            while (total > t) {
                 total -= a[head++];
                 len--;
             }

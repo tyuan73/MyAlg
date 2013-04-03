@@ -11,6 +11,7 @@
  */
 
 import java.io.*;
+
 public class MinAnagramTransfer {
     public static void main(String[] args) throws IOException {
         BufferedReader f = new BufferedReader(new FileReader("input.txt"));
@@ -21,30 +22,29 @@ public class MinAnagramTransfer {
 
         int[] count1 = new int[26];
         int[] count2 = new int[26];
-        for(int i = 0; i < T.length(); i++)
+        for (int i = 0; i < T.length(); i++)
             count1[T.charAt(i) - 'A']++;
-        for(int i = 0; i < S.length(); i++)
+        for (int i = 0; i < S.length(); i++)
             count2[S.charAt(i) - 'A']++;
 
         StringBuffer sb = new StringBuffer();
         int start = 0;
         int step = 0;
-        for(int i = 0; i < S.length(); i++) {
-            int index = S.charAt(i)-'A';
-            if(count1[index] >= count2[index]) {
+        for (int i = 0; i < S.length(); i++) {
+            int index = S.charAt(i) - 'A';
+            if (count1[index] >= count2[index]) {
                 sb.append(S.charAt(i));
                 count1[index]--;
                 count2[index]--;
-            }
-            else {
+            } else {
                 start = 0;
-                while(count1[start] <= count2[start] && (start != index || count1[start] == 0)) {
+                while (count1[start] <= count2[start] && (start != index || count1[start] == 0)) {
                     start++;
                 }
                 count1[start]--;
                 count2[index]--;
                 sb.append((char) (start + 'A'));
-                if(start != index) step++;
+                if (start != index) step++;
             }
         }
         out.println(step);

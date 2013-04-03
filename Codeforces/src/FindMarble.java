@@ -13,18 +13,18 @@ public class FindMarble {
         Scanner in = new Scanner(System.in);
 
         int n = in.nextInt();
-        int s = in.nextInt()-1;
-        int t = in.nextInt()-1;
+        int s = in.nextInt() - 1;
+        int t = in.nextInt() - 1;
         int[] shuffle = new int[n];
-        for(int i = 0; i < n; i++)
-            shuffle[i] = in.nextInt()-1;
+        for (int i = 0; i < n; i++)
+            shuffle[i] = in.nextInt() - 1;
 
         boolean[] f = new boolean[n];
         f[s] = true;
         int total = 0;
-        while(s != t) {
+        while (s != t) {
             s = shuffle[s];
-            if(f[s]) {
+            if (f[s]) {
                 System.out.println(-1);
                 return;
             }

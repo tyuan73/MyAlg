@@ -14,17 +14,17 @@ public class SlightlyDecreasingPermutations {
         int n = in.nextInt();
         int k = in.nextInt();
         int[] p = new int[n];
-        for(int i = 0; i < n; i++)
-            p[i] = i+1;
+        for (int i = 0; i < n; i++)
+            p[i] = i + 1;
 
-        for(int i = n-1-k, j = n-1; i < j; i++, j--) {
+        for (int i = n - 1 - k, j = n - 1; i < j; i++, j--) {
             int x = p[i];
             p[i] = p[j];
             p[j] = x;
         }
 
         System.out.print(p[0]);
-        for(int i = 1; i < n; i++)
+        for (int i = 1; i < n; i++)
             System.out.print(" " + p[i]);
         System.out.println();
     }

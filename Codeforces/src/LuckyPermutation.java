@@ -15,21 +15,21 @@ import java.util.*;
  * p[n-i+1] = n - p[i] + 1,
  * p[n-p[i]+1] = n-(n-i+1)+1 = i
  * p[i] = n- (n-p[i]+1) + 1 = p[i]
- *
+ * <p/>
  * so indexes i, p[i], p[n-i+1], p[n-p[i]+1] are a group. They exchange values among themselves.
  * the only exception is when i = (n+1)/2 where n is an odd. In this case, i = p[i] = p[n-i+1] = p[n-p[i]+1].
  * For example:
- *        1  2  3  4  5
- *        X  X  3  X  X
+ * 1  2  3  4  5
+ * X  X  3  X  X
  * So,  in order to get lucky permutations, n has to be equal to 4k or 4k+1
- *
+ * <p/>
  * There are many ways to choose groups, but an easy way is to choose p[i] = i+1.
  * That is:
- *  p[i] = i+1,
- *  p[i+1] = n-i+1
- *  p[n-i+1] = n-(i+1)+1 = n-i
- *  p[n-i] = n-(n-i+1)+1 = i
- *
+ * p[i] = i+1,
+ * p[i+1] = n-i+1
+ * p[n-i+1] = n-(i+1)+1 = n-i
+ * p[n-i] = n-(n-i+1)+1 = i
+ * <p/>
  * Note: here i is 1-based. But in java, array index is 0-base, so you will see a little transfer in code below.
  */
 public class LuckyPermutation {

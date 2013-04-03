@@ -13,10 +13,10 @@ public class LittleElephantChess {
         Scanner in = new Scanner(System.in);
 
         int n = 8;
-        while(n -- > 0) {
+        while (n-- > 0) {
             String row = in.next();
-            for(int i = 1; i < 8; i++) {
-                if(row.charAt(i) == row.charAt(i-1)) {
+            for (int i = 1; i < 8; i++) {
+                if (row.charAt(i) == row.charAt(i - 1)) {
                     System.out.println("NO");
                     return;
                 }

@@ -13,10 +13,10 @@ public class FancyFence {
         Scanner in = new Scanner(System.in);
 
         int n = in.nextInt();
-        while(n-- > 0) {
+        while (n-- > 0) {
             int d = in.nextInt();
 
-            if(d < 180 && (360 % (180-d)) == 0)
+            if (d < 180 && (360 % (180 - d)) == 0)
                 System.out.println("YES");
             else
                 System.out.println("NO");

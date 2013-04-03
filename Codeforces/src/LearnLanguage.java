@@ -17,21 +17,21 @@ public class LearnLanguage {
         int[] group = new int[m];
         int ret = 0;
         int id = 1;
-        while(n-- > 0) {
+        while (n-- > 0) {
             int k = in.nextInt();
-            if(k == 0) {
+            if (k == 0) {
                 ret++;
                 continue;
             }
             int thisid = id++;
-            while(k-- > 0) {
-                int lang = in.nextInt()-1;
-                if(group[lang] == 0)
+            while (k-- > 0) {
+                int lang = in.nextInt() - 1;
+                if (group[lang] == 0)
                     group[lang] = thisid;
                 else {
-                    int newid  = group[lang];
-                    for(int j = 0; j < m; j++) {
-                        if(group[j] == thisid)
+                    int newid = group[lang];
+                    for (int j = 0; j < m; j++) {
+                        if (group[j] == thisid)
                             group[j] = newid;
                     }
                     thisid = newid;
@@ -40,11 +40,11 @@ public class LearnLanguage {
         }
 
         HashSet<Integer> set = new HashSet<Integer>();
-        for(int i : group)
-            if(i != 0)
+        for (int i : group)
+            if (i != 0)
                 set.add(i);
-        if(set.size() > 0)
-            ret += set.size()-1;
+        if (set.size() > 0)
+            ret += set.size() - 1;
         System.out.println(ret);
     }
 }

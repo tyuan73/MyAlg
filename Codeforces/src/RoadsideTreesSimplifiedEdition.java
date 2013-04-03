@@ -15,9 +15,9 @@ public class RoadsideTreesSimplifiedEdition {
         int n = in.nextInt();
         int total = -1;
         int cur = 0;
-        for(int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++) {
             int h = in.nextInt();
-            total += 2 + Math.abs(h-cur);
+            total += 2 + Math.abs(h - cur);
             cur = h;
         }
 

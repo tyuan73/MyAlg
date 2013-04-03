@@ -15,12 +15,12 @@ public class LittleElephantBits {
 
         int index = input.indexOf("0");
         String output = null;
-        if(index < 0)
+        if (index < 0)
             output = input.substring(1);
         else
-            output = input.substring(0, index) + input.substring(index+1);
+            output = input.substring(0, index) + input.substring(index + 1);
 
-        if(output.length() == 0) {
+        if (output.length() == 0) {
             System.out.println(0);
         } else {
             System.out.println(output);

@@ -16,30 +16,30 @@ public class ChoosingBalls {
         int q = in.nextInt();
         long[] v = new long[n];
         int[] c = new int[n];
-        for(int i = 0; i < n; i++)
+        for (int i = 0; i < n; i++)
             v[i] = in.nextLong();
-        for(int i = 0; i < n; i++)
+        for (int i = 0; i < n; i++)
             c[i] = in.nextInt();
 
         long INF = (long) 1e15;
-        long[] dp = new long[n+1];
-        while(q-- > 0) {
+        long[] dp = new long[n + 1];
+        while (q-- > 0) {
             long a = in.nextInt();
             long b = in.nextInt();
             Arrays.fill(dp, -INF);
             dp[0] = 0;
             int max = 0, max2 = 1;
-            for(int i = 0; i < n; i++) {
+            for (int i = 0; i < n; i++) {
                 int ci = c[i];
                 long vi = v[i];
-                long newV = Math.max(b*vi, dp[ci]+a*vi);
+                long newV = Math.max(b * vi, dp[ci] + a * vi);
                 int index = ci == max ? max2 : max;
-                newV = Math.max(newV, dp[index] + b*vi);
+                newV = Math.max(newV, dp[index] + b * vi);
 
-                if(newV > dp[ci]) {
+                if (newV > dp[ci]) {
                     dp[ci] = newV;
-                    if(ci != max) {
-                        if(dp[ci] > dp[max]) {
+                    if (ci != max) {
+                        if (dp[ci] > dp[max]) {
                             max2 = max;
                             max = ci;
                         } else if (dp[ci] > dp[max2]) {
