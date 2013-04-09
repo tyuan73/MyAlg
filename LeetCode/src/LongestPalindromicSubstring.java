@@ -6,8 +6,6 @@
  * To change this template use File | Settings | File Templates.
  */
 
-import java.util.*;
-
 public class LongestPalindromicSubstring {
     public static void main(String[] args) {
         LongestPalindromicSubstring lp = new LongestPalindromicSubstring();

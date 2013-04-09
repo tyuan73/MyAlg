@@ -13,8 +13,8 @@ public class LittleElephantMagicSquare {
         Scanner in = new Scanner(System.in);
 
         int[][] square = new int[3][3];
-        for(int i = 0; i < 3; i++) {
-            for(int j = 0; j < 3; j++) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
                 square[i][j] = in.nextInt();
             }
         }
@@ -25,9 +25,9 @@ public class LittleElephantMagicSquare {
         square[2][2] = sum - square[1][1];
         square[0][0] = square[2][2] + square[2][1] - square[1][0];
 
-        for(int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
             StringBuilder sb = new StringBuilder();
-            for(int j = 0; j < 3; j++) {
+            for (int j = 0; j < 3; j++) {
                 sb.append(" ").append(square[i][j]);
             }
             System.out.println(sb.substring(1));

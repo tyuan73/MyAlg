@@ -5,6 +5,7 @@
  * Time: 1:03 AM
  * To change this template use File | Settings | File Templates.
  */
+
 import java.util.*;
 
 public class CodeParsing {
@@ -13,19 +14,19 @@ public class CodeParsing {
         String s = in.next();
 
         int rem = 0;
-        for(int i = 0; i < s.length(); i++)
-            if(s.charAt(i) == 'x')
+        for (int i = 0; i < s.length(); i++)
+            if (s.charAt(i) == 'x')
                 rem++;
             else
                 rem--;
         char ch = 'x';
-        if(rem < 0) {
+        if (rem < 0) {
             rem = -rem;
             ch = 'y';
         }
 
         StringBuilder sb = new StringBuilder();
-        while(rem-- > 0) {
+        while (rem-- > 0) {
             sb.append(ch);
         }
 

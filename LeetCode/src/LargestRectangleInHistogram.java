@@ -6,39 +6,43 @@
  * To change this template use File | Settings | File Templates.
  */
 
-import java.util.*;
+import java.util.Stack;
 
 public class LargestRectangleInHistogram {
     class Element {
         int index;
         int value;
-        Element(int i, int v) {this.index = i; this.value = v;}
+
+        Element(int i, int v) {
+            this.index = i;
+            this.value = v;
+        }
     }
 
     public int largestRectangleArea(int[] height) {
-        if(height == null || height.length == 0)
+        if (height == null || height.length == 0)
             return 0;
 
         Stack<Element> S = new Stack<Element>();
         S.push(new Element(0, height[0]));
         int max = 0;
-        for(int i = 1; i < height.length; i++) {
+        for (int i = 1; i < height.length; i++) {
             int h = height[i];
-            if(h > S.peek().value)
+            if (h > S.peek().value)
                 S.push(new Element(i, h));
             else {
                 Element e = null;
                 do {
                     e = S.pop();
-                    int area = (i-e.index) * e.value;
+                    int area = (i - e.index) * e.value;
                     max = Math.max(max, area);
-                } while(!S.empty() && S.peek().value >= h);
+                } while (!S.empty() && S.peek().value >= h);
                 e.value = h;
                 S.push(e);
             }
         }
 
-        while(!S.empty()) {
+        while (!S.empty()) {
             Element e = S.pop();
             int area = (height.length - e.index) * e.value;
             max = Math.max(max, area);

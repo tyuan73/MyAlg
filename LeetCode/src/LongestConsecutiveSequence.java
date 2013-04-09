@@ -6,7 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Scanner;
 
 public class LongestConsecutiveSequence {
     public static void main(String[] args) {
@@ -16,23 +17,23 @@ public class LongestConsecutiveSequence {
 
     public int longestConsecutive(int[] num) {
         HashSet<Integer> set = new HashSet<Integer>();
-        for(int i : num)
+        for (int i : num)
             set.add(i);
 
         int max = 0;
-        for(int i : num) {
-            if(set.contains(i)) {
+        for (int i : num) {
+            if (set.contains(i)) {
                 int r = i;
-                while(set.contains(r)) {
+                while (set.contains(r)) {
                     set.remove(r);
                     r++;
                 }
-                int l = i-1;
-                while(set.contains(l)) {
+                int l = i - 1;
+                while (set.contains(l)) {
                     set.remove(l);
                     l--;
                 }
-                max = Math.max(max, r-l-1);
+                max = Math.max(max, r - l - 1);
             }
         }
 

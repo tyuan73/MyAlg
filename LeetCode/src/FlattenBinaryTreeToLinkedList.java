@@ -6,8 +6,6 @@
  * To change this template use File | Settings | File Templates.
  */
 
-import java.util.*;
-
 public class FlattenBinaryTreeToLinkedList {
     public static void main(String[] args) {
         //Scanner in = new Scanner(System.in);
@@ -15,10 +13,10 @@ public class FlattenBinaryTreeToLinkedList {
     }
 
     public void flatten(TreeNode root) {
-        while(root != null) {
+        while (root != null) {
             TreeNode p = root.left;
-            if(p != null) {
-                while(p.right != null) {
+            if (p != null) {
+                while (p.right != null) {
                     p = p.right;
                 }
                 p.right = root.right;

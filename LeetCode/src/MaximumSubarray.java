@@ -9,7 +9,7 @@ public class MaximumSubarray {
     public int maxSubArray(int[] A) {
         int max = Integer.MIN_VALUE;   // if empty subsequence is allowed, init max = 0;
         int cur = 0;
-        for(int i = 0; i < A.length; i++) {
+        for (int i = 0; i < A.length; i++) {
             cur += A[i];
             max = Math.max(max, cur);
             cur = Math.max(0, cur);

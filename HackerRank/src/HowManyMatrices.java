@@ -5,70 +5,70 @@
  * Time: 11:52 AM
  * To change this template use File | Settings | File Templates.
  */
-import java.util.*;
+
+import java.util.Scanner;
 
 public class HowManyMatrices {
-    public static void main(String[] args) {
-        HowManyMatrices hm = new HowManyMatrices();
-        //hm.process(1, 6);
-        //hm.process(2, 3);
+    final static int MOD = 10007;
+    static long[] factorial = new long[MOD + 1];
+    static long[] inverse = new long[MOD + 1];
 
-        //hm.factoral(21);
-        ArrayList<Integer[]> table = hm.getTableSize(1000000000);
-
-        for(Integer[] a : table)
-             System.out.println(a[0] + " " + a[1]);
-
-
-
+    // initialize factorial & inverse
+    static {
+        factorial[0] = inverse[0] = 1;
+        long f = 1, v = 1;
+        for (int i = 1; i <= MOD; i++) {
+            f = f * i % MOD;
+            factorial[i] = f;
+            v = v * calModInverse(i) % MOD;
+            inverse[i] = v;
+        }
     }
 
-    ArrayList<Integer[]> getTableSize(int n) {
-        ArrayList<Integer[]> ret = new ArrayList<Integer[]>();
-        //Integer[] pair = {1, n};
-        //ret.add(pair);
+    static long calModInverse(long i) {
+        int pow = MOD - 2;
+        long res = 1;
+        while (pow > 0) {
+            if ((pow & 1) > 0)
+                res = res * i % MOD;
+            pow >>= 1;
+            i = i * i % MOD;
+        }
+        return res;
+    }
 
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int n = in.nextInt();
+        if (n >= MOD) {
+            System.out.println(2);
+            return;
+        }
+        if(n == 1) {
+            System.out.println(1);
+            return;
+        }
+
+        long ans = 2;
         int sqrt = (int) Math.sqrt(n);
-        for(int i = 1; i <= sqrt; i++) {
-            if((n % i) == 0) {
-                Integer[] a = {i, n/i};
-                ret.add(a);
+        for (int m = 2; m <= sqrt; m++) {
+            if (n % m == 0) {
+                int m1 = n / m;
+
+                long res = factorial[n];
+                for (int k = 2; k < m; k++)
+                    res = res * factorial[k] % MOD;
+                for (int k = m1; k < m + m1; k++)
+                    res = res * inverse[k] % MOD;
+
+                if (m != m1)
+                    ans = (ans + 2 * res) % MOD;
+                else
+                    ans = (ans + res) % MOD;
             }
         }
-        return ret;
-    }
 
-    void factoral(int a) {
-        long[] table = new long[a+1];
-        table[0] = 1;
-        for(int i = 1; i <= a; i++) {
-            table[i] = table[i-1]*i;
-        }
-
-        for(long x : table)
-            System.out.println(x);
-    }
-
-    void process(int r, int c) {
-        long f1 = 1;
-        for(int i = 1; i <= r*c; i++)
-            f1 *= i;
-        long f2 = 1;
-        for(int i = 1; i < c; i++) {
-            long x = 1;
-            for(int j = 1; j <= i; j++)
-                x *= j;
-            f2 *= x;
-        }
-        long f3 = 1;
-        for(int i = r; i < c+r; i++) {
-            long x = 1;
-            for(int j = 1; j <= i; j++)
-                x *= j;
-            f3 *= x;
-        }
-
-        System.out.println("f1 = " + f1 + " f2 = " + f2 + " f3 = " + f3);
-        System.out.println(f1*f2/f3);
+        System.out.println(ans);
     }
 }

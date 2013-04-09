@@ -6,7 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-import java.util.*;
+import java.util.Scanner;
 
 public class FirstMissingPositive {
     public static void main(String[] args) {
@@ -15,10 +15,10 @@ public class FirstMissingPositive {
     }
 
     public int firstMissingPositive(int[] A) {
-        int l = 0, r = A.length-1;
-        while(l <= r) {
+        int l = 0, r = A.length - 1;
+        while (l <= r) {
             int x = A[l];
-            if(x == l+1) {
+            if (x == l + 1) {
                 l++;
                 continue;
             }
@@ -34,13 +34,13 @@ public class FirstMissingPositive {
              * sight, it does not matter if it has the correct value or not.
              *
              */
-            if(x <= l || x > r+1 || A[x-1] == x) {
+            if (x <= l || x > r + 1 || A[x - 1] == x) {
                 A[l] = A[r--];
             } else {
-                A[l] = A[x-1];
-                A[x-1] = x;
+                A[l] = A[x - 1];
+                A[x - 1] = x;
             }
         }
-        return l+1;
+        return l + 1;
     }
 }

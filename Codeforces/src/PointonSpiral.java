@@ -5,6 +5,7 @@
  * Time: 9:49 AM
  * To change this template use File | Settings | File Templates.
  */
+
 import java.util.*;
 
 public class PointonSpiral {
@@ -16,29 +17,29 @@ public class PointonSpiral {
         int ya = Math.abs(y);
 
         int turns = 0;
-        if(xa >= ya) {
-            if(x < 0) {
+        if (xa >= ya) {
+            if (x < 0) {
                 turns = (xa - 1) * 4 + 3;
-                if(xa == ya && y > 0)
+                if (xa == ya && y > 0)
                     turns--;
             } else {
-                if(xa == ya && y <= 0) {
+                if (xa == ya && y <= 0) {
                     turns = ya * 4;
                 } else {
                     turns = (xa - 1) * 4 + 1;
-                    if(xa == ya + 1 && y <= 0) {
+                    if (xa == ya + 1 && y <= 0) {
                         turns--;
                     }
                 }
             }
         } else {
-            if(y > 0) {
+            if (y > 0) {
                 turns = (ya - 1) * 4 + 2;
-                if(xa == ya && y > 0)
+                if (xa == ya && y > 0)
                     turns--;
             } else {
                 turns = ya * 4;
-                if(ya == xa && x < 0)
+                if (ya == xa && x < 0)
                     turns--;
             }
         }

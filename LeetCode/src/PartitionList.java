@@ -12,9 +12,9 @@ public class PartitionList {
         head = tail;
 
         ListNode runner = tail;
-        while(runner.next != null) {
-            if(runner.next.val < x) {
-                if(runner == tail) {
+        while (runner.next != null) {
+            if (runner.next.val < x) {
+                if (runner == tail) {
                     runner = runner.next;
                     tail = runner;
                 } else {

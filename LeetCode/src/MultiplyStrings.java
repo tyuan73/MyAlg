@@ -6,7 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-import java.util.*;
+import java.util.Arrays;
 
 public class MultiplyStrings {
     public String multiply(String num1, String num2) {

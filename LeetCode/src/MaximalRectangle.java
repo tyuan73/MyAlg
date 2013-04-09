@@ -6,17 +6,22 @@
  * To change this template use File | Settings | File Templates.
  */
 
-import java.util.*;
+import java.util.Stack;
 
 public class MaximalRectangle {
 
     class Element {
-        int index; int value;
-        Element(int i, int v) {this.index = i; this.value = v;}
+        int index;
+        int value;
+
+        Element(int i, int v) {
+            this.index = i;
+            this.value = v;
+        }
     }
 
     public int maximalRectangle(char[][] matrix) {
-        if(matrix.length == 0 || matrix[0].length == 0)
+        if (matrix.length == 0 || matrix[0].length == 0)
             return 0;
 
         int n = matrix.length;
@@ -24,9 +29,9 @@ public class MaximalRectangle {
 
         int max = 0;
         int[] height = new int[m];
-        for(int i = 0; i < n; i++) {
-            for(int j = 0; j < m; j++) {
-                if(matrix[i][j] == '1')
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (matrix[i][j] == '1')
                     height[j]++;
                 else
                     height[j] = 0;
@@ -43,25 +48,25 @@ public class MaximalRectangle {
         int max = 0;
         Stack<Element> s = new Stack<Element>();
         s.push(new Element(0, height[0]));
-        for(int i = 1; i < n; i++) {
+        for (int i = 1; i < n; i++) {
             int h = height[i];
-            if(h > s.peek().value)
+            if (h > s.peek().value)
                 s.push(new Element(i, h));
             else {
                 Element e = null;
-                do{
+                do {
                     e = s.pop();
-                    int area = (i-e.index) * e.value;
+                    int area = (i - e.index) * e.value;
                     max = Math.max(max, area);
-                } while(!s.empty() && h <= s.peek().value);
+                } while (!s.empty() && h <= s.peek().value);
                 e.value = h;
                 s.push(e);
             }
         }
 
-        while(!s.empty()) {
+        while (!s.empty()) {
             Element e = s.pop();
-            int area = (n-e.index) * e.value;
+            int area = (n - e.index) * e.value;
             max = Math.max(max, area);
         }
 

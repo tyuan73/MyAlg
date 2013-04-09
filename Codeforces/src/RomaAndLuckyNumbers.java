@@ -16,23 +16,23 @@ public class RomaAndLuckyNumbers {
         int k = in.nextInt();
 
         int[] a = new int[n];
-        for(int i = 0; i < n; i++)
+        for (int i = 0; i < n; i++)
             a[i] = in.nextInt();
 
         int ret = 0;
-        for(int i : a) {
+        for (int i : a) {
             int x = i;
             int c = 0;
-            while(x > 0) {
-                int rem = x%10;
-                if(rem == 4 || rem == 7) {
+            while (x > 0) {
+                int rem = x % 10;
+                if (rem == 4 || rem == 7) {
                     c++;
-                    if(c > k)
+                    if (c > k)
                         break;
                 }
                 x /= 10;
             }
-            if(c <= k)
+            if (c <= k)
                 ret++;
         }
 

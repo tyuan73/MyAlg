@@ -14,15 +14,15 @@ public class DimaAndSequence {
 
         int n = in.nextInt();
         int[] a = new int[n];
-        for(int i = 0; i < n; i++)
+        for (int i = 0; i < n; i++)
             a[i] = in.nextInt();
 
         long[] count = new long[40];
-        for(int i : a) {
+        for (int i : a) {
             int x = i;
             int c = 1;
-            while(x > 1) {
-                if((x%2) == 1) {
+            while (x > 1) {
+                if ((x % 2) == 1) {
                     c++;
                     x--;
                 }
@@ -32,9 +32,9 @@ public class DimaAndSequence {
         }
 
         long ret = 0;
-        for(long i : count) {
-            if(i > 1)
-                ret += i*(i-1)/2;
+        for (long i : count) {
+            if (i > 1)
+                ret += i * (i - 1) / 2;
         }
         System.out.println(ret);
     }

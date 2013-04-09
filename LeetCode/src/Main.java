@@ -10,7 +10,7 @@ public class Main {
         int[] rows = new int[n];
         //table[0][0] = 1; table[n-1][m-1] = n*m;
         rows[0] = 1;
-        helper(rows, 2, m, n*m);
+        helper(rows, 2, m, n * m);
         System.out.println(total);
 
         /*
@@ -28,7 +28,7 @@ public class Main {
     }
 
     static void helper(int[] rows, int next, int m, int max) {
-        if(next == max) {
+        if (next == max) {
             /*
             for(int[] x : table) {
                 for(int y : x)
@@ -42,11 +42,11 @@ public class Main {
             return;
         }
 
-        for(int i = 0; i < rows.length; i++) {
-            if(rows[i] == m || (i > 0 && rows[i] == rows[i-1])) continue;
+        for (int i = 0; i < rows.length; i++) {
+            if (rows[i] == m || (i > 0 && rows[i] == rows[i - 1])) continue;
             //table[i][rows[i]] = next;
             rows[i]++;
-            helper(rows, next+1, m, max);
+            helper(rows, next + 1, m, max);
             rows[i]--;
         }
     }

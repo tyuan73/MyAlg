@@ -6,7 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class CombinationSum {
     public static void main(String[] args) {
@@ -23,19 +24,19 @@ public class CombinationSum {
     }
 
     void combination(int target, int sum, int[] c, int index, ArrayList<Integer> list, ArrayList<ArrayList<Integer>> ret) {
-        if(sum > target)
+        if (sum > target)
             return;
-        if(sum == target) {
-            ret.add((ArrayList<Integer>)list.clone());
+        if (sum == target) {
+            ret.add((ArrayList<Integer>) list.clone());
             return;
         }
-        if(index == c.length)
+        if (index == c.length)
             return;
 
-        for(int i = index; i < c.length; i++) {
+        for (int i = index; i < c.length; i++) {
             list.add(c[i]);
             combination(target, sum + c[i], c, i, list, ret);
-            list.remove(list.size()-1);
+            list.remove(list.size() - 1);
         }
     }
 }

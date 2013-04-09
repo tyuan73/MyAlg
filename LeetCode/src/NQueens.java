@@ -5,7 +5,9 @@
  * Time: 4:21 PM
  * To change this template use File | Settings | File Templates.
  */
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class NQueens {
     boolean[] b1;
@@ -18,8 +20,8 @@ public class NQueens {
         int[] rows = new int[n];
         boolean[] used = new boolean[n];
         ArrayList<String[]> ret = new ArrayList<String[]>();
-        b1 = new boolean[2*n];
-        b2 = new boolean[2*n];
+        b1 = new boolean[2 * n];
+        b2 = new boolean[2 * n];
         this.n = n;
         this.total = 0;
         queens(rows, used, 0, ret);
@@ -29,9 +31,9 @@ public class NQueens {
 
     void queens(int[] rows, boolean[] used, int index, ArrayList<String[]> ret) {
         //int n = rows.length;
-        if(index == n) {
+        if (index == n) {
             String[] board = new String[n];
-            for(int i = 0; i < n; i++) {
+            for (int i = 0; i < n; i++) {
                 char[] line = new char[n];
                 Arrays.fill(line, '.');
                 line[rows[i]] = 'Q';
@@ -42,24 +44,24 @@ public class NQueens {
             return;
         }
 
-        for(int i = 0; i < n; i++) {
-            if(used[i]) continue;
-            if(valid(index, i)) {
+        for (int i = 0; i < n; i++) {
+            if (used[i]) continue;
+            if (valid(index, i)) {
                 rows[index] = i;
                 used[i] = true;
-                queens(rows, used, index+1, ret);
+                queens(rows, used, index + 1, ret);
                 used[i] = false;
-                b1[index+i] = false;
-                b2[i-index+n] = false;
+                b1[index + i] = false;
+                b2[i - index + n] = false;
             }
         }
     }
 
     boolean valid(int x, int y) {
-        if(b1[x+y] || b2[y-x+n])
+        if (b1[x + y] || b2[y - x + n])
             return false;
-        b1[x+y] = true;
-        b2[y-x+n] = true;
+        b1[x + y] = true;
+        b2[y - x + n] = true;
         return true;
     }
 

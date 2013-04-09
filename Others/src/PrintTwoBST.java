@@ -1,8 +1,9 @@
 class PrintTwoBST {
-	publiv static void main(String[] args) {
+	public static void main(String[] args) {
 		
 	}
-	
+
+    /*
 	TreeNode merge(TreeNode n1, TreeNode n2) {
 		if(n1 == null && n2 == null) {
 			return null;
@@ -39,4 +40,5 @@ class PrintTwoBST {
 			
 		}
 	}
+	*/
 }

@@ -26,6 +26,6 @@ public class PermutationSignature
 		return ret;
 	}
 	
-	<%: testing-code%>
+	//<%: testing-code%>
 }
 //Powered by [KawigiEdit] 2.0!

@@ -13,12 +13,12 @@ public class PlayingCubes {
         Scanner in = new Scanner(System.in);
         int n = in.nextInt();
         int m = in.nextInt();
-        if(n < m) {
+        if (n < m) {
             int x = n;
             n = m;
             m = x;
         }
 
-        System.out.println((n-1) + " " + m);
+        System.out.println((n - 1) + " " + m);
     }
 }
