@@ -7,7 +7,7 @@
  */
 public class SameTree {
     public boolean isSameTree(TreeNode p, TreeNode q) {
-        if (p == null && q == null)
+        if (p == q)   // it only happens when "p == null && q == null" or p and q are pointing to the same node
             return true;
         if (p == null || q == null || p.val != q.val)
             return false;

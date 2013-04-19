@@ -7,30 +7,31 @@
  */
 public class SearchForARange {
     public int[] searchRange(int[] A, int target) {
+        int n = A.length;
         int[] ret = {-1, -1};
 
-        int l = 0, r = A.length - 1;
+        int l = 0, r = n - 1;
         while (l < r) {
             int mid = (l + r) / 2;
-            if (A[mid] >= target)
-                r = mid;
-            else
+            if (A[mid] < target)
                 l = mid + 1;
+            else
+                r = mid;
         }
 
-        if (A[l] == target) {
-            int i = l, j = A.length - 1;
-            while (i < j) {
-                int mid = (i + j + 1) / 2;
-                if (A[mid] <= target)
-                    i = mid;
-                else
-                    j = mid - 1;
-            }
-            ret[0] = l;
-            ret[1] = i;
-        }
+        if (A[l] != target)
+            return ret;
 
+        ret[0] = l;
+        r = n - 1;
+        while (l < r) {
+            int mid = (l + r + 1) / 2;
+            if (A[mid] > target)
+                r = mid - 1;
+            else
+                l = mid;
+        }
+        ret[1] = r;
         return ret;
     }
 }
