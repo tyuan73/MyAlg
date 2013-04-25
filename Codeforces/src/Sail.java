@@ -20,32 +20,32 @@ public class Sail {
         String wind = in.next();
 
         int i = 0;
-        for(; i < wind.length(); i++) {
+        for (; i < wind.length(); i++) {
             char ch = wind.charAt(i);
             switch (ch) {
-                case 'E' :
-                    if(ex > sx)
+                case 'E':
+                    if (ex > sx)
                         sx++;
                     break;
-                case 'S' :
-                    if(ey < sy)
+                case 'S':
+                    if (ey < sy)
                         sy--;
                     break;
-                case 'W' :
-                    if(ex < sx)
+                case 'W':
+                    if (ex < sx)
                         sx--;
                     break;
-                case 'N' :
-                    if(ey > sy)
+                case 'N':
+                    if (ey > sy)
                         sy++;
                     break;
             }
-            if(sx == ex && sy == ey)
+            if (sx == ex && sy == ey)
                 break;
         }
 
-        if(sx == ex && sy == ey)
-            System.out.println(i+1);
+        if (sx == ex && sy == ey)
+            System.out.println(i + 1);
         else
             System.out.println(-1);
     }

@@ -15,20 +15,19 @@ public class SnowFootprints {
         int n = in.nextInt();
         String path = in.next();
         int s = 0, t = 0;
-        boolean first = false;
         int index = 0;
-        while(index < n && path.charAt(index) == '.')
+        while (index < n && path.charAt(index) == '.')
             index++;
-        if(path.charAt(index) == 'L') {
+        if (path.charAt(index) == 'L') {
             t = index;
-            while(index < n && path.charAt(index) == 'L')
+            while (index < n && path.charAt(index) == 'L')
                 index++;
             s = index;
         } else {
-            s = index+1;
-            while(index < n && path.charAt(index) == 'R')
+            s = index + 1;
+            while (index < n && path.charAt(index) == 'R')
                 index++;
-            t = path.charAt(index) == '.' ? index+1 : index;
+            t = path.charAt(index) == '.' ? index + 1 : index;
         }
         System.out.println(s + " " + t);
     }
