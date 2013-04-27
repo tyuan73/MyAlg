@@ -11,7 +11,6 @@ public class EllysRoomAssignmentsDiv2 {
             sb.append(s);
         String[] reg = sb.toString().split(" ");
         int n = reg.length;
-        int[] a = new int[n];
         int el = Integer.parseInt(reg[0]);
         int rank = 0;
         for (int i = 1; i < n; i++) {
