@@ -38,4 +38,26 @@ public class SearchInRotatedSortedArray {
 
         return -1;
     }
+
+    public int search2(int[] A, int target) {
+        int l = 0, r = A.length - 1;
+        while (l <= r) {
+            int mid = l + (r - l) / 2;
+            if (A[mid] == target)
+                return mid;
+            if (A[l] <= A[mid]) {  // left half is sorted
+                if (A[l] <= target && target < A[mid])
+                    r = mid - 1;
+                else
+                    l = mid + 1;
+            } else {               // right half is sorted
+                if (A[mid] < target && target <= A[r])
+                    l = mid + 1;
+                else
+                    r = mid - 1;
+            }
+        }
+
+        return -1;
+    }
 }

@@ -64,7 +64,7 @@ public class MysteriousPresent4D {
         int[] parent = new int[n + 1];
         for (int i = count - 1; i >= 0; i--) {
             int index = order[i];
-            if(len[index] == 0)
+            if (len[index] == 0)
                 len[index]++;
             for (int x : G[index]) {
                 if (len[index] + 1 > len[x]) {
@@ -84,7 +84,7 @@ public class MysteriousPresent4D {
 
         System.out.println(max);
         System.out.print(last);
-        for (int i = 0; i < max-1; i++) {
+        for (int i = 0; i < max - 1; i++) {
             last = parent[last];
             System.out.print(" " + last);
         }
