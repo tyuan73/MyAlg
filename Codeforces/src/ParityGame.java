@@ -23,7 +23,8 @@ public class ParityGame {
             if (b.charAt(i) == '1')
                 c2++;
 
-        if (c1 >= c2 || ((c1 & 1) == 1 && c1 == c2 - 1))
+        c1 += c1 & 1;
+        if (c1 >= c2)
             System.out.println("YES");
         else
             System.out.println("NO");
