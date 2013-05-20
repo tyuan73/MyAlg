@@ -9,18 +9,14 @@ public class ColorfulRabbits
 	public int getMinimum(int[] replies)
 	{
 		Arrays.sort(replies);
-		int pre = replies[0] + 1;
-		int count = pre;
-		int total = pre;
+		int total = replies[0]+1;
+		int remaining = replies[0];
 		for(int i = 1; i < replies.length; i++) {
-			int cur = replies[i] + 1;
-			if(cur == pre && count > 1) {
-				count--;
-			} else {
-				pre = cur;
-				count = pre;
-				total += cur;
-			}
+			if(replies[i] != replies[i-1] || remaining == 0) {
+				total += replies[i]+1;
+				remaining = replies[i];
+			} else
+				remaining--;
 		}
 		return total;
 	}
