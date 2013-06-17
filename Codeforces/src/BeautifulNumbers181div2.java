@@ -6,7 +6,7 @@
  * Copyright (c) 2013 All Right Reserved, http://github.com/tyuan73
  */
 
-import java.util.*;
+import java.util.Scanner;
 
 public class BeautifulNumbers181div2 {
     static long MOD = 1000000007;

@@ -6,7 +6,9 @@
  * To change this template use File | Settings | File Templates.
  */
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Random;
+import java.util.Scanner;
 
 public class MaximandDiscounts {
     public static void main(String[] args) {

@@ -6,7 +6,7 @@
  * Copyright (c) 2013 All Right Reserved, http://github.com/tyuan73
  */
 
-import java.util.*;
+import java.util.Scanner;
 
 /**
  * for any i, assume the value is p[i], we know

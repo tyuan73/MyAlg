@@ -6,7 +6,9 @@
  * To change this template use File | Settings | File Templates.
  */
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class CycleInGraph {
     static List<Integer>[] v;

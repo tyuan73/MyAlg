@@ -6,7 +6,7 @@
  * Copyright (c) 2013 All Right Reserved, http://github.com/tyuan73
  */
 
-import java.util.*;
+import java.util.Scanner;
 
 public class EugenyAndPlayList182Div2 {
     public static void main(String[] args) {
@@ -16,19 +16,19 @@ public class EugenyAndPlayList182Div2 {
         int m = in.nextInt();
         int[] time = new int[n];
         int total = 0;
-        for(int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++) {
             int t = in.nextInt();
             int c = in.nextInt();
-            total += c*t;
+            total += c * t;
             time[i] = total;
         }
 
         int index = 0;
-        while(m-- > 0) {
+        while (m-- > 0) {
             int x = in.nextInt();
-            while(index < n && time[index] < x)
+            while (index < n && time[index] < x)
                 index++;
-            System.out.println(index+1);
+            System.out.println(index + 1);
         }
     }
 }

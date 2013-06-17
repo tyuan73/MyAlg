@@ -6,8 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 
-import javax.sound.midi.SysexMessage;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Ladder {
     static class Ele {

@@ -1,8 +1,8 @@
 /**
  * Created with IntelliJ IDEA.
  * User: yuantian
- * Date: 5/30/13
- * Time: 11:07 PM
+ * Date: 6/8/13
+ * Time: 11:35 PM
  * Copyright (c) 2013 All Right Reserved, http://github.com/tyuan73
  */
 
@@ -10,11 +10,32 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.Random;
 import java.util.StringTokenizer;
 
-public class IlyaAndMatrix313C {
+public class SerejaAndContest315Div2 {
+    public static void main(String[] args) {
+        FastInputReader in = new FastInputReader(System.in);
+
+        int n = in.nextInt();
+        int k = in.nextInt();
+        long[] a = new long[n];
+        for (int i = 0; i < n; i++)
+            a[i] = in.nextInt();
+
+        int count = n, index = 0;
+        long total = 0;
+        for (int i = 1; i < n; i++) {
+            long d = total + a[i - 1] * index - a[i] * (index + 1) * (count - index - 2);
+            if (d < k) {
+                System.out.println(i + 1);
+                count--;
+            } else {
+                total += a[i - 1] * index;
+                index++;
+            }
+        }
+
+    }
 
     static class FastInputReader {
         BufferedReader br;
@@ -44,41 +65,6 @@ public class IlyaAndMatrix313C {
 
         public String nextString() {
             return getToken();
-        }
-
-        public long nextLong() {
-            return Long.parseLong(getToken());
-        }
-    }
-
-    public static void main(String[] args) {
-        FastInputReader in = new FastInputReader(System.in);
-
-        int n = in.nextInt();
-        long[] a = new long[n];
-        for (int i = 0; i < n; i++)
-            a[i] = in.nextInt();
-
-        shuffle(a);
-        Arrays.sort(a);
-        for (int i = n - 2; i >= 0; i--)
-            a[i] = a[i] + a[i + 1];
-
-        long total = 0;
-        for (int i = n; i > 0; i >>= 2) {
-            total = total + a[n - i];
-        }
-        System.out.println(total);
-    }
-
-    static void shuffle(long[] a) {
-        int n = a.length;
-        Random rnd = new Random(System.nanoTime());
-        for (int i = 0; i < n; ++i) {
-            int v = rnd.nextInt(n - i);
-            long tmp = a[i + v];
-            a[i + v] = a[i];
-            a[i] = tmp;
         }
     }
 }

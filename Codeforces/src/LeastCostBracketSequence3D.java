@@ -6,7 +6,8 @@
  * Copyright (c) 2013 All Right Reserved, http://github.com/tyuan73
  */
 
-import java.util.*;
+import java.util.PriorityQueue;
+import java.util.Scanner;
 
 public class LeastCostBracketSequence3D {
     static class Element implements Comparable<Element> {

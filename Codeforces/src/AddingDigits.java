@@ -6,8 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-import javax.sound.midi.SysexMessage;
-import java.util.*;
+import java.util.Scanner;
 
 public class AddingDigits {
     public static void main(String[] args) {

@@ -6,7 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 
-import java.util.*;
+import java.util.Scanner;
+import java.util.Stack;
 
 public class MaximumXorSecondary {
     public static void main(String[] args) {

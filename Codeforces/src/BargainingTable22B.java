@@ -6,7 +6,8 @@
  * Copyright (c) 2013 All Right Reserved, http://github.com/tyuan73
  */
 
-import java.util.*;
+import java.util.Scanner;
+import java.util.Stack;
 
 public class BargainingTable22B {
     static class Element {
