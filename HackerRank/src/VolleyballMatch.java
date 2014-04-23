@@ -51,3 +51,12 @@ public class VolleyballMatch {
         }
     }
 }
+
+/**
+ * Test1
+ *  input:
+ *      1000000000
+ *      999999998
+ *  output:
+ *      575548948
+ */
