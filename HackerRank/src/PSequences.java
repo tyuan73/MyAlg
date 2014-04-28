@@ -48,24 +48,27 @@ public class PSequences {
         long[] x = new long[2 * r + 3];
         long[] y = new long[2 * r + 3];
 
-        int max = (p == r*(r+1)) ? r+1: r;
-
         Arrays.fill(f, 1);
         Arrays.fill(x, 1);
         x[0] = 0;
 
-        int sum = max;
-        int index = r;
+        int max = r, sum = r;
+        int next = r;
         while (sum < p) {
-            f[++max] = p/(index-1) - p/index;
-            index--;
+            f[++max] = p/(next) - p/(next+1);
             sum += f[max];
+            next--;
         }
 
+        int diff = 0;
+        if (sum > p) {
+            max--;
+            diff = 1;
+        }
 
         while(n-- > 0) {
             for (int i = max, j = 1; i > 0; i--, j++) {
-                y[i] = (x[j] * f[j] + y[i+1]) % P;
+                y[i] = (x[j] * f[j+diff] + y[i+1]) % P;
             }
 
             long[] z = x;
@@ -92,4 +95,16 @@ public class PSequences {
  *  6
  * output:
  *  14
- */
+ *
+ * input:
+ *  2
+ *  13
+ * output:
+ *  37
+ *
+ * input:
+ *  100
+ *  48
+ * output:
+ *  920856782
+ **/
