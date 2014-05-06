@@ -58,11 +58,9 @@ public class CutTheTree {
 
         int n = in.nextInt();
         int[] weight = new int[n];
-        int[] tw = new int[n];
         int total = 0;
         for (int i = 0; i < n; i++) {
             weight[i] = in.nextInt();
-            tw[i] = weight[i];
             total += weight[i];
         }
 
@@ -88,8 +86,8 @@ public class CutTheTree {
         for (int i = n-1; i > 0; i--) { // skip the root which is vertex 0
             int next = order[i];
             int p = parent[next];
-            tw[p] += tw[next];
-            min = Math.min(min, Math.abs(total - 2*tw[next]));
+            weight[p] += weight[next];
+            min = Math.min(min, Math.abs(total - 2*weight[next]));
         }
 
         System.out.println(min);
