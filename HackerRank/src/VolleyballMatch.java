@@ -49,6 +49,10 @@ There’s no game of volleyball that ends with a score of 24 : 17.
 
 import java.util.*;
 
+/*
+* replace 2-dimension array with 1-dimension array
+* A little improve over previous version
+* */
 public class VolleyballMatch {
     static long P = 1000000007;
     public static void main(String[] args) {
@@ -63,26 +67,22 @@ public class VolleyballMatch {
             b = x;
         }
 
-        long[][] dp = new long[25][25];
-
         if (a - b <= 1 || a < 25 || (a > 25 && a-b != 2)) {
             System.out.println(0);
         } else {
-            Arrays.fill(dp[0], 1);
-            for (int i = 0; i < 25; i++) {
-                dp[i][0] = 1;
-            }
+            long[] dp = new long[25];
+            Arrays.fill(dp, 1);
 
             for (int i = 1; i < 25; i++) {
                 for (int j = 1; j < 25; j++)
-                    dp[i][j] = (dp[i-1][j] + dp[i][j-1]) % P;
+                    dp[j] = (dp[j-1] + dp[j]) % P;
             }
 
             if (a == 25) {
-                System.out.println(dp[24][(int)b]);
+                System.out.println(dp[(int)b]);
             } else {
                 b -= 24;
-                long out = dp[24][24];
+                long out = dp[24];
                 //System.out.println(out);
                 long base = 2;
                 while (b > 0) {
