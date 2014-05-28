@@ -43,6 +43,10 @@ public class A0000 {
             return Integer.parseInt(getToken());
         }
 
+        public long nextLong() {
+            return Long.parseLong(getToken());
+        }
+
         public double nextDouble() {
             return Double.parseDouble(getToken());
         }
