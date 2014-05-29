@@ -43,50 +43,11 @@ Explanation
 For the first testcase, we can see that the saint can destroy the first stone and win the game.
  */
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.*;
 
 public class StonesGame {
-    static class FastInputReader {
-        BufferedReader br;
-        StringTokenizer st = null;
-
-        public FastInputReader(InputStream str) {
-            br = new BufferedReader(new InputStreamReader(str));
-        }
-
-        private String getToken() {
-            while (st == null || !st.hasMoreTokens())
-                try {
-                    st = new StringTokenizer(br.readLine());
-                } catch (IOException exp) {
-                    throw new RuntimeException();
-                }
-            return st.nextToken();
-        }
-
-        public int nextInt() {
-            return Integer.parseInt(getToken());
-        }
-
-        public long nextLong() {
-            return Long.parseLong(getToken());
-        }
-
-        public double nextDouble() {
-            return Double.parseDouble(getToken());
-        }
-
-        public String nextString() {
-            return getToken();
-        }
-    }
-
     static public void main(String[] args) {
-        FastInputReader in = new FastInputReader(System.in);
+        Scanner in = new Scanner(System.in);
 
         int[][] table = new int[32][33];
         table[1][1] = 1;
@@ -97,11 +58,13 @@ public class StonesGame {
 
         }
 
+        /*
         for(int[] x : table) {
             for(int y : x)
                 System.out.print(" " + y);
             System.out.println();
         }
+        */
 
         /*
         table is like:
@@ -133,24 +96,16 @@ public class StonesGame {
             }
 
             p>>=1;
-            long out = p-1; // minimum
-            long target = 1 ^ max;
+            long out = p-1; // default
+            int target = 1 ^ max;
 
             //System.out.println("p = " + p + " target =" + target + " max = " + max + " out for now = " + out);
             for(int nim = 2; nim < max; nim++) {
-                boolean better = false;
-                for(int j = nim-1; j >= 0; j--) {
-                    //long remove = table[nim][j];
-                    //System.out.println(" j = " + j + " nim =" + nim + " j^nim = " + (j^nim));
-                    if ((j ^ nim) == target) {
-                        //System.out.println("table[nim][nim-j-1] = " + table[nim][nim-j-1]);
-                        out = table[nim][nim-j];
-                        better = true;
-                        break;
-                    }
-                }
-                if (better)
+                int j = target ^ nim;
+                if (nim > j) {
+                    out = Math.min(out, table[nim][nim - j]);
                     break;
+                }
             }
             System.out.println(out);
         }
