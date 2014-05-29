@@ -43,11 +43,21 @@ Explanation
 For the first testcase, we can see that the saint can destroy the first stone and win the game.
  */
 
-import java.util.*;
+import java.io.PrintWriter;
+import java.io.BufferedWriter;
+import java.util.InputMismatchException;
+import java.io.InputStream;
+import java.io.OutputStreamWriter;
+import java.io.OutputStream;
+import java.io.Writer;
+import java.io.IOException;
 
 public class StonesGame {
     static public void main(String[] args) {
-        Scanner in = new Scanner(System.in);
+        InputStream inputStream = System.in;
+        OutputStream outputStream = System.out;
+        InputReader in = new InputReader(inputStream);
+        OutputWriter out = new OutputWriter(outputStream);
 
         int[][] table = new int[32][33];
         table[1][1] = 1;
@@ -79,12 +89,12 @@ public class StonesGame {
           64 65 97 113 121 125 127 128
         */
 
-        int t = in.nextInt();
+        int t = in.readInt();
         while(t-- > 0) {
-            long n = in.nextLong();
+            long n = in.readLong();
 
             if ((n & 1) == 1) {
-                System.out.println(1);
+                out.printLine(1);
                 continue;
             }
 
@@ -96,19 +106,150 @@ public class StonesGame {
             }
 
             p>>=1;
-            long out = p-1; // default
+            long res = p-1; // default
             int target = 1 ^ max;
 
             //System.out.println("p = " + p + " target =" + target + " max = " + max + " out for now = " + out);
             for(int nim = 2; nim < max; nim++) {
                 int j = target ^ nim;
                 if (nim > j) {
-                    out = Math.min(out, table[nim][nim - j]);
+                    res = Math.min(res, table[nim][nim - j]);
                     break;
                 }
             }
-            System.out.println(out);
+            out.printLine(res);
         }
+        out.close();
+    }
+}
+
+class InputReader {
+
+    private InputStream stream;
+    private byte[] buf = new byte[1024];
+    private int curChar;
+    private int numChars;
+    private SpaceCharFilter filter;
+
+    public InputReader(InputStream stream) {
+        this.stream = stream;
+    }
+
+    public int read() {
+        if (numChars == -1)
+            throw new InputMismatchException();
+        if (curChar >= numChars) {
+            curChar = 0;
+            try {
+                numChars = stream.read(buf);
+            } catch (IOException e) {
+                throw new InputMismatchException();
+            }
+            if (numChars <= 0)
+                return -1;
+        }
+        return buf[curChar++];
+    }
+
+    public int peek() {
+        if (numChars == -1)
+            return -1;
+        if (curChar >= numChars) {
+            curChar = 0;
+            try {
+                numChars = stream.read(buf);
+            } catch (IOException e) {
+                return -1;
+            }
+            if (numChars <= 0)
+                return -1;
+        }
+        return buf[curChar];
+    }
+
+    public int readInt() {
+        int c = read();
+        while (isSpaceChar(c))
+            c = read();
+        int sgn = 1;
+        if (c == '-') {
+            sgn = -1;
+            c = read();
+        }
+        int res = 0;
+        do {
+            if (c < '0' || c > '9')
+                throw new InputMismatchException();
+            res *= 10;
+            res += c - '0';
+            c = read();
+        } while (!isSpaceChar(c));
+        return res * sgn;
+    }
+
+    public long readLong() {
+        int c = read();
+        while (isSpaceChar(c))
+            c = read();
+        int sgn = 1;
+        if (c == '-') {
+            sgn = -1;
+            c = read();
+        }
+        long res = 0;
+        do {
+            if (c < '0' || c > '9')
+                throw new InputMismatchException();
+            res *= 10;
+            res += c - '0';
+            c = read();
+        } while (!isSpaceChar(c));
+        return res * sgn;
+    }
+
+    public boolean isSpaceChar(int c) {
+        if (filter != null)
+            return filter.isSpaceChar(c);
+        return isWhitespace(c);
+    }
+
+    public static boolean isWhitespace(int c) {
+        return c == ' ' || c == '\n' || c == '\r' || c == '\t' || c == -1;
+    }
+
+    public boolean isExhausted() {
+        int value;
+        while (isSpaceChar(value = peek()) && value != -1)
+            read();
+        return value == -1;
+    }
+
+    public interface SpaceCharFilter {
+        public boolean isSpaceChar(int ch);
+    }
+}
+
+class OutputWriter {
+    private final PrintWriter writer;
+
+    public OutputWriter(OutputStream outputStream) {
+        writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(outputStream)));
+    }
+
+    public OutputWriter(Writer writer) {
+        this.writer = new PrintWriter(writer);
+    }
+
+    public void close() {
+        writer.close();
+    }
+
+    public void printLine(long i) {
+        writer.println(i);
+    }
+
+    public void printLine(int i) {
+        writer.println(i);
     }
 }
 
