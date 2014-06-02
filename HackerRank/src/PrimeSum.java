@@ -36,13 +36,19 @@ Explanation
 In the first case, 10 can be written as 5 + 5, and 5 is a prime number. In the second case, 1 cannot be represented as a sum of prime numbers, because there are no prime numbers less than 1.
  */
 
+import java.io.*;
 import java.util.*;
 
 public class PrimeSum {
     static int[] primes = new int[1000009];
     static int total = 0;
     public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
+        PrimeSum solution = new PrimeSum();
+        solution.go();
+    }
+
+    public void go() {
+        InputReader in = new InputReader(System.in);
 
         primes[0]= primes[1]=1;       // we know 0 and 1 are not prime.
 
@@ -56,10 +62,10 @@ public class PrimeSum {
             }
         }
 
-        int t = in.nextInt();
+        int t = in.readInt();
         while(t-- > 0) {
-            long n = in.nextLong();
-            long k = in.nextLong();
+            long n = in.readLong();
+            long k = in.readLong();
 
             if (n < 2*k) {
                 System.out.println("No");
@@ -108,3 +114,4 @@ public class PrimeSum {
         return true;
     }
 }
+
