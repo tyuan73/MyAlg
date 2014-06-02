@@ -54,11 +54,11 @@ public class SherlockAndMiniMax {
                 }
             }
             int mid = (a[i]+a[i-1])/2;
-            if (mid+1 > p && mid <= q) {
-                int diff = Math.min(mid - a[i - 1], a[i] - mid);
+            if (mid > p && mid <= q) {
+                int diff = mid - a[i - 1];
                 if (diff > min) {
                     min = diff;
-                    out = mid; //?
+                    out = mid;
                 }
             }
             if(a[i-1] < q && a[i] > q) {
@@ -75,7 +75,6 @@ public class SherlockAndMiniMax {
             out = p;
         }
         if (q - a[n-1] > min) {
-            min = q - a[n-1];
             out = q;
         }
         System.out.println(out);
