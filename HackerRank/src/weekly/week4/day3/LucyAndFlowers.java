@@ -56,8 +56,7 @@ public class LucyAndFlowers {
         long P = 1000000009;
 
         long[] a = new long[5001];
-        a[1] = 1;
-        for(int i = 2; i <= 5000; i++) {
+        for(int i = 1; i <= 5000; i++) {
             long cur = 0;
             for(int l = 0, r = i-1; r >= 0; l++, r--) {
                 cur += (a[l]+1)*(a[r]+1);
