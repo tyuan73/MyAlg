@@ -1,4 +1,4 @@
-/**
+package weekly.week4.day1; /**
  * Created by yuantian on 6/2/14.
  */
 /*
