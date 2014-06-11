@@ -1,4 +1,6 @@
-package weekly.week4.day5;/**
+package weekly.week4.day5;
+
+/**
  * Created by yuantian on 6/6/14.
  */
 
