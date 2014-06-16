@@ -51,8 +51,13 @@ find(2,3) = 128, which is even
  * test case
  * 3
  * 2 0 7
- * 1
+ * 2
  * 1 2
+ * 1 1
+ *
+ * output:
+ * Odd
+ * Even
  */
 
 import java.util.*;
