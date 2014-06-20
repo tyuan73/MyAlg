@@ -60,7 +60,7 @@ public class KunduAndTree {
     public static void main(String[] args) {
         InputReader in = new InputReader(System.in);
 
-        int n = in.readInt();
+        int n = in.nextInt();
 
         if (n < 3) {
             System.out.println(0);
@@ -73,11 +73,10 @@ public class KunduAndTree {
         }
 
         for(int i = 0; i < n-1; i++) {
-            int from = in.readInt() - 1;
-            int to = in.readInt() - 1;
-            String color = in.readString();
-            //System.out.println("color = " + color);
-            if (color.equals("98")) {
+            int from = in.nextInt() - 1;
+            int to = in.nextInt() - 1;
+            String color = in.nextString();
+            if (color.equals("b")) {
                 tree[from].add(to);
                 tree[to].add(from);
             }
@@ -93,8 +92,8 @@ public class KunduAndTree {
             }
         }
 
-        for(int i = 0; i < gid; i++)
-            System.out.println(i + " : " + group[i]);
+        //for(int i = 0; i < gid; i++)
+        //    System.out.println(i + " : " + group[i]);
 
         long[] C = new long[n+1];
         C[3] = 1;
@@ -103,16 +102,17 @@ public class KunduAndTree {
             C[i] = (C[i] * calInverse(i-3, P-2)) % P;
         }
 
-        for(int i = 0; i <= n; i++)
-            System.out.println(i + " : " + C[i]);
+        //for(int i = 0; i <= n; i++)
+        //    System.out.println(i + " : " + C[i]);
 
         long out = C[n];
         for(int i = 0; i < gid; i++) {
-            long g = ((group[i] * (group[i] - 1)) / 2 % P) * (n-group[i]) % P;
+            long x = group[i];
+            long g = ((x * (x - 1)) / 2 % P) * (n-x) % P;
             g = (g + C[group[i]]) % P;
-            out -= g;
-            if (out < 0)
-                out += P;
+            out += P - g;
+            if (out >= P)
+                out -= P;
         }
         System.out.println(out);
     }
@@ -139,145 +139,83 @@ public class KunduAndTree {
             }
         }
     }
-}
 
-class InputReader {
+    static class InputReader {
 
-    private InputStream stream;
-    private byte[] buf = new byte[1024];
-    private int curChar;
-    private int numChars;
-    private SpaceCharFilter filter;
+        private InputStream stream;
+        private byte[] buf = new byte[1024];
+        private int curChar;
+        private int numChars;
 
-    public InputReader(InputStream stream) {
-        this.stream = stream;
-    }
+        public InputReader(InputStream stream) {
+            this.stream = stream;
+        }
 
-    public int read() {
-        if (numChars == -1)
-            throw new InputMismatchException();
-        if (curChar >= numChars) {
-            curChar = 0;
-            try {
-                numChars = stream.read(buf);
-            } catch (IOException e) {
+        public int read() {
+            if (numChars == -1)
                 throw new InputMismatchException();
+            if (curChar >= numChars) {
+                curChar = 0;
+                try {
+                    numChars = stream.read(buf);
+                } catch (IOException e) {
+                    throw new InputMismatchException();
+                }
+                if (numChars <= 0)
+                    return -1;
             }
-            if (numChars <= 0)
-                return -1;
+            return buf[curChar++];
         }
-        return buf[curChar++];
-    }
 
-    public int peek() {
-        if (numChars == -1)
-            return -1;
-        if (curChar >= numChars) {
-            curChar = 0;
-            try {
-                numChars = stream.read(buf);
-            } catch (IOException e) {
-                return -1;
+        public int nextInt() {
+            return (int) nextLong();
+        }
+
+        public long nextLong() {
+            int c = read();
+            while (isSpaceChar(c))
+                c = read();
+            int sgn = 1;
+            if (c == '-') {
+                sgn = -1;
+                c = read();
             }
-            if (numChars <= 0)
-                return -1;
+            long res = 0;
+            do {
+                if (c < '0' || c > '9')
+                    throw new InputMismatchException();
+                res *= 10;
+                res += c - '0';
+                c = read();
+            } while (!isSpaceChar(c));
+            return res * sgn;
         }
-        return buf[curChar];
-    }
 
-    public int readInt() {
-        int c = read();
-        while (isSpaceChar(c))
-            c = read();
-        int sgn = 1;
-        if (c == '-') {
-            sgn = -1;
-            c = read();
+        public String nextString() {
+            int c = read();
+            while (isSpaceChar(c))
+                c = read();
+            StringBuilder sb = new StringBuilder(1024);
+            do {
+                sb.append((char)c);
+                c = read();
+            } while (!isSpaceChar(c));
+            return sb.toString();
         }
-        int res = 0;
-        do {
-            if (c < '0' || c > '9')
-                throw new InputMismatchException();
-            res *= 10;
-            res += c - '0';
-            c = read();
-        } while (!isSpaceChar(c));
-        return res * sgn;
-    }
 
-    public long readLong() {
-        int c = read();
-        while (isSpaceChar(c))
-            c = read();
-        int sgn = 1;
-        if (c == '-') {
-            sgn = -1;
-            c = read();
+        public static boolean isSpaceChar(int c) {
+            switch (c) {
+                case -1:
+                case ' ':
+                case '\n':
+                case '\r':
+                case '\t':
+                    return true;
+                default:
+                    return false;
+            }
         }
-        long res = 0;
-        do {
-            if (c < '0' || c > '9')
-                throw new InputMismatchException();
-            res *= 10;
-            res += c - '0';
-            c = read();
-        } while (!isSpaceChar(c));
-        return res * sgn;
-    }
-
-    public String readString() {
-        int c = read();
-        while (isSpaceChar(c))
-            c = read();
-        StringBuilder sb = new StringBuilder(1024);
-        do {
-            sb.append(c);
-            c = read();
-        } while (!isSpaceChar(c));
-        return sb.toString();
-    }
-    public boolean isSpaceChar(int c) {
-        if (filter != null)
-            return filter.isSpaceChar(c);
-        return isWhitespace(c);
-    }
-
-    public static boolean isWhitespace(int c) {
-        return c == ' ' || c == '\n' || c == '\r' || c == '\t' || c == -1;
-    }
-
-    public boolean isExhausted() {
-        int value;
-        while (isSpaceChar(value = peek()) && value != -1)
-            read();
-        return value == -1;
-    }
-
-    public interface SpaceCharFilter {
-        public boolean isSpaceChar(int ch);
     }
 }
 
-class OutputWriter {
-    private final PrintWriter writer;
 
-    public OutputWriter(OutputStream outputStream) {
-        writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(outputStream)));
-    }
-
-    public OutputWriter(Writer writer) {
-        this.writer = new PrintWriter(writer);
-    }
-
-    public void close() {
-        writer.close();
-    }
-
-    public void printLine(long i) {
-        writer.println(i);
-    }
-
-    public void printLine(int i) {
-        writer.println(i);
-    }
-}
