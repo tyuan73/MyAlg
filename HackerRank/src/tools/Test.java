@@ -4,19 +4,26 @@ package tools;
  * Created by yuantian on 6/20/14.
  */
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.*;
 
 public class Test {
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws FileNotFoundException, IOException {
         //Scanner in = new Scanner(new FileInputStream("/home/yuantian/IdeaProjects/MyAlg/HackerRank/src/tools/input.txt"));
         InputReader in = new InputReader(new FileInputStream("/home/yuantian/IdeaProjects/MyAlg/HackerRank/src/tools/input.txt"));
         //InputReader in = new InputReader(System.in);
+        //Input input = new Input(new BufferedReader(new FileReader("/home/yuantian/IdeaProjects/MyAlg/HackerRank/src/tools/input.txt")));
 
         long start = System.currentTimeMillis();
+
+        /*
+        int n = input.nextInt();
+        while(n-- > 1) {
+            int x = input.nextInt();
+            long y = input.nextLong();
+            String c = input.next();
+        }
+        */
         int n = in.readInt();
         while(n-- > 1) {
             int x = in.readInt();
@@ -38,6 +45,52 @@ public class Test {
     }
 }
 
+class Input {
+    BufferedReader in;
+    StringBuilder sb = new StringBuilder();
+
+    public Input(BufferedReader in) {
+        this.in = in;
+    }
+
+    public Input(String s) {
+        this.in = new BufferedReader(new StringReader(s));
+    }
+
+    public String next() throws IOException {
+        sb.setLength(0);
+        while (true) {
+            int c = in.read();
+            if (c == -1) {
+                return null;
+            }
+            if (" \n\r\t".indexOf(c) == -1) {
+                sb.append((char)c);
+                break;
+            }
+        }
+        while (true) {
+            int c = in.read();
+            if (c == -1 || " \n\r\t".indexOf(c) != -1) {
+                break;
+            }
+            sb.append((char)c);
+        }
+        return sb.toString();
+    }
+
+    public int nextInt() throws IOException {
+        return Integer.parseInt(next());
+    }
+
+    public long nextLong() throws IOException {
+        return Long.parseLong(next());
+    }
+
+    public double nextDouble() throws IOException {
+        return Double.parseDouble(next());
+    }
+}
 
 class InputReader {
 
