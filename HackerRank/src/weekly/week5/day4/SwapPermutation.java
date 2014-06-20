@@ -14,8 +14,8 @@ public class SwapPermutation {
             list[i] = new ArrayList<String>();
         }
 
-        list[0].add("1234567");
-        hash.add("1234567");
+        list[0].add("12345678");
+        hash.add("12345678");
         for(int i = 0; i < 21; i++) {
             List<String> temp = list[i];
             for(String str : temp) {
