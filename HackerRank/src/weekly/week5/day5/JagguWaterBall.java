@@ -108,7 +108,8 @@ public class JagguWaterBall {
             } else {
                 int p1 = in.nextInt();
                 int p2 = in.nextInt();
-                out.println(read(p2) - read(p1-1));
+                //out.println(read(p2) - read(p1-1));
+                out.println(getBetween(p1-1, p2));
             }
         }
     }
@@ -158,6 +159,20 @@ public class JagguWaterBall {
             if (pos > N)
                 pos -= N;
         }
+    }
+
+    static long getBetween(int p1, int p2) {
+        long ret = 0;
+        while(p1 != p2) {
+            if (p2 > p1) {
+                ret += buckets[p2];
+                p2 -= (p2 & -p2);
+            } else {
+                ret -= buckets[p1];
+                p1 -= (p1 & -p1);
+            }
+        }
+        return ret;
     }
 
     static long read(int idx) {
