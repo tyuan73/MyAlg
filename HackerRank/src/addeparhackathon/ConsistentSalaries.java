@@ -71,17 +71,19 @@ public class ConsistentSalaries {
             s[i] = in.nextLong();
 
         a = new long[n];
-        a[0] = Long.MIN_VALUE;
+        //a[0] = Long.MIN_VALUE;
         set = new HashSet<Integer>();
         dfs(0);
         while(q-- > 0) {
             int idx = in.nextInt() - 1;
             int v = in.nextInt();
-            a[idx] += v;
-            if (a[idx] > 0)
-                set.add(idx);
-            else
-                set.remove(idx);
+            if (idx != 0) {
+                a[idx] += v;
+                if (a[idx] > 0)
+                    set.add(idx);
+                else
+                    set.remove(idx);
+            }
             if (set.size() > 0)
                 System.out.println("BAD");
             else
