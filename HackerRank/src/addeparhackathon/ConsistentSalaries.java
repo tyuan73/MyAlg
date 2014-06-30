@@ -78,7 +78,7 @@ public class ConsistentSalaries {
             int idx = in.nextInt() - 1;
             int v = in.nextInt();
             a[idx] += v;
-            if (a[idx] >= 0)
+            if (a[idx] > 0)
                 set.add(idx);
             else
                 set.remove(idx);
@@ -86,17 +86,13 @@ public class ConsistentSalaries {
                 System.out.println("BAD");
             else
                 System.out.println("GOOD");
-            for(int x : set) {
-                System.out.print(x);
-            }
-            System.out.println();
         }
     }
 
     static void dfs(int parent) {
         for(int next : tree[parent]) {
             a[next] = s[next] - s[parent];
-            if (a[next] >= 0)
+            if (a[next] > 0)
                 set.add(next);
             dfs(next);
         }
