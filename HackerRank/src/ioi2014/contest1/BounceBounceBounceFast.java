@@ -21,12 +21,16 @@ public class BounceBounceBounceFast {
         long start = System.currentTimeMillis();
         long x = n;
         for(long p = 2; p <= n; p++) {
+            // p is now greater than sqrt(n). the next prime candidate can only be n.
             if (p > n/p)
                 p = n;
+
             if (n % p == 0) {
+                // p is a prime factor of n so, multiply x by (1 - 1/p) = x-x/p
                 x -= x/p;
-                while(n % p == 0)
-                    n /= p;
+                // remove all prime factors p in n
+                while((n /= p) % p == 0)
+                    ;
             }
         }
         System.out.println(x);
