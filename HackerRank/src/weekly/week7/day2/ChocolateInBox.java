@@ -52,7 +52,7 @@ public class ChocolateInBox {
 
         int total = 0;
         for(int i = 0; i < n; i++)
-            if (a[i] >= (a[i] ^ xor))
+            if (a[i] > (a[i] ^ xor))
                 total++;
         out.println(total);
     }
