@@ -263,7 +263,7 @@ public class StringFunctionCalculation {
             }
         }
 
-			/* find the lexicographic names of all substrings */
+		/* find the lexicographic names of all substrings */
         for(i = 0, name = 0, q = n, qlen = 0;i < m;++i){
             p = SA[i];
             plen = SA[m + (p >> 1)];
@@ -275,7 +275,7 @@ public class StringFunctionCalculation {
                     diff = false;
                 }
             }
-            if(diff != false){
+            if(diff){
                 ++name;
                 q = p;
                 qlen = plen;
@@ -291,7 +291,7 @@ public class StringFunctionCalculation {
                                  BaseArray B, int n, int k) {
         int b, i, j;
         int c0, c1;
-			/* compute SAl */
+		/* compute SAl */
         if(C == B){
             getCounts(T, C, n, k);
         }
@@ -310,7 +310,7 @@ public class StringFunctionCalculation {
                 SA[b++] = ((0 < j) && (T.get(j - 1) < c1)) ? ~j : j;
             }
         }
-			/* compute SAs */
+		/* compute SAs */
         if(C == B){
             getCounts(T, C, n, k);
         }

@@ -73,16 +73,18 @@ import java.io.*;
 
 public class SavitaAndFriends {
     static List<City>[] g = null;
-    static double[][] shortest = null;
+    static long[][] shortest = null;
+    static int[] order = null;
+    static int index = 0;
 
-    static class Ele implements Comparable<Ele> {
-        double v;
+    static class Path implements Comparable<Path> {
+        long v;
         int id;
-        public Ele(int id, double v) {
+        public Path(int id, long v) {
             this.id = id; this.v = v;
         }
-        public int compareTo(Ele p) {
-            double d = this.v - p.v;
+        public int compareTo(Path p) {
+            long d = this.v - p.v;
             if (d > 0)
                 return 1;
             else if (d == 0)
@@ -122,10 +124,12 @@ public class SavitaAndFriends {
                 }
             }
 
-            shortest = new double[2][n];
+            shortest = new long[2][n];
+            order = new int[n];
+            //index = 0;
 
-            dijkstra(a, 0);
             dijkstra(b, 1);
+            dijkstra(a, 0);
 
             /* for test */
             /*
@@ -137,17 +141,11 @@ public class SavitaAndFriends {
             out.println();
             */
 
-            Ele[] vert = new Ele[n];
-            for(int i = 0; i < n; i++) {
-                vert[i] = new Ele(i, shortest[0][i]);
-            }
-            Arrays.sort(vert);
-
-            double prey = shortest[1][vert[n-1].id];
+            double prey = shortest[1][order[n-1]];
             double dist = 0;
-            double max = shortest[0][vert[n-1].id];
+            double max = shortest[0][order[n-1]];
             for(int i = n-2; i >= 0; i--) {
-                int cur = vert[i].id;
+                int cur = order[i];
                 double x = shortest[0][cur];
                 double y = shortest[1][cur];
                 if (y <= prey)
@@ -169,20 +167,22 @@ public class SavitaAndFriends {
     }
 
     static void dijkstra(int start, int idx) {
-        double[] path = shortest[idx];
+        long[] path = shortest[idx];
         Arrays.fill(path, Long.MAX_VALUE);
-        PriorityQueue<Ele> q = new PriorityQueue<Ele>();
-        q.add(new Ele(start, 0));
+        PriorityQueue<Path> q = new PriorityQueue<Path>();
+        q.add(new Path(start, 0));
+        index = 0;
 
         while(q.size() > 0) {
-            Ele x = q.poll();
+            Path x = q.poll();
             if (x.v >= path[x.id])
                 continue;
 
             path[x.id] = x.v;
+            order[index++] = x.id;
             for(City y : g[x.id]) {
                 if (path[x.id] + y.len < path[y.to])
-                    q.add(new Ele(y.to, path[x.id] + y.len));
+                    q.add(new Path(y.to, path[x.id] + y.len));
             }
         }
     }
