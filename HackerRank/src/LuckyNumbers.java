@@ -78,7 +78,7 @@ class LuckyNumbers {
 			if((x % i) == 0)
 				return false;
 		}
-		System.out.println(x);
+		//System.out.println(x);
 		return true;
 	}
 }
