@@ -42,7 +42,7 @@ public class NumberLetterCounts {
     static long MIL = 1000000;
     static long THO = 1000;
     static String[] tens = {"", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"};
-    static String[] s = {"", "One", "Two", "Three", "Four", "Five", "Six",
+    static String[] digit = {"", "One", "Two", "Three", "Four", "Five", "Six",
             "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen",
             "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"};
 
@@ -73,7 +73,7 @@ public class NumberLetterCounts {
         } else if (n >= 20) {
             return (tens[(int) n / 10] + " " + toStr(n % 10)).trim();
         } else {
-            return s[(int) n];
+            return digit[(int) n];
         }
     }
 }
