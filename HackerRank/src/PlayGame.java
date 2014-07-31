@@ -8,8 +8,29 @@
 import java.util.*;
 
 public class PlayGame {
-
+    // a better solution with less space and less operations
     static public void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+
+        int t = in.nextInt();
+        while(t-- > 0) {
+            int n = in.nextInt();
+            int[] brick = new int[n];
+            for(int i = 0; i < n; i++)
+                brick[i] = in.nextInt();
+
+            long[] max = new long[n+4];
+            long sum = 0;
+            for(int i = n-1; i >= 0; i--) {
+                sum += brick[i];
+                max[i] = sum - getMin(max[i+1], max[i+2], max[i+3]);
+            }
+            System.out.println(max[0]);
+        }
+    }
+
+    // better than recursive version. but as good as the one above.
+    static public void main1(String[] args) {
         Scanner in = new Scanner(System.in);
 
         int t = in.nextInt();
@@ -33,6 +54,14 @@ public class PlayGame {
                         brick[i] + brick[i+1] + brick[i+2] + min[i+3]);
                 min[i] = getMin(max[i+1], max[i+2], max[i+3]);
             }
+
+            for(long l : max)
+                System.out.print(l + " ");
+            System.out.println();
+            for(long l : min)
+                System.out.print(l + " ");
+            System.out.println();
+
 
             System.out.println(max[0]);
         }
