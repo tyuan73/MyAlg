@@ -24,14 +24,19 @@ public class CavityMap {
             map[i] = in.nextString().toCharArray();
         }
 
+        int[][] adj = {{0,1}, {0,-1}, {1,0}, {-1,0}};
         for(int i = 1; i <= n-2; i++)
             for(int j = 1; j <= n-2; j++) {
-                if (map[i-1][j] == 'X' || map[i][j-1] == 'X')
-                    continue;
-                if (map[i-1][j] >= map[i][j] || map[i][j-1] >= map[i][j]
-                        || map[i+1][j] >= map[i][j] || map[i][j+1] >= map[i][j])
-                    continue;
-                map[i][j] = 'X';
+                boolean isCave = true;
+                for(int[] a : adj) {
+                    // 'X' > '0' - '9'
+                    if (map[i+a[0]][j+a[1]] >= map[i][j]) {
+                        isCave = false;
+                        break;
+                    }
+                }
+                if (isCave)
+                    map[i][j] = 'X';
             }
 
         for(char[] x: map)
