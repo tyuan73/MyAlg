@@ -59,6 +59,24 @@ public class SqrtX {
         return (int) r;
     }
 
+    /**
+     * a solution with bit operation. It finds the most signifisant bit
+     * and then next bit until end.
+     *
+     */
+    public int sqrtBitOp(int x) {
+        long ans = 0;
+        long bit = 1l << 16;
+        while(bit > 0) {
+            ans |= bit;
+            if (ans * ans > x) {
+                ans ^= bit;
+            }
+            bit >>= 1;
+        }
+        return (int)ans;
+    }
+
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
 
@@ -66,5 +84,6 @@ public class SqrtX {
         System.out.println(x.sqrtNewton(214739559));
         System.out.println(x.sqrt(2147395599));
         System.out.println(x.sqrt1(2147395599));
+        System.out.println(x.sqrtBitOp(2147395599));
     }
 }
