@@ -9,6 +9,9 @@
 import java.util.Scanner;
 
 public class SqrtX {
+    /**
+     * binary search
+     */
     public int sqrt(int x) {
         long r1 = 0;
         long r2 = x;
@@ -27,9 +30,6 @@ public class SqrtX {
 
     /**
      * A better solution.
-     *
-     * @param x
-     * @return
      */
     public int sqrt1(int x) {
         int r1 = 0;
@@ -53,7 +53,7 @@ public class SqrtX {
      */
     public int sqrtNewton(int x) {
         double r = (double) x;
-        while (Math.abs(r - x / r) > 0.0001) {
+        while (Math.abs(r - x / r) > 0.000001) {
             r = (x / r + r) / 2;
         }
         return (int) r;
@@ -81,7 +81,7 @@ public class SqrtX {
         Scanner in = new Scanner(System.in);
 
         SqrtX x = new SqrtX();
-        System.out.println(x.sqrtNewton(214739559));
+        System.out.println(x.sqrtNewton(2147395599));
         System.out.println(x.sqrt(2147395599));
         System.out.println(x.sqrt1(2147395599));
         System.out.println(x.sqrtBitOp(2147395599));
