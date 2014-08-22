@@ -8,8 +8,7 @@
  * }
  */
 
-import java.util.ArrayList;
-import java.util.Stack;
+import java.util.*;
 
 public class BTreeInorderTraversal {
     public ArrayList<Integer> inorderTraversal(TreeNode root) {
@@ -29,5 +28,23 @@ public class BTreeInorderTraversal {
             s.push(n);
             n = n.left;
         }
+    }
+
+    /**
+     * recursive solution
+     */
+    public List<Integer> inorderTraversalRecursive(TreeNode root) {
+        List<Integer> ans = new ArrayList<Integer>();
+        internal(root, ans);
+        return ans;
+    }
+
+    private void internal(TreeNode root, List<Integer> list) {
+        if (root == null)
+            return;
+
+        internal(root.left, list);
+        list.add(root.val);
+        internal(root.right, list);
     }
 }
