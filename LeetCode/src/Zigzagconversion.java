@@ -5,7 +5,7 @@
  * Time: 1:37 PM
  * Copyright (c) 2013 All Right Reserved, http://github.com/tyuan73
  */
-public class ZigzagConversion {
+public class Zigzagconversion {
     /**
      * Naive solution.
      *
@@ -56,7 +56,7 @@ public class ZigzagConversion {
     }
 
     public static void main(String[] args) {
-        ZigzagConversion zz = new ZigzagConversion();
+        Zigzagconversion zz = new Zigzagconversion();
         System.out.println(zz.convert("ABCD", 3));
     }
 }
