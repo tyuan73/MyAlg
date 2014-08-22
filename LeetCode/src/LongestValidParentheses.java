@@ -11,6 +11,7 @@ public class LongestValidParentheses {
      * But here I'm trying to solve it with DP.
      */
 
+    /*
     public int longestValidParentheses(String s) {
         int[] dp = new int[s.length() + 1];
         int max = 0;
@@ -24,6 +25,22 @@ public class LongestValidParentheses {
             }
         }
 
+        return max;
+    }
+    */
+
+    public int longestValidParentheses(String s) {
+        s = s + "(";
+        int[] dp = new int[s.length()];
+        int max = 0;
+        for(int i = s.length()-2; i >= 0; i--) {
+            if (s.charAt(i) == ')') continue;
+            int pre = i + dp[i + 1] + 1;
+            if (s.charAt(pre) == ')') {
+                dp[i] = dp[i+1] + dp[pre+1] + 2;
+                max = Math.max(max, dp[i]);
+            }
+        }
         return max;
     }
 }
