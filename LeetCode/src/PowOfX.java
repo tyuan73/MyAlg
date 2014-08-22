@@ -8,20 +8,19 @@
 
 public class PowOfX {
     public double pow(double x, int n) {
-        boolean isNeg = n < 0 ? true : false;
-        if (isNeg)
+        boolean isNag = n < 0;
+        if (isNag)
             n = -n;
-
-        double ret = 1.0;
-        while (n > 0) {
-            if ((n & 1) > 0)
-                ret *= x;
-            x *= x;
+        double base = x;
+        x = 1.0;
+        while(n > 0) {
+            if ((n&1) == 1)
+                x *= base;
             n >>= 1;
+            base *= base;
         }
-
-        if (isNeg)
-            return 1.0 / ret;
-        return ret;
+        return isNag ? 1/x : x;
     }
 }
+
+
