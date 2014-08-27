@@ -67,12 +67,12 @@ public class MixingProteins {
         int k = in.nextInt();
         String str = in.nextString();
         int[] p = new int[n];
-        for(int i = 0; i < n; i++)
+        for (int i = 0; i < n; i++)
             p[i] = str.charAt(i) - 'A';
 
         int[] q = new int[n];
         int[] temp = null;
-        for(int bit = 1 << 30; bit > 0; bit >>= 1) {
+        for (int bit = 1 << 30; bit > 0; bit >>= 1) {
             if ((k & bit) > 0) {
                 for (int j = 0; j < n; j++) {
                     q[j] = p[j] ^ p[(j + bit) % n];
@@ -84,7 +84,7 @@ public class MixingProteins {
         }
 
         char[] s = new char[n];
-        for(int x = 0; x < n; x++)
+        for (int x = 0; x < n; x++)
             s[x] = (char) (p[x] + 'A');
         out.println(s);
         //out.println(new String(s));
