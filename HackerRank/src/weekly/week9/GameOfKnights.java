@@ -38,8 +38,10 @@ Explanation
 In the given test case, there is only one knight and it can be moved only once. Hence the first player makes the first move leaving the second player with no move to make.
 */
 
-import java.util.*;
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.util.InputMismatchException;
 
 public class GameOfKnights {
     static void go() {
@@ -51,25 +53,30 @@ public class GameOfKnights {
             int x = in.nextInt();
             x = 2 * x + 1;
 
-            int c1 = 0, c2 = 0;
+            int[][] g = new int[x + 3][303];
+            for (int i = 0; i <= x; i++) {
+                for (int j = i; j < 300; j++) {
+                    g[i + 1][j + 2] = g[i][j] + 1;
+                    g[i + 2][j + 1] = g[i][j] + 1;
+                }
+            }
+
+            int c = 0;
             while (n-- > 0) {
                 int p = in.nextInt();
                 int q = in.nextInt();
-                int min = Math.min(p, q);
-                int max = Math.max(p, q);
 
-                if (min % x == 0 || (p == q && (p - 1) % x == 0)) {
-                    continue;
+                if (p > q) {
+                    int temp = p;
+                    p = q;
+                    q = temp;
                 }
 
-                if ((min - 1) % x == 0
-                        || (p == q && (p - 2) % x == 0)
-                        || (max - 3 == min - 2 && (min - 2) % x == 0)) {
-                    c1++;
-                } else
-                    c2++;
+                q -= p / x * x;
+                p %= x;
+                c += g[p][q];
             }
-            if (c1 % (k + 1) == 0 && c2 % (k + 1) == 0)
+            if (c % (k + 1) == 0)
                 out.println("Second player wins");
             else
                 out.println("First player wins");
