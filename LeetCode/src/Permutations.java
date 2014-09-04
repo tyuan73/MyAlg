@@ -6,36 +6,37 @@
  * To change this template use File | Settings | File Templates.
  */
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class Permutations {
-    public ArrayList<ArrayList<Integer>> permute(int[] num) {
-        ArrayList<ArrayList<Integer>> ret = new ArrayList<ArrayList<Integer>>();
-        helper(num, 0, ret);
+    List<List<Integer>> ret = null;
+
+    public List<List<Integer>> permute(int[] num) {
+        ret = new ArrayList<List<Integer>>();
+        internalPerm(num, 0);
         return ret;
     }
 
-    void helper(int[] num, int index, ArrayList<ArrayList<Integer>> ret) {
+    private void internalPerm(int[] num, int index) {
         if (index == num.length) {
-            ArrayList<Integer> list = getList(num);
-            ret.add(list);
+            addToRet(num);
             return;
         }
 
         for (int i = index; i < num.length; i++) {
-            int x = num[i];
-            num[i] = num[index];
-            num[index] = x;
-            helper(num, index + 1, ret);
+            int n = num[index];
             num[index] = num[i];
-            num[i] = x;
+            num[i] = n;
+            internalPerm(num, index + 1);
+            num[i] = num[index];
+            num[index] = n;
         }
     }
 
-    ArrayList<Integer> getList(int[] num) {
-        ArrayList<Integer> list = new ArrayList<Integer>();
-        for (int i : num)
-            list.add(i);
-        return list;
+    private void addToRet(int[] num) {
+        List<Integer> list = new ArrayList<Integer>();
+        for (int n : num)
+            list.add(n);
+        ret.add(list);
     }
 }

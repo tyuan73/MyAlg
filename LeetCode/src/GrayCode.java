@@ -35,7 +35,7 @@ public class GrayCode {
     }
 
     /**
-     * a better and fater solution.
+     * a better and faster solution.
      */
     public ArrayList<Integer> grayCode2(int n) {
         ArrayList<Integer> ret = new ArrayList<Integer>();

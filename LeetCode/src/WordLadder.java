@@ -6,11 +6,49 @@
  * Copyright (c) 2013 All Right Reserved, http://github.com/tyuan73
  */
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 public class WordLadder {
+    /* BFS */
+    public int ladderLength(String start, String end, Set<String> dict) {
+        if (start.equals(end))
+            return 1;
+
+        Set<String> visited = new HashSet<String>();
+        visited.add(start);
+        List<String> pre = new ArrayList<String>();
+        List<String> next = new ArrayList<String>();
+        pre.add(start);
+        int steps = 1;
+        while (pre.size() > 0) {
+            next.clear();
+            for (String s : pre) {
+                char[] ch = s.toCharArray();
+                for (int j = 0; j < ch.length; j++) {
+                    char orig = ch[j];
+                    for (char c = 'a'; c <= 'z'; c++) {
+                        ch[j] = c;
+                        String s1 = new String(ch);
+                        if (s1.equals(end))
+                            return steps + 1;
+                        else if (dict.contains(s1) && !visited.contains(s1)) {
+                            visited.add(s1);
+                            next.add(s1);
+                        }
+                    }
+                    ch[j] = orig;
+                }
+            }
+            steps++;
+            List<String> temp = pre;
+            pre = next;
+            next = temp;
+        }
+
+        return 0;
+    }
+
+    /*
     public int ladderLength(String start, String end, HashSet<String> dict) {
         HashMap<String, Integer> visited = new HashMap<String, Integer>();
         for (String s : dict) {
@@ -56,4 +94,5 @@ public class WordLadder {
         }
         return ret;
     }
+    */
 }
