@@ -8,9 +8,11 @@
  * }
  */
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class BTreeLevelOrderII {
+
+    /* the same as BTreeLevelOrderI. just reverse the list before returning it. */
     public ArrayList<ArrayList<Integer>> levelOrderBottom(TreeNode root) {
         ArrayList<ArrayList<TreeNode>> level = new ArrayList<ArrayList<TreeNode>>();
         if (root == null)
@@ -37,6 +39,33 @@ public class BTreeLevelOrderII {
                 x.add(tn.val);
 
             ret.add(x);
+        }
+
+        return ret;
+    }
+
+    /* a better solution. use linked list and insert levels at position 0 */
+    public List<List<Integer>> levelOrderBottom2(TreeNode root) {
+        List<List<Integer>> ret = new LinkedList<List<Integer>>();
+
+        if (root == null)
+            return ret;
+
+        List<TreeNode> list = new ArrayList<TreeNode>();
+        list.add(root);
+
+        while(list.size() > 0) {
+            List<TreeNode> nextLevel = new ArrayList<TreeNode>();
+            List<Integer> level = new ArrayList<Integer>();
+            for(TreeNode node: list) {
+                level.add(node.val);
+                if (node.left != null)
+                    nextLevel.add(node.left);
+                if (node.right != null)
+                    nextLevel.add(node.right);
+            }
+            ret.add(0, level);
+            list = nextLevel;
         }
 
         return ret;
