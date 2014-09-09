@@ -11,6 +11,7 @@ public class WordSearch {
     char[][] b = null;
     int n = 0;
     int m = 0;
+    int[][] next = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
     public boolean exist(char[][] board, String word) {
         n = board.length;
@@ -32,16 +33,19 @@ public class WordSearch {
     boolean dfs(int i, int j, int index) {
         if (index == w.length())
             return true;
-        if (i < 0 || i >= n || j < 0 || j >= m || visited[i][j])
+        if (i < 0 || i >= n
+                || j < 0 || j >= m
+                || visited[i][j]
+                || b[i][j] != w.charAt(index))
             return false;
 
-        if (b[i][j] == w.charAt(index)) {
-            visited[i][j] = true;
-            if (dfs(i + 1, j, index + 1) || dfs(i - 1, j, index + 1)
-                    || dfs(i, j + 1, index + 1) || dfs(i, j - 1, index + 1))
+
+        visited[i][j] = true;
+        for (int[] step : next)
+            if (dfs(i + step[0], j + step[1], index + 1))
                 return true;
-            visited[i][j] = false;
-        }
+        visited[i][j] = false;
+
         return false;
     }
 }
