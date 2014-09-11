@@ -21,4 +21,15 @@ public class MergeSortedArray {
             A[next--] = B[i2--];
         }
     }
+
+    public static void main(String[] args) {
+        int[] a = {1,2,3,0,0,0};
+        int[] b = {4,5,6};
+
+        MergeSortedArray ma = new MergeSortedArray();
+        ma.merge(a, 3, b, 3);
+        for(int x : a)
+            System.out.print(x + " ");
+        System.out.println();
+    }
 }
