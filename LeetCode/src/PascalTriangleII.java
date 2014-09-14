@@ -14,7 +14,7 @@ public class PascalTriangleII {
         tri[0] = 1;
         for (int i = 1; i <= rowIndex; i++) {
             for (int j = i; j > 0; j--)
-                tri[j] = tri[j] + tri[j - 1];
+                tri[j] += tri[j - 1];
         }
 
         ArrayList<Integer> ret = new ArrayList<Integer>();
