@@ -5,23 +5,19 @@
  * Time: 9:49 AM
  * To change this template use File | Settings | File Templates.
  */
+
 public class LongestSubstringWithoutRepeatingCharacters {
     public int lengthOfLongestSubstring(String s) {
-        boolean[] set = new boolean[26];
-        int max = 0;
-        int start = 0;
+        int[] index = new int[256];
+        int last = 0, max = 0;
         for (int i = 0; i < s.length(); i++) {
-            int index = s.charAt(i) - 'a';
-            if (set[index]) {
-                int i1;
-                do {
-                    i1 = s.charAt(start++) - 'a';
-                    set[i1] = false;
-                } while (i1 != index);
-            }
-            set[index] = true;
-            max = Math.max(max, i - start + 1);
+            char ch = s.charAt(i);
+            if (index[ch] > last)
+                last = index[ch];
+            max = Math.max(max, i - last + 1);
+            index[ch] = i + 1;
         }
+
         return max;
     }
 }
