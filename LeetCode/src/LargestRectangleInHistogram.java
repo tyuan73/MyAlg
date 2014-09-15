@@ -50,4 +50,37 @@ public class LargestRectangleInHistogram {
 
         return max;
     }
+
+    /**
+     * The same as above, but implement stack with a two-dimension array
+     */
+    public int largestRectangleArea1(int[] height) {
+        int n = height.length;
+        int max = 0;
+        int[][] stack = new int[n + 1][2];
+        int index = 0;
+        stack[0][0] = Integer.MIN_VALUE;
+        stack[0][1] = -1;
+        for (int i = 0; i < n; i++) {
+            if (height[i] >= stack[index][0]) {
+                index++;
+                stack[index][0] = height[i];
+                stack[index][1] = i;
+            } else {
+                do {
+                    int area = (i - stack[index][1]) * stack[index][0];
+                    max = Math.max(max, area);
+                    index--;
+                } while (stack[index][0] > height[i]);
+                stack[++index][0] = height[i];
+            }
+        }
+
+        while (index > 0) {
+            int area = (n - stack[index][1]) * stack[index][0];
+            max = Math.max(max, area);
+            index--;
+        }
+        return max;
+    }
 }

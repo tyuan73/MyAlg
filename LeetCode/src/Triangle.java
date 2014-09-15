@@ -6,30 +6,28 @@
  * Copyright (c) 2013 All Right Reserved, http://github.com/tyuan73
  */
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
+
 public class Triangle {
-    public int minimumTotal(ArrayList<ArrayList<Integer>> triangle) {
-        int n = triangle.size();
-
-        int[] dp = new int[n + 1];
-        Arrays.fill(dp, Integer.MAX_VALUE);
-        dp[n - 1] = triangle.get(0).get(0);
-
-        for (int i = 1; i < n; i++) {
-            ArrayList<Integer> list = triangle.get(i);
-            for (int j = n - 1 - i, k = 0; j < n; j++, k++) {
-                dp[j] = Math.min(dp[j], dp[j + 1]) + list.get(k);
+    public int minimumTotal(List<List<Integer>> triangle) {
+        int[] ret = new int[triangle.size() + 1];
+        Arrays.fill(ret, Integer.MAX_VALUE);
+        ret[1] = 0;
+        for (List<Integer> list : triangle) {
+            for (int i = list.size(); i > 0; i--) {
+                ret[i] = Math.min(ret[i - 1], ret[i]) + list.get(i - 1);
             }
         }
 
         int min = Integer.MAX_VALUE;
-        for (int i : dp)
-            min = Math.min(i, min);
+        for (int x : ret)
+            min = Math.min(min, x);
         return min;
     }
+
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
