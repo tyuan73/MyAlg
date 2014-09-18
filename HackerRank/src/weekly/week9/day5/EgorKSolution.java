@@ -87,7 +87,7 @@ class AlexVsFedor {
     }
 
     private int[][] build(int id, Graph graph, boolean[] visited) {
-        Indexer<Integer> indexer = new Indexer<>();
+        Indexer<Integer> indexer = new Indexer<Integer>();
         dfs(id, graph, visited, indexer);
         int[][] matrix = new int[indexer.size()][indexer.size()];
         for (Map.Entry<Integer, Integer> entry : indexer.entrySet()) {
