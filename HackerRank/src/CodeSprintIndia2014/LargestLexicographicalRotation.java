@@ -10,6 +10,46 @@ package CodeSprintIndia2014;
 
 /*
 
+https://www.hackerrank.com/contests/csindia/challenges/largest-lexicographical-rotation
+
+Bidhan studies at the University of Dhaka. Recently he noticed that, some of the university students are speaking a strange language. The words used in that language are not meaningful to him. After some investigation he learned that, the students use the largest lexicographical rotation of words instead of the original words. Word p′ is a rotation of word p if,
+p=a+b and
+p′=b+a, where a and b are some strings ( possibly empty ) and + sign denotes the concatenation operation.
+w, the largest lexicographical rotation of p is the lexicographically biggest one among all possible p′s.
+
+Given a string, output it's largest lexicographical rotation.
+
+Input Format
+The first line of input will contain t, number of test cases. Each of the next t lines contains p.
+
+Constraints
+1≤t≤100
+1≤|p|≤103
+|p| denotes the length of p.
+p will contain lowercase english letters only.
+
+Sample Input
+
+3
+bidhan
+zorro
+apple
+Sample Output
+
+nbidha
+zorro
+pplea
+Explanation
+
+Test case 1 : The rotations of string bidhan are
+bidhan,
+idhanb,
+dhanbi,
+hanbid,
+anbidh and
+nbidha.
+nbidha is lexicographically biggest among all of them.
+
 */
 
 import java.util.*;
@@ -18,15 +58,15 @@ import java.io.*;
 public class LargestLexicographicalRotation {
     static void go() {
         int t = in.nextInt();
-        while(t-- > 0) {
+        while (t-- > 0) {
             String str = in.nextString();
             int n = str.length();
             String[] suffix = new String[n];
-            for(int i = 0; i < n; i++) {
-                suffix[i] = str.substring(i)+str.substring(0, i);
+            for (int i = 0; i < n; i++) {
+                suffix[i] = str.substring(i) + str.substring(0, i);
             }
             Arrays.sort(suffix);
-            out.println(suffix[n-1].substring(0, n));
+            out.println(suffix[n - 1].substring(0, n));
         }
     }
 

@@ -3,79 +3,72 @@ package CodeSprintIndia2014;
 /**
  * Created with IntelliJ IDEA.
  * User: Michael Tian
- * Date: 9/19/14
- * Time: 10:16 PM
+ * Date: 9/20/14
+ * Time: 9:51 PM
  * Copyright (c) 2013 All Right Reserved, http://github.com/tyuan73
  */
 
 /*
 
-https://www.hackerrank.com/contests/csindia/challenges/pin-problem-1
+https://www.hackerrank.com/contests/csindia/challenges/jigar-and-strings
 
-Bidhan and Roy are very close friends. They know every little secret of each other. Today Roy forgot his ATM card's pin code. So, he called Bidhan and asked if he can remember the code. Bidhan does not remember the exact code. But he told Roy that, the pin code is a positive number not bigger than n and it is divisible by m other numbers. Then Bidhan gave Roy the list of m numbers.
-
-Now, Roy has to try all possible combinations for his pin code. How many are possible?
+Jigar is playing with strings. He likes a string, if all the characters in it are repeated the same number of times. We are given a string of length n, what is the minimum number of changes we have to make in this string so that Jigar likes it? We are only allowed to use lowercase English letters, and we can change any letter to any other letter.
 
 Input Format
-
-The first line of input will contain t, the number of test cases. Each testcase will consist of two lines. The first line will contain n and m. The second line will contain m space separated integers.
-
-Constraints
-
-1≤t≤105
-1≤n≤104
-1≤m≤10
-All of the m integers will be positive and will not exceed 10.
+The first line contains an integer T, the number of test cases. This is followed by T test cases each containing 1 line:
+Each testcase consists of a string composed of lowercase letters.
 
 Output Format
+For each testcase, print in a new line the minimum number of changes required.
 
-For each testcase, print the number of possible pin codes on a separate line.
+Constraints
+1 ≤ T ≤ 1370
+1 ≤ n ≤ 1991
 
 Sample Input
 
-3
-5 1
-1
-7 2
-2 3
-10 3
-2 2 4
+2
+bbaccaaa
+ccaacb
 Sample Output
 
-5
-1
 2
+1
 Explanation
-
-Test case 1 : The possible pin codes are, 1,2,3,4 and 5. All of them are divisible by 1.
-Test case 2 : The only number smaller than 7 which is divisible by both 2 and 3 is 6.
-Test case 3 : The possible pin codes are 4 and 8.
+One possible solution to first test is bbabbaaa. We have changed 2 'c' to 2 'b'. Now both 'a' and 'b' are repeated 4 times and Jigar would like this string.
 */
 
-import java.util.*;
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.InputMismatchException;
 
-public class PinProblem1 {
+public class JigarAndStrings {
     static void go() {
         int t = in.nextInt();
-
         while (t-- > 0) {
-            int n = in.nextInt();
-            int m = in.nextInt();
-            int d = in.nextInt();
-            for (int i = 1; i < m; i++) {
-                int next = in.nextInt();
-                int g = gcd(d, next);
-                d *= next / g;
+            String str = in.nextString();
+            int[] count = new int[26];
+            for (int i = 0; i < str.length(); i++) {
+                count[str.charAt(i) - 'a']++;
             }
-            out.println(n / d);
+            Arrays.sort(count);
 
+            int n = str.length();
+            int max = Integer.MIN_VALUE;
+            for (int i = 1; i <= 26; i++) {
+                if (n % i == 0) {
+                    int k = n / i;
+                    int unchanged = 0;
+                    for (int j = 25; j >= 26 - i; j--) {
+                        unchanged += Math.min(count[j], k);
+                    }
+                    max = Math.max(max, unchanged);
+                }
+            }
+            out.println(n - max);
         }
-    }
-
-    static int gcd(int a, int b) {
-        if (a == 0) return b;
-        return gcd(b % a, a);
     }
 
     static InputReader in;

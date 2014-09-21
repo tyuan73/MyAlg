@@ -3,79 +3,94 @@ package CodeSprintIndia2014;
 /**
  * Created with IntelliJ IDEA.
  * User: Michael Tian
- * Date: 9/19/14
- * Time: 10:16 PM
+ * Date: 9/20/14
+ * Time: 10:24 PM
  * Copyright (c) 2013 All Right Reserved, http://github.com/tyuan73
  */
 
 /*
 
-https://www.hackerrank.com/contests/csindia/challenges/pin-problem-1
+https://www.hackerrank.com/contests/csindia/challenges/array-simplification
 
-Bidhan and Roy are very close friends. They know every little secret of each other. Today Roy forgot his ATM card's pin code. So, he called Bidhan and asked if he can remember the code. Bidhan does not remember the exact code. But he told Roy that, the pin code is a positive number not bigger than n and it is divisible by m other numbers. Then Bidhan gave Roy the list of m numbers.
+Chelsea likes to play with arrays very much, but today she is lazy and only wants to play with arrays containing single element. Her brother Mike wants to help her and takes an array A of N elements. Now Mike wants to apply N-1 operations to obtain a single element. In a single operation the number of array elements is reduced by one. A single operation is described below:
 
-Now, Roy has to try all possible combinations for his pin code. How many are possible?
+For every element in A start at position 0 calculate a new array B where B[i] = A[i] - A[i+1] for 0<= i < number of elements on A.
+
+Set B to A and go back to step 1, until the number of array elements in A is 1.
+
+Calculate the single element that Mike gives to her sister. As this number can be very large or negative, so return it's modulo (109 + 7).
 
 Input Format
-
-The first line of input will contain t, the number of test cases. Each testcase will consist of two lines. The first line will contain n and m. The second line will contain m space separated integers.
+The first line of input contains a number T, the number of test cases.
+For every test case: the first line contains an integer N, the number of element in the array. The next line contains N space separated integers which denote the array.
 
 Constraints
-
-1≤t≤105
-1≤n≤104
-1≤m≤10
-All of the m integers will be positive and will not exceed 10.
+1<=T<=5
+1<=N<=100000
+Every number in A fits into 32 signed bit integer.
 
 Output Format
-
-For each testcase, print the number of possible pin codes on a separate line.
+One line per test case that represents the single element Mike gives to his sister.
 
 Sample Input
 
-3
-5 1
+2
 1
-7 2
-2 3
-10 3
-2 2 4
+3
+3
+5 1 3
 Sample Output
 
-5
-1
-2
+3
+6
 Explanation
 
-Test case 1 : The possible pin codes are, 1,2,3,4 and 5. All of them are divisible by 1.
-Test case 2 : The only number smaller than 7 which is divisible by both 2 and 3 is 6.
-Test case 3 : The possible pin codes are 4 and 8.
+In the second test case: First compute 5-1,1-3. The second step is 4-(-2) = 6.
 */
 
-import java.util.*;
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.util.InputMismatchException;
 
-public class PinProblem1 {
+public class ArraySimplification {
+    static long P = 1000000007L;
+
     static void go() {
         int t = in.nextInt();
-
         while (t-- > 0) {
             int n = in.nextInt();
-            int m = in.nextInt();
-            int d = in.nextInt();
-            for (int i = 1; i < m; i++) {
-                int next = in.nextInt();
-                int g = gcd(d, next);
-                d *= next / g;
-            }
-            out.println(n / d);
+            int[] a = new int[n];
+            for (int i = 0; i < n; i++)
+                a[i] = in.nextInt();
 
+            long res = a[0];
+            boolean minus = true;
+            long c = 1;
+            for (int i = 1; i < n; i++) {
+                c = (((c * (n - i)) % P) * power(i, P - 2)) % P;
+                if (minus)
+                    res -= c * a[i];
+                else
+                    res += c * a[i];
+                minus = !minus;
+                res %= P;
+            }
+            if (res < 0)
+                res += P;
+            out.println(res);
         }
     }
 
-    static int gcd(int a, int b) {
-        if (a == 0) return b;
-        return gcd(b % a, a);
+    static private long power(long x, long p) {
+        long ret = 1;
+        while (p > 0) {
+            if ((p & 1) == 1)
+                ret = (ret * x) % P;
+            p >>= 1;
+            x = (x * x) % P;
+        }
+        return ret;
     }
 
     static InputReader in;
