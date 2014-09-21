@@ -56,6 +56,10 @@ public class TheRabbit {
                     r = mid;
             }
             out.println(l);
+
+            // another solution:
+            // int x = (int)((-1 + Math.sqrt(1 + 8 * n))/2);
+            // out.println(x);
         }
     }
 
