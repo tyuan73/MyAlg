@@ -1,60 +1,42 @@
-package hackjuly14;
+package projecteuler1;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Michael Tian
- * Date: 7/26/14
- * Time: 11:12 PM
- * Copyright (c) 2013 All Right Reserved, http://github.com/tyuan73
+ * Created by yuantian on 9/24/14.
  */
 
 /*
+Project Euler #36: Double-base palindromes
+
+https://www.hackerrank.com/contests/projecteuler/challenges/euler036
 
 */
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
-import java.util.InputMismatchException;
+import java.util.*;
+import java.io.*;
 
-public class BusStation {
+public class DoublebasePalindromes {
     static void go() {
         int n = in.nextInt();
-        int[] a = new int[n + 1];
-        for (int i = 1; i <= n; i++)
-            a[i] = a[i - 1] + in.nextInt();
-
-        for (int i = 1; i <= n; i++) {
-            if (a[n] % a[i] != 0)
+        int k = in.nextInt();
+        int total = 0;
+        for (int i = 1; i < n; i++) {
+            if (i % 10 == 0 || i % k == 0)
                 continue;
-            int x = a[i], y = a[n] / x;
-            boolean yes = true;
-            int next = i;
-            for (int j = 2; j < y; j++) {
-                next = search(a, next, n, j * x);
-                if (next == -1) {
-                    yes = false;
-                    break;
-                }
-            }
-            if (yes) {
-                out.print(x + " ");
-            }
+            if (isPalin(i, 10) && isPalin(i, k))
+                total += i;
         }
-        out.println();
+        out.print(total);
     }
 
-    static int search(int[] a, int from, int to, int v) {
-        while (from <= to) {
-            int mid = (from + to) / 2;
-            if (a[mid] == v)
-                return mid;
-            else if (a[mid] > v)
-                to = mid - 1;
-            else
-                from = mid + 1;
+    static private boolean isPalin(int x, int k) {
+        int y = 0;
+        while (y < x) {
+            y = y * k + x % k;
+            if (x == y)
+                break;
+            x /= k;
         }
-        return -1;
+        return y == x;
     }
 
     static InputReader in;

@@ -1,11 +1,7 @@
-package hackjuly14;
+package hack101.june2014;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Michael Tian
- * Date: 7/27/14
- * Time: 10:26 PM
- * Copyright (c) 2013 All Right Reserved, http://github.com/tyuan73
+ * Created by yuantian on 7/2/14.
  */
 
 /*
@@ -15,58 +11,36 @@ package hackjuly14;
 import java.util.*;
 import java.io.*;
 
-public class ColorfulPolygon {
-    static long P = 1000000007;
+public class SherlockAndGCD {
     static void go() {
-        int n = in.nextInt();
-        long[] fb = new long[100001];
-        fb[0] = 1;
-        fb[1] = 2;
-        for(int i = 2; i <= 100000; i++) {
-            fb[i] = fb[i - 2] + fb[i - 1];
-            if (fb[i] > P)
-                fb[i] -= P;
-        }
-
-        int[] a = new int[n];
-        for(int i = 0; i < n; i++)
-            a[i] = in.nextInt();
-
-        ArrayList<Integer> group = new ArrayList<Integer>();
-        int preCol = a[0], preCount = 1;
-        for(int i = 1; i < n; i++) {
-            if (a[i] != preCol) {
-                group.add(preCount);
-                preCol = a[i];
-                preCount = 1;
-            } else {
-                preCount++;
+        int t = in.nextInt();
+        while(t-- > 0) {
+            int n = in.nextInt();
+            int pre = in.nextInt();
+            for(int i = 1; i < n; i++) {
+                int cur = in.nextInt();
+                pre = gcd(cur, pre);
             }
+            if (pre == 1)
+                out.println("YES");
+            else
+                out.println("NO");
         }
-        group.add(preCount);
+    }
 
-        if (a[n-1] == a[0] && group.size() > 1) {
-            group.set(0, group.get(0) + group.get(group.size() - 1));
-            group.remove(group.size()-1);
+    static int gcd(int a, int b) {
+        if (a > b) {
+            int x = a;
+            a = b;
+            b = x;
         }
 
-        long ans = 1;
-        for(int x : group) {
-            ans *= fb[x];
-            ans %= P;
+        while(a != 0) {
+            int x = a;
+            a = b%a;
+            b = x;
         }
-
-        if (group.size() == n) {
-            ans -= n+1;
-        } else if (group.size() == n-1) {
-            ans -= 2;
-        } else if (group.size() == 1) {
-            int x = group.get(0);
-            ans = fb[x] - fb[x-2] + fb[x-3];
-        }
-        if (ans < 0)
-            ans += P;
-        out.println(ans);
+        return b;
     }
 
     static InputReader in;
@@ -157,29 +131,3 @@ public class ColorfulPolygon {
         }
     }
 }
-
-/*
-case #1
-input:
-5
-4 5 3 2 5
-
-output:
-25
-
-Case #2
-input:
-5
-3 2 1 5 3
-
-output:
-22
-
-case #3
-input:
-5
-4 2 1 5 3
-
-output:
-26
- */

@@ -1,53 +1,60 @@
-package hackjune14;
+package hack101.july2014;
 
 /**
- * Created by yuantian on 6/30/14.
+ * Created with IntelliJ IDEA.
+ * User: Michael Tian
+ * Date: 7/26/14
+ * Time: 11:12 PM
+ * Copyright (c) 2013 All Right Reserved, http://github.com/tyuan73
  */
 
 /*
 
 */
 
-import java.util.*;
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.util.InputMismatchException;
 
-public class SherlockAndQueries {
+public class BusStation {
     static void go() {
         int n = in.nextInt();
-        int m = in.nextInt();
-        long[] a = new long[n];
-        int[] b = new int[m];
-        long[] c = new long[m];
-        long[] d = new long[n+1];
-        final long P = 1000000007;
+        int[] a = new int[n + 1];
+        for (int i = 1; i <= n; i++)
+            a[i] = a[i - 1] + in.nextInt();
 
-        for(int i = 0; i < n; i++)
-            a[i] = in.nextLong();
-        for(int i = 0; i < m; i++)
-            b[i] = in.nextInt();
-        for(int i = 0; i < m; i++)
-            c[i] = in.nextLong();
-
-        Arrays.fill(d, 1);
-        for(int i = 0; i < m; i++) {
-            d[b[i]] = (d[b[i]] * c[i]) % P;
-        }
-
-        for(int i = 1; i <= n; i++) {
-            int to = (int)Math.sqrt((double)i);
-            for(int j = 1; j <= to; j++) {
-                if (i % j == 0) {
-                    a[i-1] = (a[i-1] * d[j]) % P;
-                    if (j != i/j) {
-                        a[i-1] = (a[i-1] * d[i/j]) % P;
-                    }
+        for (int i = 1; i <= n; i++) {
+            if (a[n] % a[i] != 0)
+                continue;
+            int x = a[i], y = a[n] / x;
+            boolean yes = true;
+            int next = i;
+            for (int j = 2; j < y; j++) {
+                next = search(a, next, n, j * x);
+                if (next == -1) {
+                    yes = false;
+                    break;
                 }
             }
+            if (yes) {
+                out.print(x + " ");
+            }
         }
-
-        for(int i = 0; i < n; i++)
-            out.print(a[i] + " ");
         out.println();
+    }
+
+    static int search(int[] a, int from, int to, int v) {
+        while (from <= to) {
+            int mid = (from + to) / 2;
+            if (a[mid] == v)
+                return mid;
+            else if (a[mid] > v)
+                to = mid - 1;
+            else
+                from = mid + 1;
+        }
+        return -1;
     }
 
     static InputReader in;

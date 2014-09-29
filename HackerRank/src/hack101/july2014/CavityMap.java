@@ -1,4 +1,4 @@
-package hackjuly14;
+package hack101.july2014;
 
 /**
  * Created with IntelliJ IDEA.

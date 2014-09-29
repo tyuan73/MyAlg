@@ -1,4 +1,4 @@
-package hackjune14;
+package hack101.june2014;
 
 /**
  * Created by yuantian on 7/2/14.
@@ -11,36 +11,41 @@ package hackjune14;
 import java.util.*;
 import java.io.*;
 
-public class SherlockAndGCD {
+public class XORlove {
     static void go() {
-        int t = in.nextInt();
-        while(t-- > 0) {
-            int n = in.nextInt();
-            int pre = in.nextInt();
-            for(int i = 1; i < n; i++) {
-                int cur = in.nextInt();
-                pre = gcd(cur, pre);
+        int n = in.nextInt();
+        int[][] a = new int[n+1][20];
+        for(int i = 1; i <= n; i++) {
+            int next = in.nextInt();
+            for(int s = 0; s < 20; s++) {
+                if ((next & (1 << s)) > 0 ) {
+                    a[i][s] = a[i-1][s] + 1;
+                } else {
+                    a[i][s] = a[i-1][s];
+                }
             }
-            if (pre == 1)
-                out.println("YES");
-            else
-                out.println("NO");
-        }
-    }
-
-    static int gcd(int a, int b) {
-        if (a > b) {
-            int x = a;
-            a = b;
-            b = x;
         }
 
-        while(a != 0) {
-            int x = a;
-            a = b%a;
-            b = x;
+        int q = in.nextInt();
+        while(q-- > 0) {
+            int k = in.nextInt();
+            int p = in.nextInt();
+            int r = in.nextInt();
+
+            long ans = 0;
+            long num;
+            for(int s = 0; s < 20; s++) {
+                long count1 = a[r][s] - a[p-1][s];
+                long count0 = r-p+1-count1;
+                if ((k & (1 << s)) > 0) {
+                    num = (count0 * (count0-1) + count1 * (count1-1))/2;
+                } else {
+                    num = count1*count0;
+                }
+                ans += num * (1<<s);
+            }
+            out.println(ans % 1000000007);
         }
-        return b;
     }
 
     static InputReader in;

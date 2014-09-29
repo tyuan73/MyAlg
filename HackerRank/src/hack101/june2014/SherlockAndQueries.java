@@ -1,7 +1,7 @@
-package hackjune14;
+package hack101.june2014;
 
 /**
- * Created by yuantian on 7/2/14.
+ * Created by yuantian on 6/30/14.
  */
 
 /*
@@ -11,41 +11,43 @@ package hackjune14;
 import java.util.*;
 import java.io.*;
 
-public class XORlove {
+public class SherlockAndQueries {
     static void go() {
         int n = in.nextInt();
-        int[][] a = new int[n+1][20];
+        int m = in.nextInt();
+        long[] a = new long[n];
+        int[] b = new int[m];
+        long[] c = new long[m];
+        long[] d = new long[n+1];
+        final long P = 1000000007;
+
+        for(int i = 0; i < n; i++)
+            a[i] = in.nextLong();
+        for(int i = 0; i < m; i++)
+            b[i] = in.nextInt();
+        for(int i = 0; i < m; i++)
+            c[i] = in.nextLong();
+
+        Arrays.fill(d, 1);
+        for(int i = 0; i < m; i++) {
+            d[b[i]] = (d[b[i]] * c[i]) % P;
+        }
+
         for(int i = 1; i <= n; i++) {
-            int next = in.nextInt();
-            for(int s = 0; s < 20; s++) {
-                if ((next & (1 << s)) > 0 ) {
-                    a[i][s] = a[i-1][s] + 1;
-                } else {
-                    a[i][s] = a[i-1][s];
+            int to = (int)Math.sqrt((double)i);
+            for(int j = 1; j <= to; j++) {
+                if (i % j == 0) {
+                    a[i-1] = (a[i-1] * d[j]) % P;
+                    if (j != i/j) {
+                        a[i-1] = (a[i-1] * d[i/j]) % P;
+                    }
                 }
             }
         }
 
-        int q = in.nextInt();
-        while(q-- > 0) {
-            int k = in.nextInt();
-            int p = in.nextInt();
-            int r = in.nextInt();
-
-            long ans = 0;
-            long num;
-            for(int s = 0; s < 20; s++) {
-                long count1 = a[r][s] - a[p-1][s];
-                long count0 = r-p+1-count1;
-                if ((k & (1 << s)) > 0) {
-                    num = (count0 * (count0-1) + count1 * (count1-1))/2;
-                } else {
-                    num = count1*count0;
-                }
-                ans += num * (1<<s);
-            }
-            out.println(ans % 1000000007);
-        }
+        for(int i = 0; i < n; i++)
+            out.print(a[i] + " ");
+        out.println();
     }
 
     static InputReader in;
