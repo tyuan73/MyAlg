@@ -10,8 +10,6 @@
 import java.io.*;
 import java.util.InputMismatchException;
 import java.util.Random;
-import java.util.Scanner;
-import java.util.StringTokenizer;
 
 public class A0000 {
     public static void main(String[] args) {
