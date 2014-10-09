@@ -1,0 +1,351 @@
+import java.io.PrintStream;
+import java.util.Comparator;
+import java.io.BufferedReader;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.util.HashSet;
+import java.util.List;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Set;
+import java.io.FileOutputStream;
+import java.io.FileInputStream;
+import java.util.TreeSet;
+import java.util.StringTokenizer;
+import java.util.Collections;
+import java.io.InputStream;
+
+/**
+ * Built using CHelper plug-in
+ * Actual solution is at the top
+ */
+public class Main {
+	public static void main(String[] args) {
+		InputStream inputStream;
+		try {
+			inputStream = new FileInputStream("greedy.in");
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+		OutputStream outputStream;
+		try {
+			outputStream = new FileOutputStream("greedy.out");
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+		InputReader in = new InputReader(inputStream);
+		PrintWriter out = new PrintWriter(outputStream);
+		Greedy solver = new Greedy();
+		int testCount = Integer.parseInt(in.next());
+		for (int i = 1; i <= testCount; i++)
+			solver.solve(i, in, out);
+		out.close();
+	}
+}
+
+class Greedy {
+    static class Vertex {
+        public Component where;
+    }
+
+    static int gen;
+    static List<Component> curForward = new ArrayList<Component>();
+    static List<Component> curBackward = new ArrayList<Component>();
+    static TreeSet<Component> allComps = new TreeSet<Component>();
+
+    static class Component implements Comparable<Component> {
+        int genForward;
+        int genBackward;
+        public int index;
+        public Set<Vertex> vert = new HashSet<Vertex>();
+        public Set<Component> outgo = new HashSet<Component>();
+        public Set<Component> incom = new HashSet<Component>();
+
+        public void dfsForward(int maxIndex) {
+            if (index > maxIndex) return;
+            if (genForward >= gen) return;
+            genForward = gen;
+            curForward.add(this);
+            for (Component x : outgo)
+                x.dfsForward(maxIndex);
+        }
+
+        public void dfsBackward(int minIndex) {
+            if (index < minIndex) return;
+            if (genBackward >= gen) return;
+            genBackward = gen;
+            curBackward.add(this);
+            for (Component x : incom)
+                x.dfsBackward(minIndex);
+        }
+
+        public int compareTo(Component o) {
+            if (this == o) return 0;
+            int isOk = outgo.isEmpty() ? 1 : 0;
+            int oisOk = o.outgo.isEmpty() ? 1 : 0;
+            if (isOk != oisOk)
+                return oisOk - isOk;
+            if (vert.size() != o.vert.size())
+                return vert.size() - o.vert.size();
+            if (index == o.index) {
+                throw new RuntimeException();
+            }
+            return index - o.index;
+        }
+    }
+
+    static class Edge {
+        Vertex src;
+        Vertex dst;
+        long cost;
+
+        Edge(Vertex src, Vertex dst, long cost) {
+            this.src = src;
+            this.dst = dst;
+            this.cost = cost;
+        }
+    }
+
+    public void solve(int testNumber, InputReader in, PrintWriter out) {
+        System.err.println(testNumber);
+        int n = in.nextInt();
+        int k = in.nextInt();
+        long c = in.nextLong();
+        long x1 = in.nextLong();
+        long a1 = in.nextLong();
+        long b1 = in.nextLong();
+        long m1 = in.nextLong();
+        long x2 = in.nextLong();
+        long a2 = in.nextLong();
+        long b2 = in.nextLong();
+        long m2 = in.nextLong();
+        long[] f1 = gen(n, x1, a1, b1, m1);
+        long[] f2 = gen(n, x2, a2, b2, m2);
+        long[][] r = new long[n][n];
+        for (int i = 0; i < n; ++i)
+            for (int j = 0; j < n; ++j) {
+                if (i > j) r[i][j] = f1[i * (i - 1) / 2 + j];
+                if (i < j) r[i][j] = f2[j * (j - 1) / 2 + i];
+            }
+        Vertex[] v = new Vertex[n];
+        allComps.clear();
+        for (int i = 0; i < n; ++i) {
+            v[i] = new Vertex();
+            v[i].where = new Component();
+            v[i].where.index = i;
+            v[i].where.vert.add(v[i]);
+            allComps.add(v[i].where);
+        }
+        Edge[] edges = new Edge[n * (n - 1)];
+        int ptr = 0;
+        for (int i = 0; i < n; ++i)
+            for (int j = 0; j < n; ++j) {
+                if (i == j) continue;
+                edges[ptr++] = new Edge(v[i], v[j], r[i][j]);
+            }
+        if (ptr != edges.length) throw new RuntimeException();
+        Arrays.sort(edges, new Comparator<Edge>() {
+            @Override
+            public int compare(Edge o1, Edge o2) {
+                return Long.signum(o2.cost - o1.cost);
+            }
+        });
+        long res = Long.MAX_VALUE;
+        gen = 0;
+        int processed = 0;
+        for (Edge ce : edges) {
+            ++processed;
+            //if (processed % 1000 == 0) System.err.println(processed);
+            int totalPay = getTotalPay(v, k);
+            if (totalPay < 0) continue;
+            res = Math.min(res, totalPay * c + ce.cost);
+            handleEdge(ce.src, ce.dst);
+        }
+        {
+            int totalPay = getTotalPay(v, k);
+            if (totalPay >= 0)
+                res = Math.min(res, totalPay * c);
+        }
+        out.println("Case #" + testNumber + ": " + res);
+    }
+
+    private void handleEdge(Vertex src, Vertex dst) {
+        Component srcComp = src.where;
+        Component dstComp = dst.where;
+        if (srcComp == dstComp) return;
+        if (srcComp.index < dstComp.index) {
+            allComps.remove(dstComp);
+            allComps.remove(srcComp);
+            srcComp.outgo.add(dstComp);
+            dstComp.incom.add(srcComp);
+            allComps.add(dstComp);
+            allComps.add(srcComp);
+            return;
+        }
+        ++gen;
+        curBackward.clear();
+        curForward.clear();
+        dstComp.dfsForward(srcComp.index);
+        srcComp.dfsBackward(dstComp.index);
+        Collections.sort(curBackward, new Comparator<Component>() {
+            @Override
+            public int compare(Component o1, Component o2) {
+                return o1.index - o2.index;
+            }
+        });
+        Collections.sort(curForward, new Comparator<Component>() {
+            @Override
+            public int compare(Component o1, Component o2) {
+                return o1.index - o2.index;
+            }
+        });
+        for (Component comp: curBackward) allComps.remove(comp);
+        for (Component comp: curForward) allComps.remove(comp);
+
+        if (dstComp.genBackward == gen) {
+            Component merged = srcComp;
+            for (Component x : curForward)
+                if (x.genBackward == gen && x != merged) {
+                    merge(merged, x);
+                }
+            int cnt = 0;
+            for (int i = 0; i < curBackward.size(); ++i) {
+                if (curBackward.get(i).vert.isEmpty()) continue;
+                curBackward.set(cnt++, curBackward.get(i));
+            }
+            while (curBackward.size() > cnt) curBackward.remove(curBackward.size() - 1);
+            cnt = 0;
+            for (int i = 0; i < curForward.size(); ++i) {
+                if (curForward.get(i) == merged || curForward.get(i).vert.isEmpty()) continue;
+                curForward.set(cnt++, curForward.get(i));
+            }
+            if (curForward.size() == cnt) throw new RuntimeException();
+            while (curForward.size() > cnt) curForward.remove(curForward.size() - 1);
+        } else {
+            srcComp.outgo.add(dstComp);
+            dstComp.incom.add(srcComp);
+        }
+        int[] indices = new int[curForward.size() + curBackward.size()];
+        int ptr = 0;
+        for (Component x : curForward) {
+            indices[ptr++] = x.index;
+        }
+        for (Component x : curBackward) {
+            indices[ptr++] = x.index;
+        }
+        if (ptr != indices.length) throw new RuntimeException();
+        Arrays.sort(indices);
+        ptr = 0;
+        for (Component x : curBackward) {
+            x.index = indices[ptr++];
+        }
+        for (Component x : curForward) {
+            x.index = indices[ptr++];
+        }
+        if (ptr != indices.length) throw new RuntimeException();
+        for (Component comp: curBackward) allComps.add(comp);
+        for (Component comp: curForward) allComps.add(comp);
+    }
+
+    private void merge(Component merged, Component other) {
+        for (Vertex v : other.vert) {
+            v.where = merged;
+            merged.vert.add(v);
+        }
+        other.vert.clear();
+        for (Component comp : other.incom) {
+            if (!comp.outgo.remove(other)) {
+                throw new RuntimeException();
+            }
+            if (comp != merged) {
+                comp.outgo.add(merged);
+                merged.incom.add(comp);
+            }
+        }
+        for (Component comp : other.outgo) {
+            if (!comp.incom.remove(other)) throw new RuntimeException();
+            if (comp != merged) {
+                comp.incom.add(merged);
+                merged.outgo.add(comp);
+            }
+        }
+    }
+
+    private int getTotalPay(Vertex[] v, int k) {
+        /*for (Vertex vv : v) {
+            vv.where.mark = false;
+            vv.where.size = vv.where.vert.size();
+        }
+        Component[] comps = new Component[v.length];
+        int ncomps = 0;
+        for (Vertex vv : v) {
+            if (!vv.where.mark) {
+                vv.where.mark = true;
+                if (vv.where.outgo.isEmpty())
+                    comps[ncomps++] = vv.where;
+            }
+        }
+        if (ncomps < k) return -1;
+        Arrays.sort(comps, 0, ncomps, new Comparator<Component>() {
+            @Override
+            public int compare(Component o1, Component o2) {
+                return o1.size - o2.size;
+            }
+        });
+        int res = 0;
+        for (int i = 0; i < k; ++i) res += comps[i].size;
+        return res;*/
+        int need = k;
+        int res = 0;
+        for (Component comp : allComps) {
+            if (!comp.outgo.isEmpty()) break;
+            --need;
+            res += comp.vert.size();
+            if (need == 0) break;
+        }
+        if (need == 0) return res; else return -1;
+    }
+
+    private long[] gen(int n, long x1, long a1, long b1, long m1) {
+        long[] f1 = new long[n * (n - 1) / 2];
+        if (n == 1) return f1;
+        f1[0] = x1;
+        for (int i = 1; i < f1.length; ++i) {
+            f1[i] = (a1 * f1[i - 1] + b1) % m1;
+        }
+        return f1;
+    }
+}
+
+class InputReader {
+    public BufferedReader reader;
+    public StringTokenizer tokenizer;
+
+    public InputReader(InputStream stream) {
+        reader = new BufferedReader(new InputStreamReader(stream));
+        tokenizer = null;
+    }
+
+    public String next() {
+        while (tokenizer == null || !tokenizer.hasMoreTokens()) {
+            try {
+                tokenizer = new StringTokenizer(reader.readLine());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return tokenizer.nextToken();
+    }
+
+    public int nextInt() {
+        return Integer.parseInt(next());
+    }
+
+    public long nextLong() {
+        return Long.parseLong(next());
+    }
+
+    }
+

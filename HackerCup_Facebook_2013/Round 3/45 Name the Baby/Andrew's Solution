@@ -1,0 +1,181 @@
+import java.util.*;
+import java.io.*;
+
+public class B {
+    FastScanner in;
+    PrintWriter out;
+
+    final static long BIG = 2_000_000_000_000_000_000L;
+
+    public void solve() throws IOException {
+        int testNo = in.nextInt();
+        for (int test = 1; test <= testNo; test++) {
+            int l = in.nextInt();
+            long k = in.nextLong();
+            int n = in.nextInt();
+            String[] w = new String[n];
+            int sum = 1;
+            for (int i = 0; i < n; i++) {
+                w[i] = in.next();
+                sum += w[i].length();
+            }
+
+            int[][] go = new int[sum][26];
+            int[] p = new int[sum];
+            int[] suf = new int[sum];
+            int[] inc = new int[sum];
+            boolean[] good = new boolean[sum];
+            for (int[] z : go) {
+                Arrays.fill(z, -1);
+            }
+            int nv = 1;
+            for (int i = 0; i < n; i++) {
+                int cur = 0;
+                for (int j = 0; j < w[i].length(); j++) {
+                    int c = w[i].charAt(j) - 'a';
+                    if (go[cur][c] == -1) {
+                        go[cur][c] = nv;
+                        p[nv] = cur;
+                        inc[nv] = c;
+                        nv++;
+                    }
+                    cur = go[cur][c];
+                }
+                good[cur] = true;
+            }
+
+            int[] q = new int[sum];
+            int hd = 0;
+            int tl = 1;
+            q[hd] = 0;
+            while (hd < tl) {
+                int v = q[hd++];
+                for (int u : go[v]) {
+                    if (u != -1) {
+                        q[tl++] = u;
+                    }
+                }
+
+                if (v == 0) {
+                    for (int i = 0; i < 26; i++) {
+                        if (go[v][i] == -1) {
+                            go[v][i] = 0;
+                        }
+                    }
+                } else {
+                    if (p[v] == 0) {
+                        suf[v] = 0;
+                    } else {
+                        suf[v] = go[suf[p[v]]][inc[v]];
+                    }
+                    if (good[suf[v]]) {
+                        good[v] = true;
+                    }
+                    for (int i = 0; i < 26; i++) {
+                        if (go[v][i] == -1) {
+                            go[v][i] = go[suf[v]][i];
+                        }
+                    }
+                }
+            }
+
+            int[][] ggo = new int[2 * nv][26];
+            for (int i = 0; i < nv; i++) {
+                for (int j = 0; j < 26; j++) {
+                    ggo[nv + i][j] = go[i][j] + nv;
+                    if (good[go[i][j]]) {
+                        ggo[i][j] = go[i][j] + nv;
+                    } else {
+                        ggo[i][j] = go[i][j];
+                    }
+                }
+            }
+
+            go = null;
+
+            long[][] dp = new long[2 * nv][l + 1];
+            for (int i = 0; i < nv; i++) {
+                dp[nv + i][0] = 1;
+            }
+
+            for (int i = 1; i <= l; i++) {
+                for (int j = 0; j < 2 * nv; j++) {
+                    for (int c = 0; c < 26; c++) {
+                        dp[j][i] = dp[j][i] + dp[ggo[j][c]][i - 1];
+                        if (dp[j][i] > BIG) {
+                            dp[j][i] = BIG;
+                        }
+                    }
+                }
+            }
+
+            String ans = "";
+            int cur = 0;
+            for (int i = 0; i < l; i++) {
+                if (dp[cur][l - i] < k) {
+                    ans = "unnamed baby :(";
+                    break;
+                }
+                for (int c = 0; c < 26; c++) {
+                    if (dp[ggo[cur][c]][l - i - 1] < k) {
+                        k -= dp[ggo[cur][c]][l - i - 1];
+                    } else {
+                        ans += (char) (c + 'a');
+                        cur = ggo[cur][c];
+                        break;
+                    }
+                }
+            }
+
+
+            out.println("Case #" + test + ": " + ans);
+            System.out.println("Case #" + test + ": " + ans);
+        }
+    }
+
+    public void run() {
+        try {
+            in = new FastScanner(new File("B.in"));
+            out = new PrintWriter(new File("B.out"));
+
+            solve();
+
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] arg) {
+        new B().run();
+    }
+
+    static class FastScanner {
+        BufferedReader br;
+        StringTokenizer st;
+
+        FastScanner(File file) throws IOException {
+            br = new BufferedReader(new FileReader(file));
+        }
+
+        String next() {
+            while (st == null || !st.hasMoreTokens()) {
+                try {
+                    st = new StringTokenizer(br.readLine());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return "";
+                }
+            }
+            return st.nextToken();
+        }
+
+        int nextInt() {
+            return Integer.parseInt(next());
+        }
+
+        long nextLong() {
+            return Long.parseLong(next());
+        }
+    }
+}

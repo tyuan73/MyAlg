@@ -1,0 +1,48 @@
+https://www.facebook.com/hackercup/problems.php?pid=500995316613418&round=499927843385312
+
+
+Cake Cutting20 points
+
+    Download Input File
+
+"Happy birthday to you... Happy birthday to you... Happy birthday to Grovyle... Happy birthday to you..."
+
+Today is Grovyle's birthday and he is going to invite his friends to his birthday party. To have an awesome party, each of the attendants should get one piece of cake. Your job is to help Grovyle invite as many friends as you can.
+
+However, Grovyle's parents are very mean, and make him use the following rules when cutting his cake:
+There is only ONE cylindrical cake.
+Grovyle cuts the cake N times, each cut being perpendicular to the surface of the cake.
+The i-th cut is a broken line with a[i] vertices.
+The knife is only allowed to intersect the edge of the cylindrical cake at the start and end of the cut.
+
+What is the maximum number of pieces Grovyle could get?
+Input
+
+The first line contains an integer T, T ≤ 50, indicating the number of test cases. Each test case begins with an integer N, 1 ≤ N ≤ 100, followed by N integers a[i], 0 ≤ a[i] < 400, which indicate the number of vertices in the i-th cut.
+Output
+
+For each test case, output "Case #i: " followed by the maximum number of pieces of cake Grovyle can cut.
+
+
+Example for test case 1
+
+Example for test case 2
+
+
+Example for test case 3
+
+Example input · Download
+Example output · Download
+
+5
+3 0 0 0
+2 1 1
+2 1 2
+4 0 0 0 1
+4 2 2 2 2
+
+Case #1: 7
+Case #2: 7
+Case #3: 10
+Case #4: 14
+Case #5: 63

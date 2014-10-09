@@ -1,0 +1,78 @@
+import java.util.*;
+import java.io.*;
+
+public class A {
+    FastScanner in;
+    PrintWriter out;
+
+    public void solve() throws IOException {
+        int testNo = in.nextInt();
+        for (int test = 1; test <= testNo; test++) {
+            System.out.println("Test " + test);
+
+            int n = in.nextInt();
+            long[] a =  new long[n];
+            long[] s = new long[n + 1];
+            for (int i = 0; i < n; i++) {
+                a[i] = in.nextInt() + 1;
+            }
+
+            long ans = 1;
+            long nseg = 0;
+            for (int i = 0; i < n; i++) {
+                ans++;
+                for (int j = 0; j < a[i]; j++) {
+                    ans += nseg + (j > 1 ? j - 1 : 0);
+                }
+                nseg += a[i];
+            }
+
+            out.println("Case #" + test + ": " + ans);
+            System.out.println("Case #" + test + ": " + ans);
+
+            System.out.println("Test " + test + " completed");
+        }
+    }
+
+    public void run() {
+        try {
+            in = new FastScanner(new File("cake_cutting.txt"));
+            out = new PrintWriter(new File("cake_cutting.ans"));
+
+            solve();
+
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] arg) {
+        new A().run();
+    }
+
+    static class FastScanner {
+        BufferedReader br;
+        StringTokenizer st;
+
+        FastScanner(File file) throws IOException {
+            br = new BufferedReader(new FileReader(file));
+        }
+
+        String next() {
+            while (st == null || !st.hasMoreTokens()) {
+                try {
+                    st = new StringTokenizer(br.readLine());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return "";
+                }
+            }
+            return st.nextToken();
+        }
+
+        int nextInt() {
+            return Integer.parseInt(next());
+        }
+    }
+}

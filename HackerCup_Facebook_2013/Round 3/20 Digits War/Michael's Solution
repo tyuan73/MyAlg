@@ -1,0 +1,131 @@
+import java.io.*;
+import java.util.*;
+
+public class DigitsWar {
+
+	static void solve() throws IOException {
+		int tests = nextInt();
+		for (int test = 1; test <= tests; test++) {
+			long k = nextLong();
+			boolean[][] matrix = new boolean[10][10];
+			for (int i = 0; i < 10; i++) {
+				for (int j = 0; j < 10; j++) {
+					matrix[i][j] = nextInt() != 0;
+				}
+			}
+			int answer = solve(matrix, k);
+			out.println("Case #" + test + ": " + answer);
+		}
+	}
+
+	private static int solve(boolean[][] matrix, long k) {
+		int[][] m = new int[101][101];
+		for (int a = 0; a < 10; a++) {
+			for (int b = 0; b < 10; b++) {
+				int pairAB = a * 10 + b;
+				for (int c = 0; c < 10; c++) {
+					int pairBC = b * 10 + c;
+					if (matrix[a][b] || matrix[a][c] || matrix[b][c]) {
+						continue;
+					}
+					++m[pairAB][pairBC];
+				}
+				++m[pairAB][100];
+			}
+		}
+		++m[100][100];
+		int[][][] pows = new int[64][][];
+		pows[0] = m;
+		for (int i = 1; i < pows.length; i++) {
+			pows[i] = mul(pows[i - 1], pows[i - 1]);
+		}
+		int[] initialVector = new int[101];
+		for (int a = 1; a <= 9; a++) {
+			for (int b = 0; b <= 9; b++) {
+				if (matrix[a][b]) {
+					continue;
+				}
+				int pairAB = a * 10 + b;
+				++initialVector[pairAB];
+			}
+		}
+		initialVector[100] = 9;
+		--k;
+
+		for (int i = 0; i < 64; i++) {
+			if ((k & (1L<<i)) != 0) {
+				initialVector = mul(initialVector, pows[i]);
+			}
+		}
+
+		return initialVector[100];
+	}
+
+	static int[][] mul(int[][] m1, int[][] m2) {
+		int n = m1.length;
+		int[][] ret = new int[n][n];
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				for (int k = 0; k < n; k++) {
+					ret[i][k] = add(ret[i][k], mul(m1[i][j], m2[j][k]));
+				}
+			}
+		}
+		return ret;
+	}
+
+	static int[] mul(int[] v, int[][] m) {
+		int n = v.length;
+		int[] ret = new int[n];
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				ret[j] = add(ret[j], mul(v[i], m[i][j]));
+			}
+		}
+		return ret;
+	}
+
+	static final int MOD = 1000000000 + 7;
+
+	static int mul(int a, int b) {
+		return (int) ((long) a * b % MOD);
+	}
+
+	static int add(int a, int b) {
+		return (a + b) % MOD;
+	}
+
+	static BufferedReader br;
+	static PrintWriter out;
+	static StringTokenizer st;
+
+	public static void main(String[] args) throws Exception {
+		br = new BufferedReader(new FileReader("digits.in"));
+		out = new PrintWriter("digits.out");
+		solve();
+		out.close();
+	}
+
+	static String nextToken() throws IOException {
+		while (st == null || !st.hasMoreTokens()) {
+			String line = br.readLine();
+			if (line == null) {
+				return null;
+			}
+			st = new StringTokenizer(line);
+		}
+		return st.nextToken();
+	}
+
+	static int nextInt() throws IOException {
+		return Integer.parseInt(nextToken());
+	}
+
+	static long nextLong() throws IOException {
+		return Long.parseLong(nextToken());
+	}
+
+	static double nextDouble() throws IOException {
+		return Double.parseDouble(nextToken());
+	}
+}

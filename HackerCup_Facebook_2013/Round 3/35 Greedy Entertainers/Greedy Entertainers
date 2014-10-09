@@ -1,0 +1,76 @@
+Greedy Entertainers45 points
+
+    Download Input File 
+
+You are the King of Byteland, which now consists of K rival states. The national day of Byteland is approaching, and it is a day of great merriment. Each of the K states is throwing its own party. Fortunately your kingdom also has N rich and famous entertainers, numbered from 0 to N-1. Its your job to allocate to each state, some non empty set of entertainers. Note that the same entertainer cannot be allocated to two different states. Some entertainers may be unallocated. Also to each allocated entertainer, you must pay C coins to hire him.
+
+The trouble is, some of the entertainers are fond of some others, and refuse to spend the national day without their friends, meaning they insist on being allocated to the same state if they are allocated). Under this constraint, you find out that allocating entertainers to the states becomes impossible. So you appeal to them to relax their requirements, and they ask you to donate more money to the entertainment industry. More formally, you will be provided with a 2-dimensional array R. If the total amount of money you donate is less than R[u][v], for u not equal to v, then entertainer #u will NOT agree to spend the national day without the company of entertainer #v. Note that if you do not allocate entertainer #u, then you can safely ignore his restrictions. R[u][v] need not be equal to R[v][u].
+
+    You are free to donate any non-negative amount of coins as you see fit. Find out the minimum expenditure you must make to satisfy all entertainers and all states. Note that your total expenditure is : (the amount of money you donate + C * the number of allocated entertainers).
+
+    Input:
+
+    The first line contains T, the number of test cases. Each test contains 3 lines.
+    The first line contains 3 integers N, K, C.
+    The second line contains 4 integers x1, a1, b1, m1
+    The third line contains 4 integers x2, a2, b2, m2
+    Using these values, the array R can be generated as follows:
+    Let f1[0] = x1, f2[0] = x2;
+    f1[i] = (a1 * f1[i-1] + b1) % m1 for i ≥ 1
+    f2[i] = (a2 * f2[i-1] + b2) % m2 for i ≥ 1
+
+    If i > j, R[i][j] = f1[ i * (i-1) / 2 + j ]
+    If i < j, R[i][j] = f2[ j * (j-1) / 2 + i ]
+    Note that R[i][j] is not defined for i = j.
+
+    Output:
+    For test case numbered i, output "Case #i: " followed by the minimum number of coins you must spend to satisfy everybody.
+
+    Constraints:
+    T ≤ 20
+    1 ≤ N ≤ 1111
+    1 ≤ K ≤ N
+    1 ≤ C ≤ 1000000000
+    0 ≤ x1, a1, b1 ≤ 1000000000
+    0 ≤ x2, a2, b2 ≤ 1000000000
+    1 ≤ m1, m2 ≤ 1000000000
+
+    Explanation of Sample Cases:
+
+    In case 1, we get R[1][0] = 20 and R[0][1] = 8. The optimal choice is to donate 8 coins, and allocate entertainer #0 to the only state.
+
+    In case 2, R[1][0] = 20 and R[0][1] = 12. The optimal choice here is to donate 0 coins, and allocate both entertainers to the only state.
+
+    In case 5, the matrix R look like this:
+    ---  800 1600
+    400  ---   400
+    800 1200  ---
+    The optimal choice is to donate 1600 coins, and allocate one entertainer to each state.
+
+Example input · Download
+
+5
+2 1 10
+20 0 0 100
+8 0 0 100
+2 1 10
+20 0 0 100
+12 0 0 100
+2 2 10
+20 0 0 100
+12 0 0 100
+4 1 1
+105 7 23 1000
+14 201 1 1005
+3 3 1000
+400 1 400 2000
+800 1 800 2000
+
+
+Output:
+
+Case #1: 18
+Case #2: 20
+Case #3: 40
+Case #4: 4
+Case #5: 4600

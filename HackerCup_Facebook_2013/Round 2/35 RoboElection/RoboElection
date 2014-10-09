@@ -1,0 +1,48 @@
+RoboElection35 points
+
+    Download Input File
+
+In the not so distant future the world is populated by robots and ruled by an evil robot emperor. Every robot in the world can be identified by a unique numeric ID, and the list of all the existing robot IDs is easily accessible to everyone. One day the emperor decided to call for a general election to preserve an illusion of democracy. He set it up in the following way:
+
+    - Every robot can cast at most one vote per round of voting and the votes are anonymous.
+    - The only option on the ballot is the vote for reelection of the emperor.
+    - If at least P percent of the population cast votes for the emperor he becomes reelected for the next millennium.
+    - Otherwise the emperor declares the vote void, disassembles K robots with the lowest ID numbers (who he finds to be the most rebellious), and then if there are any functional robots left he restarts the whole process.
+
+All the robots are perfectly logical but also rather lazy and prone to procrastination. That's why after figuring out the plan of the emperor, they will abstain from voting unless they have to vote to survive the election (including this round and all later rounds). If they will die whether or not they vote, they will vote in the hope that the emperor will spare them. (He won't, because he's evil!).
+Problem
+
+Given N - the initial population size, K - the number of robots disassembled after an unsuccessful vote and P - the required percentage of votes.
+
+Compute the number of times the vote will take place.
+Input
+
+The first line contains the number of test cases T, where 1 ≤ T ≤ 100
+
+Each case is a single line with three space-separated integers N K P
+
+0 < K ≤ N ≤ 1'000'000'000'000; 0 < P ≤ 100
+Output
+
+For test case i, numbered from 1 to T, output "Case #i: ", followed by a single integer, the number of times the emperor will have to call a vote before getting reelected.
+Example
+
+In the first case we have three robots. Two of them are facing disassembly, so they will vote for the emperor. The third robot will survive even if he abstains in the first round, so he doesn't vote. But two out of three is not enough to reach the 75% minimum, so the election proceeds to a second round. The election ends when the single remaining robot casts a vote for the emperor.
+
+In the second case again two robots are in immediate danger, but the next two robots are forced to vote as well, otherwise they would end up in the same situation as in the first example case. Now with the 4 out of 5 casting the vote the election successfully ends.
+Example input · Download
+
+
+5
+3 2 75
+5 2 75
+75 8 20
+30 15 10
+1234 7 44
+
+Example output · Download
+Case #1: 2
+Case #2: 1
+Case #3: 2
+Case #4: 1
+Case #5: 60

@@ -1,0 +1,312 @@
+import static java.lang.Math.min;
+import static java.util.Arrays.fill;
+import static java.util.Arrays.sort;
+
+import java.io.*;
+import java.util.*;
+
+public class Entertainers {
+
+	static void solve() throws IOException {
+		int tests = nextInt();
+		for (int test = 1; test <= tests; test++) {
+			int n = nextInt(), k = nextInt(), c = nextInt();
+			int x1 = nextInt(), a1 = nextInt(), b1 = nextInt(), m1 = nextInt();
+			int x2 = nextInt(), a2 = nextInt(), b2 = nextInt(), m2 = nextInt();
+			int[][] r = generateR(n, x1, a1, b1, m1, x2, a2, b2, m2);
+			long ourCoins = solve(n, k, c, r);
+			out.println("Case #" + test + ": " + ourCoins);
+			System.out.println("passed " + test + "/" + tests);
+		}
+	}
+
+	static int[][] generateR(int n, int x1, int a1, int b1, int m1, int x2,
+			int a2, int b2, int m2) {
+		int[] f1 = generateInput(x1, a1, b1, m1);
+		int[] f2 = generateInput(x2, a2, b2, m2);
+		int[][] r = new int[n][n];
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				if (i == j) {
+					continue;
+				}
+				if (i > j) {
+					r[i][j] = f1[i * (i - 1) / 2 + j];
+				}
+				if (i < j) {
+					r[i][j] = f2[j * (j - 1) / 2 + i];
+				}
+			}
+		}
+		return r;
+	}
+
+	static final int BIG = 1111;
+
+	static int[] generateInput(int x1, int a1, int b1, int m1) {
+		int[] f = new int[BIG * BIG];
+		f[0] = x1;
+		for (int i = 1; i < f.length; i++) {
+			f[i] = (int) (((long) a1 * (long) f[i - 1] + (long) b1) % m1);
+		}
+		return f;
+	}
+
+	static long solve(int n, int k, int c, int[][] r) {
+		// System.out.println("Graph:");
+		// for (int i = 0; i < n; i++) {
+		// for (int j = 0; j < n; j++) {
+		// System.out.print(r[i][j] + " ");
+		// }
+		// System.out.println();
+		// }
+		// System.out.println("k = "+k+", c = "+c);
+
+		Edge[] edges = new Edge[n * (n - 1)];
+
+		int cnt = 0;
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				if (i == j) {
+					continue;
+				}
+				edges[cnt++] = new Edge(i, j, r[i][j]);
+			}
+		}
+
+		Arrays.sort(edges);
+
+		int[] stronglyConnectedComponent = new int[n];
+		int menInKbestComponents = k;
+		boolean[] hasOutgoingEdge = new boolean[n];
+
+		for (int i = 0; i < n; i++) {
+			stronglyConnectedComponent[i] = i;
+			hasOutgoingEdge[i] = false;
+		}
+
+		int edgesPointer = edges.length - 1;
+
+		boolean[][] graph = new boolean[n][n];
+
+		long bestAnswer = Long.MAX_VALUE;
+
+		while (edgesPointer >= 0) {
+			int donationCost = edges[edgesPointer].rValue;
+			if (menInKbestComponents < 0) {
+				break;
+			}
+			// System.out.println("donation: "+donationCost+", "+menInKbestComponents);
+
+			long currentAnswer = (long) donationCost
+					+ (long) menInKbestComponents * (long) c;
+
+			bestAnswer = min(bestAnswer, currentAnswer);
+
+			int wasEdgesPointer = edgesPointer;
+
+			while (edgesPointer >= 0
+					&& edges[edgesPointer].rValue == donationCost) {
+				--edgesPointer;
+			}
+
+			boolean anyChanged = false;
+			for (int i = edgesPointer + 1; i <= wasEdgesPointer; i++) {
+				anyChanged |= !hasOutgoingEdge[stronglyConnectedComponent[edges[i].u]]
+						&& stronglyConnectedComponent[edges[i].u] != stronglyConnectedComponent[edges[i].v];
+				graph[edges[i].u][edges[i].v] = true;
+			}
+
+			if (anyChanged) {
+				int componentsCount = recalcComponents(
+						stronglyConnectedComponent, graph);
+				hasOutgoingEdge = calculateHasOutgoingEdge(
+						stronglyConnectedComponent, componentsCount, graph);
+				menInKbestComponents = sumOfKbest(stronglyConnectedComponent,
+						hasOutgoingEdge, k);
+			}
+		}
+		// for (int i = 0; i < n; i++) {
+		// for (int j = 0; j < n; j++) {
+		// System.out.print(graph[i][j]+" ");
+		// }
+		// System.out.println();
+		// }
+		// System.out.println(Arrays.toString(stronglyConnectedComponent)+" "+menInKbestComponents);
+
+		if (menInKbestComponents >= 0) {
+			long donationCost = 0;
+			long currentAnswer = (long) donationCost
+					+ (long) menInKbestComponents * (long) c;
+			// System.out.println("donation: "+donationCost+", "+menInKbestComponents);
+
+			bestAnswer = min(bestAnswer, currentAnswer);
+		}
+
+		return bestAnswer;
+	}
+
+	private static int sumOfKbest(int[] stronglyConnectedComponent,
+			boolean[] hasOutgoingEdge, int k) {
+		if (hasOutgoingEdge.length < k) {
+			return -1;
+		}
+		int[] size = new int[hasOutgoingEdge.length];
+		int n = stronglyConnectedComponent.length;
+		for (int i = 0; i < n; i++) {
+			++size[stronglyConnectedComponent[i]];
+		}
+		for (int i = 0; i < hasOutgoingEdge.length; i++) {
+			if (hasOutgoingEdge[i]) {
+				size[i] = n + 1;
+			}
+		}
+		sort(size);
+		if (size[k - 1] == n + 1) {
+			return -1;
+		}
+		int sum = 0;
+		for (int i = 0; i < k; i++) {
+			sum += size[i];
+		}
+		return sum;
+	}
+
+	private static boolean[] calculateHasOutgoingEdge(
+			int[] stronglyConnectedComponent, int componentsCount,
+			boolean[][] graph) {
+		boolean[] hasOutgoingEdge = new boolean[componentsCount];
+		int n = graph.length;
+		for (int i = 0; i < n; i++) {
+			int u = stronglyConnectedComponent[i];
+			if (hasOutgoingEdge[u]) {
+				continue;
+			}
+			boolean[] g = graph[i];
+			for (int j = 0; j < n; j++) {
+				if (g[j] && stronglyConnectedComponent[j] != u) {
+					hasOutgoingEdge[u] = true;
+					break;
+				}
+			}
+		}
+		return hasOutgoingEdge;
+	}
+
+	private static int recalcComponents(int[] stronglyConnectedComponent,
+			boolean[][] graph) {
+		return StronglyConnectedComponentsFinder.findComponents(graph,
+				stronglyConnectedComponent);
+	}
+
+	static class StronglyConnectedComponentsFinder {
+		static boolean[][] graph;
+		static boolean[] visited;
+		static int[] order;
+		static int[] component;
+		static int n;
+
+		static int findComponents(boolean[][] graph,
+				int[] stronglyConnectedComponent) {
+			StronglyConnectedComponentsFinder.graph = graph;
+			StronglyConnectedComponentsFinder.component = stronglyConnectedComponent;
+			n = stronglyConnectedComponent.length;
+			order = new int[n];
+			visited = new boolean[n];
+
+			time = 0;
+			for (int i = 0; i < n; i++) {
+				if (!visited[i]) {
+					dfs1(i);
+				}
+			}
+
+			fill(visited, false);
+			time = 0;
+
+			for (int i = n - 1; i >= 0; --i) {
+				int u = order[i];
+				if (!visited[u]) {
+					dfs2(u);
+					time++;
+				}
+			}
+			return time;
+		}
+
+		private static void dfs2(int u) {
+			visited[u] = true;
+			component[u] = time;
+			for (int v = 0; v < n; v++) {
+				if (!graph[v][u] || visited[v]) {
+					continue;
+				}
+				dfs2(v);
+			}
+		}
+
+		static int time;
+
+		private static void dfs1(int u) {
+			visited[u] = true;
+			for (int v = 0; v < n; v++) {
+				if (!graph[u][v] || visited[v]) {
+					continue;
+				}
+				dfs1(v);
+			}
+			order[time++] = u;
+		}
+
+	}
+
+	static class Edge implements Comparable<Edge> {
+		int u, v;
+		int rValue;
+
+		public Edge(int u, int v, int rValue) {
+			this.u = u;
+			this.v = v;
+			this.rValue = rValue;
+		}
+
+		@Override
+		public int compareTo(Edge o) {
+			return rValue - o.rValue;
+		}
+	}
+
+	static BufferedReader br;
+	static PrintWriter out;
+	static StringTokenizer st;
+
+	public static void main(String[] args) throws Exception {
+		br = new BufferedReader(new FileReader("entertainers.in"));
+		out = new PrintWriter("entertainers.out");
+		solve();
+		out.close();
+	}
+
+	static String nextToken() throws IOException {
+		while (st == null || !st.hasMoreTokens()) {
+			String line = br.readLine();
+			if (line == null) {
+				return null;
+			}
+			st = new StringTokenizer(line);
+		}
+		return st.nextToken();
+	}
+
+	static int nextInt() throws IOException {
+		return Integer.parseInt(nextToken());
+	}
+
+	static long nextLong() throws IOException {
+		return Long.parseLong(nextToken());
+	}
+
+	static double nextDouble() throws IOException {
+		return Double.parseDouble(nextToken());
+	}
+}

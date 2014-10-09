@@ -1,0 +1,33 @@
+#include<cstdio>
+#include<algorithm>
+using namespace std;
+typedef long long ll;
+ll getS2(ll N,ll K,ll P,ll S)
+{
+	while(1)
+	{
+		ll x=(S*P-1)/K/(100-P)+1;
+		ll S2=S+x*K;
+		if(S2>N)return S;
+		S=S2;
+	}
+}
+int main()
+{
+	int _;scanf("%d",&_);
+	for(int __=1;__<=_;__++)
+	{
+		ll N,K;int P;
+		scanf("%I64d%I64d%d",&N,&K,&P);
+		ll S=0;
+		if(K*100/P>=N)S=N;
+		ll N2=K*100/P;
+		ll N3=N2/K*K+N%K;
+		if(N3>N2)N3-=K;
+		N3=min(N3,N);
+		S=max(S,N3);
+		if(P<100)S=max(S,getS2(N,K,P,S));
+		printf("Case #%d: %I64d\n",__,(N-S)/K+1);
+	}
+	return 0;
+}

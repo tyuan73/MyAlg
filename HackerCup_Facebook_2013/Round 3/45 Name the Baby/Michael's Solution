@@ -1,0 +1,222 @@
+import static java.math.BigInteger.ZERO;
+import static java.math.BigInteger.valueOf;
+import static java.util.Arrays.fill;
+
+import java.io.*;
+import java.math.BigInteger;
+import java.util.*;
+
+public class Baby {
+
+	static void solve() throws IOException {
+		int tests = nextInt();
+		for (int test = 1; test <= tests; test++) {
+			int length = nextInt();
+			long k = nextLong();
+			int n = nextInt();
+			String[] strings = new String[n];
+			for (int i = 0; i < n; i++) {
+				strings[i] = nextToken();
+			}
+			String babyName = solve(length, k, strings);
+			out.print("Case #"+test+": ");
+			if (babyName == null) {
+				out.println("unnamed baby :(");
+			} else {
+				out.println(babyName);
+			}
+			System.out.println("passed "+test+"/"+tests);
+		}
+	}
+
+	static String[] removeUseless(String[] strings) {
+		List<String> usefulList = new ArrayList<>();
+		for (int i = 0; i < strings.length; i++) {
+			String s = strings[i];
+			boolean useful = true;
+			for (int j = 0; j < strings.length; j++) {
+				if (j == i) {
+					continue;
+				}
+				if (strings[i].indexOf(strings[j]) >= 0) {
+					if (!strings[i].equals(strings[j]) || i > j) {
+						useful = false;
+					}
+				}
+			}
+			if (!useful) {
+				continue;
+			}
+			usefulList.add(s);
+		}
+		return (String[]) usefulList.toArray(new String[usefulList.size()]);
+	}
+
+	private static String solve(int length, long k, String[] strings) {
+		Set<String> allPossible = new HashSet<>();
+		strings = removeUseless(strings);
+		for (int i = 0; i < strings.length; i++) {
+			String s = strings[i];
+			for (int prefix = 0; prefix <= s.length(); prefix++) {
+				allPossible.add(s.substring(0, prefix));
+			}
+		}
+
+		List<String> list = new ArrayList<>(allPossible);
+		Map<String, Integer> id = new HashMap<String, Integer>();
+		for (int i = 0; i < list.size(); i++) {
+			id.put(list.get(i), i);
+		}
+		int totalPossible = list.size();
+		boolean[] isGood = new boolean[totalPossible];
+
+		for (String s : strings) {
+			isGood[id.get(s)] = true;
+		}
+
+		int[][] to = new int[totalPossible][26];
+		for (int i = 0; i < totalPossible; i++) {
+			String s = list.get(i);
+			if (isGood[i]) {
+				continue;
+			}
+			for (int c = 0; c < 26; c++) {
+				String goTo = s + (char) ('a' + c);
+				for (;; goTo = goTo.substring(1)) {
+					if (id.containsKey(goTo)) {
+						int val = id.get(goTo);
+						to[i][c] = val;
+						break;
+					}
+				}
+			}
+		}
+
+		BigInteger[][] dp = new BigInteger[length + 1][totalPossible];
+		for (BigInteger[] d : dp) {
+			fill(d, ZERO);
+		}
+
+		for (int i = 0; i < totalPossible; i++) {
+			if (!isGood[i]) {
+				dp[0][i] = BigInteger.ONE;
+			}
+		}
+		for (int len = 1; len <= length; len++) {
+			for (int fromState = 0; fromState < totalPossible; fromState++) {
+				if (isGood[fromState]) {
+					continue;
+				}
+				for (int go = 0; go < 26; go++) {
+					dp[len][fromState] = add(dp[len][fromState],
+							dp[len - 1][to[fromState][go]]);
+				}
+			}
+		}
+
+		--k;
+		BigInteger bigK = BigInteger.valueOf(k);
+
+		String answer = "";
+		String curString = "";
+
+		BigInteger totalBad = dp[length][id.get("")];
+		BigInteger totalGood = valueOf(26).pow(length).subtract(totalBad);
+
+		if (totalGood.compareTo(bigK) <= 0) {
+			return null;
+		}
+
+		System.out.println("total bad: " + totalBad);
+		System.out.println("total good: " + totalGood);
+
+		boolean wasThing = false;
+		for (int pos = 0; pos < length; pos++) {
+			int gotValue = -1;
+			for (int value = 0; value < 26; value++) {
+				BigInteger badStrings;
+				int val;
+				if (!wasThing) {
+					String goTo = curString + (char) ('a' + value);
+					for (; !id.containsKey(goTo); goTo = goTo.substring(1))
+						;
+					val = id.get(goTo);
+					badStrings = dp[length - pos - 1][val];
+				} else {
+					badStrings = ZERO;
+					val = 0;
+				}
+				BigInteger goodStrings = valueOf(26).pow(length - pos - 1)
+						.subtract(badStrings);
+				if (goodStrings.compareTo(bigK) <= 0) {
+					bigK = bigK.subtract(goodStrings);
+				} else {
+					gotValue = val;
+					answer += (char) ('a' + value);
+					break;
+				}
+			}
+			if (gotValue < 0) {
+				throw new AssertionError();
+			}
+			curString = list.get(gotValue);
+			if (isGood[gotValue]) {
+				wasThing = true;
+			}
+		}
+
+		if (bigK.signum() != 0) {
+			throw new AssertionError();
+		}
+		return answer;
+	}
+
+	static BigInteger add(BigInteger a, BigInteger b) {
+		return a.add(b);
+	}
+
+	//
+	// static final long INF = Long.MAX_VALUE / 2;
+	//
+	// static long add(long a, long b) {
+	// a += b;
+	// if (a >= INF) {
+	// a = INF;
+	// }
+	// return a;
+	// }
+
+	static BufferedReader br;
+	static PrintWriter out;
+	static StringTokenizer st;
+
+	public static void main(String[] args) throws Exception {
+		br = new BufferedReader(new FileReader("baby.in"));
+		out = new PrintWriter("baby.out");
+		solve();
+		out.close();
+	}
+
+	static String nextToken() throws IOException {
+		while (st == null || !st.hasMoreTokens()) {
+			String line = br.readLine();
+			if (line == null) {
+				return null;
+			}
+			st = new StringTokenizer(line);
+		}
+		return st.nextToken();
+	}
+
+	static int nextInt() throws IOException {
+		return Integer.parseInt(nextToken());
+	}
+
+	static long nextLong() throws IOException {
+		return Long.parseLong(nextToken());
+	}
+
+	static double nextDouble() throws IOException {
+		return Double.parseDouble(nextToken());
+	}
+}

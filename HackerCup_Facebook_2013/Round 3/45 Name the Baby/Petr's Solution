@@ -1,0 +1,158 @@
+import java.util.Map;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Set;
+import java.io.BufferedReader;
+import java.io.OutputStream;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
+import java.io.FileInputStream;
+import java.util.StringTokenizer;
+import java.io.InputStream;
+
+/**
+ * Built using CHelper plug-in
+ * Actual solution is at the top
+ */
+public class Main {
+	public static void main(String[] args) {
+		InputStream inputStream;
+		try {
+			inputStream = new FileInputStream("baby.in");
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+		OutputStream outputStream;
+		try {
+			outputStream = new FileOutputStream("baby.out");
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+		InputReader in = new InputReader(inputStream);
+		PrintWriter out = new PrintWriter(outputStream);
+		Baby solver = new Baby();
+		int testCount = Integer.parseInt(in.next());
+		for (int i = 1; i <= testCount; i++)
+			solver.solve(i, in, out);
+		out.close();
+	}
+}
+
+class Baby {
+    public void solve(int testNumber, InputReader in, PrintWriter out) {
+        int len = in.nextInt();
+        long k = in.nextLong();
+        int nanc = in.nextInt();
+        String[] ancestors = new String[nanc];
+        for (int i = 0; i < nanc; ++i) {
+            if (in.tokenizer.hasMoreTokens()) throw new RuntimeException();
+            ancestors[i] = in.nextLine();
+            for (int j = 0; j < ancestors[i].length(); ++j) {
+                char ch = ancestors[i].charAt(j);
+                if (ch < 'a' || ch > 'z') throw new RuntimeException();
+            }
+        }
+        Map<String, Integer> prefixes = new HashMap<String, Integer>();
+        prefixes.put("", 0);
+        for (String x : ancestors)
+            for (int i = 1; i <= x.length(); ++i) {
+                String s = x.substring(0, i);
+                if (prefixes.containsKey(s)) continue;
+                int id = prefixes.size();
+                prefixes.put(s, id);
+            }
+        int n = prefixes.size() + 1;
+        boolean[] finish = new boolean[n];
+        for (String x : prefixes.keySet()) {
+            int id = prefixes.get(x);
+            for (String y : ancestors) if (x.endsWith(y)) finish[id] = true;
+        }
+        if (finish[0]) throw new RuntimeException();
+        int[][] next = new int[n][26];
+        Arrays.fill(next[n - 1], n - 1);
+        for (String x : prefixes.keySet()) {
+            int id = prefixes.get(x);
+            if (finish[id]) continue;
+            for (char ch = 'a'; ch <= 'z'; ++ch) {
+                String xx = x + ch;
+                while (!prefixes.containsKey(xx))
+                    xx = xx.substring(1);
+                int did = prefixes.get(xx);
+                if (finish[did]) next[id][ch - 'a'] = n - 1; else next[id][ch - 'a'] = did;
+            }
+        }
+        long[][] ways = new long[len + 1][n];
+        ways[0][n - 1] = 1;
+        for (int pos = 1; pos <= len; ++pos) {
+            for (int state = 0; state < n; ++state) {
+                long w = 0;
+                for (int ch = 0; ch < 26; ++ch) {
+                    w += ways[pos - 1][next[state][ch]];
+                    if (w > k + 1) w = k + 1;
+                }
+                ways[pos][state] = w;
+            }
+        }
+        out.print("Case #" + testNumber + ": ");
+        if (ways[len][0] < k) {
+            out.println("unnamed baby :(");
+            return;
+        }
+        int cstate = 0;
+        for (int pos = len; pos >= 1; --pos) {
+            int ch;
+            for (ch = 0; ch < 26; ++ch) {
+                long cw = ways[pos - 1][next[cstate][ch]];
+                if (k <= cw) {
+                    cstate = next[cstate][ch];
+                    out.print((char) ('a' + ch));
+                    break;
+                }
+                k -= cw;
+            }
+            if (ch >= 26) throw new RuntimeException();
+        }
+        out.println();
+    }
+}
+
+class InputReader {
+    public BufferedReader reader;
+    public StringTokenizer tokenizer;
+
+    public InputReader(InputStream stream) {
+        reader = new BufferedReader(new InputStreamReader(stream));
+        tokenizer = null;
+    }
+
+    public String next() {
+        while (tokenizer == null || !tokenizer.hasMoreTokens()) {
+            try {
+                tokenizer = new StringTokenizer(reader.readLine());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return tokenizer.nextToken();
+    }
+
+    public int nextInt() {
+        return Integer.parseInt(next());
+    }
+
+    public long nextLong() {
+        return Long.parseLong(next());
+    }
+
+    public String nextLine() {
+        try {
+            return reader.readLine();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    }
+

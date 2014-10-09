@@ -1,0 +1,145 @@
+import java.io.*;
+import java.util.Arrays;
+import java.util.StringTokenizer;
+
+public class A {
+    FastScanner in;
+    PrintWriter out;
+
+    final static long MOD = 1_000_000_000 + 7;
+
+    class Matrix {
+        int n;
+        long[][] a;
+
+        Matrix(int n) {
+            this.n = n;
+            a = new long[n][n];
+        }
+
+        Matrix mul(Matrix m) {
+            Matrix r = new Matrix(n);
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    for (int k = 0; k < n; k++) {
+                        r.a[i][j] = (r.a[i][j] + a[i][k] * m.a[k][j]) % MOD;
+                    }
+                }
+            }
+            return r;
+        }
+
+        Matrix pow(long t) {
+            Matrix r = new Matrix(n);
+            for (int i = 0; i < n; i++) {
+                r.a[i][i] = 1;
+            }
+            Matrix a = this;
+            while (t > 0) {
+                if (t % 2 == 1) {
+                    r = r.mul(a);
+                }
+                a = a.mul(a);
+                t /= 2;
+            }
+            return r;
+        }
+    }
+
+
+    public void solve() throws IOException {
+        int testNo = in.nextInt();
+        for (int test = 1; test <= testNo; test++) {
+            long n = in.nextLong();
+            boolean[][] a = new boolean[10][10];
+            for (int i = 0; i < 10; i++) {
+                for (int j = 0; j < 10; j++) {
+                    a[i][j] = in.nextInt() == 0;
+                }
+            }
+
+            Matrix m = new Matrix(101);
+            for (int i = 0; i < 10; i++) {
+                for (int j = 0; j < 10; j++) {
+                    for (int k = 0; k < 10; k++) {
+                        if (a[j][k] && a[i][k]) {
+                            m.a[i * 10 + j][j * 10 + k] = 1;
+                        }
+                    }
+                }
+            }
+            for (int i = 0; i < 101; i++) {
+                m.a[i][100] = 1;
+            }
+
+            m = m.pow(n - 1);
+
+            long[] v = new long[101];
+            for (int i = 1; i < 10; i++) {
+                for (int j = 0; j < 10; j++) {
+                    if (a[i][j]) {
+                        v[i * 10 + j] = 1;
+                    }
+                }
+            }
+
+            long[] w = new long[101];
+            for (int i = 0; i < 101; i++) {
+                for (int j = 0; j < 101; j++) {
+                    w[j] = (w[j] + v[i] * m.a[i][j]) % MOD;
+                }
+            }
+
+            long ans = (w[100] + 9) % MOD;
+
+            System.out.println("Case #" + test + ": " + ans);
+            out.println("Case #" + test + ": " + ans);
+        }
+    }
+
+    public void run() {
+        try {
+            in = new FastScanner(new File("A.in"));
+            out = new PrintWriter(new File("A.out"));
+
+            solve();
+
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] arg) {
+        new A().run();
+    }
+
+    static class FastScanner {
+        BufferedReader br;
+        StringTokenizer st;
+
+        FastScanner(File file) throws IOException {
+            br = new BufferedReader(new FileReader(file));
+        }
+
+        String next() {
+            while (st == null || !st.hasMoreTokens()) {
+                try {
+                    st = new StringTokenizer(br.readLine());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return "";
+                }
+            }
+            return st.nextToken();
+        }
+
+        int nextInt() {
+            return Integer.parseInt(next());
+        }
+
+        long nextLong() {
+            return Long.parseLong(next());
+        }
+    }
+}

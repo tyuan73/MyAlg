@@ -1,0 +1,90 @@
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.OutputStream;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
+import java.io.FileInputStream;
+import java.util.StringTokenizer;
+import java.io.InputStream;
+
+/**
+ * Built using CHelper plug-in
+ * Actual solution is at the top
+ */
+public class Main {
+	public static void main(String[] args) {
+		InputStream inputStream;
+		try {
+			inputStream = new FileInputStream("cake.in");
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+		OutputStream outputStream;
+		try {
+			outputStream = new FileOutputStream("cake.out");
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+		InputReader in = new InputReader(inputStream);
+		PrintWriter out = new PrintWriter(outputStream);
+		Cake solver = new Cake();
+		int testCount = Integer.parseInt(in.next());
+		for (int i = 1; i <= testCount; i++)
+			solver.solve(i, in, out);
+		out.close();
+	}
+}
+
+class Cake {
+    public void solve(int testNumber, InputReader in, PrintWriter out) {
+        int n = in.nextInt();
+        long[] a = new long[n];
+        long sum = 0;
+        for (int i = 0; i < n; ++i) {
+            a[i] = in.nextInt();
+            sum += a[i] + 1;
+        }
+        long nv = 2 * n;
+        long nmiddle = 0;
+        long ne = 2 * n;
+        for (int i = 0; i < n; ++i) {
+            nv += a[i];
+            for (int j = 0; j <= a[i]; ++j) {
+                long middles = (sum - (a[i] + 1)) + Math.max(0, j - 1) + Math.max(0, a[i] - j - 1);
+                nmiddle += middles;
+                ne += middles + 1;
+            }
+        }
+        if (nmiddle % 2 != 0) throw new RuntimeException();
+        long res = 2 + ne - nv - nmiddle / 2;
+        out.println("Case #" + testNumber + ": " + (res - 1));
+    }
+}
+
+class InputReader {
+    BufferedReader reader;
+    StringTokenizer tokenizer;
+
+    public InputReader(InputStream stream) {
+        reader = new BufferedReader(new InputStreamReader(stream));
+        tokenizer = null;
+    }
+
+    public String next() {
+        while (tokenizer == null || !tokenizer.hasMoreTokens()) {
+            try {
+                tokenizer = new StringTokenizer(reader.readLine());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return tokenizer.nextToken();
+    }
+
+    public int nextInt() {
+        return Integer.parseInt(next());
+    }
+
+    }
+

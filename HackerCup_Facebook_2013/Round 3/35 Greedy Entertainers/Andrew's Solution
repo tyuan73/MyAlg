@@ -1,0 +1,298 @@
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.StringTokenizer;
+
+public class C {
+    FastScanner in;
+    PrintWriter out;
+
+    int n;
+    boolean[][] a;
+    boolean[] u;
+    int[] lord;
+    int lpos;
+    int[] col;
+    int cn;
+    boolean[] hasOut;
+    int[] cSize;
+
+    void dfs(int x) {
+        u[x] = true;
+        for (int y = 0; y < n; y++) {
+            if (!u[y] && a[x][y]) {
+                dfs(y);
+            }
+        }
+        lord[lpos++] = x;
+    }
+
+    int dfsr(int x, int c) {
+        u[x] = true;
+        int res = 1;
+        col[x] = c;
+        for (int y = 0; y < n; y++) {
+            if (!u[y] && a[y][x]) {
+                res += dfsr(y, c);
+            }
+        }
+        return res;
+    }
+
+    boolean[][] canGo;
+    int[] nin;
+    int[] nout;
+    int[][] vin;
+    int[][] vout;
+
+    void addGo(int u, int v) {
+        canGo[u][v] = true;
+        vin[v][nin[v]] = u;
+        nin[v]++;
+        vout[u][nout[u]] = v;
+        nout[u]++;
+        if (col[v] != col[u]) {
+            hasOut[col[u]] = true;
+        }
+    }
+
+    void canCome(int x, int y) {
+        for (int i = 0; i < nin[x]; i++) {
+            int u = vin[x][i];
+            if (!canGo[u][y]) {
+                addGo(u, y);
+                for (int j = 0; j < nout[y]; j++) {
+                    int v = vout[y][j];
+                    if (!canGo[u][v]) {
+                        addGo(u, v);
+                    }
+                }
+            }
+        }
+        for (int j = 0; j < nout[y]; j++) {
+            int v = vout[y][j];
+            if (!canGo[x][v]) {
+                addGo(x, v);
+            }
+        }
+        addGo(x, y);
+    }
+
+    void updateCC() {
+        Arrays.fill(u, false);
+        lpos = 0;
+        for (int i = 0; i < n; i++) {
+            if (!u[i]) {
+                dfs(i);
+            }
+        }
+        cn = 0;
+        Arrays.fill(u, false);
+        for (int i = 0; i < n; i++) {
+            int j = lord[n - 1 - i];
+            if (!u[j]) {
+                cSize[cn] = dfsr(j, cn);
+                cn++;
+            }
+        }
+        Arrays.fill(hasOut, false);
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (a[i][j] && col[i] != col[j]) {
+                    hasOut[col[i]] = true;
+                }
+            }
+        }
+    }
+
+    int[] goodC;
+    int k;
+    long c;
+    long pay;
+
+    boolean updateCost() {
+        int gn = 0;
+        for (int i = 0; i < cn; i++) {
+            if (!hasOut[i]) {
+                goodC[gn++] = cSize[i];
+            }
+        }
+        if (gn < k) {
+            return false;
+        }
+        Arrays.sort(goodC, 0, gn);
+        pay = 0;
+        for (int i = 0; i < k; i++) {
+            pay += c * goodC[i];
+        }
+        return true;
+    }
+
+    public void solve() throws IOException {
+        int testNo = in.nextInt();
+        for (int test = 1; test <= testNo; test++) {
+            long time = System.currentTimeMillis();
+
+            n = in.nextInt();
+            k = in.nextInt();
+            c = in.nextLong();
+            long x1 = in.nextLong();
+            long a1 = in.nextLong();
+            long b1 = in.nextLong();
+            long m1 = in.nextLong();
+            long[] f1 = new long[n * n];
+            f1[0] = x1;
+            for (int i = 1; i < f1.length; i++) {
+                f1[i] = (a1 * f1[i - 1] + b1) % m1;
+            }
+            long x2 = in.nextLong();
+            long a2 = in.nextLong();
+            long b2 = in.nextLong();
+            long m2 = in.nextLong();
+            long[] f2 = new long[n * n];
+            f2[0] = x2;
+            for (int i = 1; i < f2.length; i++) {
+                f2[i] = (a2 * f2[i - 1] + b2) % m2;
+            }
+
+            long[][] r = new long[n][n];
+            Event[] ev = new Event[n * n - n];
+            int en = 0;
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    if (i > j) {
+                        r[i][j] = f1[i * (i - 1) / 2 + j];
+                        ev[en++] = new Event(i, j, r[i][j]);
+                    }
+                    if (i < j) {
+                        r[i][j] = f2[j * (j - 1) / 2 + i];
+                        ev[en++] = new Event(i, j, r[i][j]);
+                    }
+                }
+            }
+
+            Arrays.sort(ev, new Comparator<Event>() {
+                @Override
+                public int compare(Event o1, Event o2) {
+                    return Long.compare(o2.r, o1.r);
+                }
+            });
+
+            long ans = k * c + ev[0].r;
+            cn = n;
+            canGo = new boolean[n][n];
+
+            a = new boolean[n][n];
+            u = new boolean[n];
+            lord = new int[n];
+            lpos = 0;
+            col = new int[n];
+            hasOut = new boolean[n];
+            cSize = new int[n];
+            goodC = new int[n];
+            for (int i = 0; i < n; i++) {
+                col[i] = i;
+                cSize[i] = 1;
+                canGo[i][i] = true;
+            }
+            nin = new int[n];
+            nout = new int[n];
+            vin = new int[n][n];
+            vout = new int[n][n];
+
+            search: for (int i = 0; i < en;) {
+                int j = i;
+                while (j < en && ev[j].r == ev[i].r) {
+                    int x = ev[j].u;
+                    int y = ev[j].v;
+                    a[x][y] = true;
+                    if (!canGo[x][y]) {
+                        canCome(x, y);
+                        if (canGo[y][x]) {
+                            updateCC();
+                        }
+                        if (!updateCost()) {
+                            break search;
+                        }
+                    }
+
+                    j++;
+                }
+
+                long donate = 0;
+                if (j < en) {
+                    donate = ev[j].r;
+                }
+//                System.out.println(donate + " " + pay);
+                if (donate + pay < ans) {
+                    ans = donate + pay;
+                }
+
+                i = j;
+            }
+
+            System.out.println("Case #" + test + ": " + ans);
+            out.println("Case #" + test + ": " + ans);
+            System.out.println(System.currentTimeMillis() - time);
+        }
+    }
+
+    class Event {
+        int u;
+        int v;
+        long r;
+
+        Event(int u, int v, long r) {
+            this.u = u;
+            this.v = v;
+            this.r = r;
+        }
+    }
+
+    public void run() {
+        try {
+            in = new FastScanner(new File("C.in"));
+            out = new PrintWriter(new File("C.out"));
+
+            solve();
+
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] arg) {
+        new C().run();
+    }
+
+    static class FastScanner {
+        BufferedReader br;
+        StringTokenizer st;
+
+        FastScanner(File file) throws IOException {
+            br = new BufferedReader(new FileReader(file));
+        }
+
+        String next() {
+            while (st == null || !st.hasMoreTokens()) {
+                try {
+                    st = new StringTokenizer(br.readLine());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return "";
+                }
+            }
+            return st.nextToken();
+        }
+
+        long nextLong() {
+            return Long.parseLong(next());
+        }
+
+        int nextInt() {
+            return Integer.parseInt(next());
+        }
+    }
+}

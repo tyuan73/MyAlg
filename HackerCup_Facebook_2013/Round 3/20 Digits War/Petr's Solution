@@ -1,0 +1,138 @@
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.OutputStream;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
+import java.io.FileInputStream;
+import java.util.StringTokenizer;
+import java.io.InputStream;
+
+/**
+ * Built using CHelper plug-in
+ * Actual solution is at the top
+ */
+public class Main {
+	public static void main(String[] args) {
+		InputStream inputStream;
+		try {
+			inputStream = new FileInputStream("digits.in");
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+		OutputStream outputStream;
+		try {
+			outputStream = new FileOutputStream("digits.out");
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+		InputReader in = new InputReader(inputStream);
+		PrintWriter out = new PrintWriter(outputStream);
+		Digits solver = new Digits();
+		int testCount = Integer.parseInt(in.next());
+		for (int i = 1; i <= testCount; i++)
+			solver.solve(i, in, out);
+		out.close();
+	}
+}
+
+class Digits {
+    static final long MODULO = (long) (1e9 + 7);
+
+    public void solve(int testNumber, InputReader in, PrintWriter out) {
+        long len = in.nextLong();
+        out.print("Case #" + testNumber + ": ");
+        int[][] m = new int[10][10];
+        for (int i = 0; i < 10; ++i)
+            for (int j = 0;j < 10; ++j)
+                m[i][j] = in.nextInt();
+        int[][] jump = new int[101][101];
+        jump[100][100] = 1;
+        for (int i = 0; i < 10; ++i)
+            for (int j = 0; j < 10; ++j)
+                for (int k = 0; k < 10; ++k) {
+                    if (m[i][k] == 0 && m[i][j] == 0)
+                        jump[i * 10 + j][j * 10 + k] = 1;
+                }
+        for (int i = 0; i < 10; ++i)
+            for (int j = 0; j < 10; ++j)
+                if (m[i][j] == 0 && i > 0)
+                    jump[100][i * 10 + j] = 1;
+        int[] start = new int[101];
+        start[100] = 9;
+        for (int i = 0; i < 10; ++i)
+            for (int j = 0; j < 10; ++j)
+                if (m[i][j] == 0)
+                    start[i * 10 + j] = 1;
+        --len;
+        if (len < 0) throw new RuntimeException();
+        while (len > 0) {
+            if (len % 2 != 0) {
+                start = mul(jump, start);
+            }
+            len /= 2;
+            jump = mul(jump, jump);
+        }
+        out.println(start[100]);
+    }
+
+    private int[][] mul(int[][] a, int[][] b) {
+        int n = a.length;
+        int[][] c = new int[n][n];
+        for (int i = 0; i < n; ++i)
+            for (int j = 0; j < n; ++j) {
+                long s = 0;
+                for (int k = 0; k < n; ++k) {
+                    s += a[i][k] * (long) b[k][j];
+                    if (s > 7e18) s %= MODULO;
+                }
+                c[i][j] = (int) (s % MODULO);
+            }
+        return c;
+    }
+
+    private int[] mul(int[][] a, int[] b) {
+        int n = a.length;
+        int[] c = new int[n];
+        for (int i = 0; i < n; ++i) {
+            long s = 0;
+            for (int j = 0; j < n; ++j) {
+                s += a[i][j] * (long) b[j];
+                if (s > 7e18) s %= MODULO;
+            }
+            c[i] = (int) (s % MODULO);
+        }
+        return c;
+    }
+}
+
+class InputReader {
+    BufferedReader reader;
+    StringTokenizer tokenizer;
+
+    public InputReader(InputStream stream) {
+        reader = new BufferedReader(new InputStreamReader(stream));
+        tokenizer = null;
+    }
+
+    public String next() {
+        while (tokenizer == null || !tokenizer.hasMoreTokens()) {
+            try {
+                tokenizer = new StringTokenizer(reader.readLine());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return tokenizer.nextToken();
+    }
+
+    public int nextInt() {
+        return Integer.parseInt(next());
+    }
+
+    public long nextLong() {
+        return Long.parseLong(next());
+    }
+
+    }
+

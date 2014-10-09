@@ -1,0 +1,108 @@
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.OutputStream;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
+import java.io.FileInputStream;
+import java.util.StringTokenizer;
+import java.io.InputStream;
+
+/**
+ * Built using CHelper plug-in
+ * Actual solution is at the top
+ */
+public class Main {
+	public static void main(String[] args) {
+		InputStream inputStream;
+		try {
+			inputStream = new FileInputStream("robo.in");
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+		OutputStream outputStream;
+		try {
+			outputStream = new FileOutputStream("robo.out");
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+		InputReader in = new InputReader(inputStream);
+		PrintWriter out = new PrintWriter(outputStream);
+		Robo solver = new Robo();
+		int testCount = Integer.parseInt(in.next());
+		for (int i = 1; i <= testCount; i++)
+			solver.solve(i, in, out);
+		out.close();
+	}
+}
+
+class Robo {
+    public void solve(int testNumber, InputReader in, PrintWriter out) {
+        long n = in.nextLong();
+        long k = in.nextLong();
+        int p = in.nextInt();
+        long numDeaths = doit(n, k, p);
+        out.println("Case #" + testNumber + ": " + (numDeaths + 1));
+    }
+
+    private long doit(long n, long k, int p) {
+        long curTotal = n % k;
+        long curDoomed = 0;
+        long numDeaths = 0;
+        while (curTotal < n) {
+            long num = p * curTotal - 100 * curDoomed;
+            long denom = 100 - p;
+            if (k * denom >= num) {
+                curDoomed = 0;
+                numDeaths = 0;
+                curTotal += k;
+            } else {
+                long whole = (n - curTotal) / k;
+                if (denom == 0) {
+                    curDoomed += whole * k;
+                    numDeaths += whole;
+                    curTotal += whole * k;
+                } else {
+                    long firstChange = (num + denom * k - 1) / (denom * k) - 1;
+                    if (firstChange < 1) throw new RuntimeException();
+                    firstChange = Math.min(firstChange, whole);
+                    curDoomed += firstChange * k;
+                    numDeaths += firstChange;
+                    curTotal += firstChange * k;
+                }
+            }
+        }
+        return numDeaths;
+    }
+}
+
+class InputReader {
+    BufferedReader reader;
+    StringTokenizer tokenizer;
+
+    public InputReader(InputStream stream) {
+        reader = new BufferedReader(new InputStreamReader(stream));
+        tokenizer = null;
+    }
+
+    public String next() {
+        while (tokenizer == null || !tokenizer.hasMoreTokens()) {
+            try {
+                tokenizer = new StringTokenizer(reader.readLine());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return tokenizer.nextToken();
+    }
+
+    public int nextInt() {
+        return Integer.parseInt(next());
+    }
+
+    public long nextLong() {
+        return Long.parseLong(next());
+    }
+
+    }
+

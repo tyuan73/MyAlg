@@ -1,0 +1,142 @@
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.OutputStream;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
+import java.io.FileInputStream;
+import java.util.StringTokenizer;
+import java.io.InputStream;
+
+/**
+ * Built using CHelper plug-in
+ * Actual solution is at the top
+ */
+public class Main {
+	public static void main(String[] args) {
+		InputStream inputStream;
+		try {
+			inputStream = new FileInputStream("perms.in");
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+		OutputStream outputStream;
+		try {
+			outputStream = new FileOutputStream("perms.out");
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+		InputReader in = new InputReader(inputStream);
+		PrintWriter out = new PrintWriter(outputStream);
+		Perms solver = new Perms();
+		int testCount = Integer.parseInt(in.next());
+		for (int i = 1; i <= testCount; i++)
+			solver.solve(i, in, out);
+		out.close();
+	}
+}
+
+class Perms {
+    public void solve(int testNumber, InputReader in, PrintWriter out) {
+        int n = in.nextInt();
+        int[] left = new int[n - 1];
+        int[] right = new int[n - 1];
+        for (int i = 0; i < n - 1; ++i) {
+            int a = in.nextInt();
+            char what = in.next().charAt(0);
+            int b = in.nextInt();
+            if (what == '<') {
+                left[i] = a;
+                right[i] = b;
+            } else if (what == '>') {
+                left[i] = b;
+                right[i] = a;
+            } else throw new RuntimeException();
+        }
+        out.println("Case #" + testNumber + ": " + doit(n, left, right));
+    }
+
+    static final long MODULO = 1000000007;
+
+    int n;
+    int[] left;
+    int[] right;
+    long[][] comb;
+
+    private long doit(int n, int[] left, int[] right) {
+        this.n = n;
+        this.left = left;
+        this.right = right;
+        comb = new long[n + 1][n + 1];
+        comb[0][0] = 1;
+        for (int i = 1; i <= n; ++i) {
+            comb[i][0] = 1;
+            for (int j = 1; j <= n; ++j) {
+                comb[i][j] = (comb[i - 1][j - 1] + comb[i - 1][j]) % MODULO;
+            }
+        }
+        long[] res = rec(0, -1);
+        long sum = 0;
+        for (long x : res) sum = (sum + x) % MODULO;
+        return sum;
+    }
+
+    private long[] rec(int at, int parent) {
+        long[] ans = new long[]{1};
+        for (int i = 0; i < left.length; ++i) {
+            if (left[i] == at && right[i] != parent) {
+                long[] child = rec(right[i], at);
+                long[] childSums = child.clone();
+                for (int j = childSums.length - 2; j >= 0; --j) {
+                    childSums[j] = (childSums[j] + childSums[j + 1]) % MODULO;
+                }
+                long[] newAns = new long[ans.length + child.length];
+                for (int oldAns = 0; oldAns < ans.length; ++oldAns)
+                    for (int dest = oldAns; dest < oldAns + child.length; ++dest) {
+                        newAns[dest] = (newAns[dest] + ans[oldAns] * childSums[dest - oldAns] % MODULO * comb[dest][oldAns] % MODULO * comb[newAns.length - 1 - dest][ans.length - 1 - oldAns]) % MODULO;
+                    }
+                ans = newAns;
+            } else if (right[i] == at && left[i] != parent) {
+                long[] child = rec(left[i], at);
+                long[] childSums = child.clone();
+                for (int j = 1; j < childSums.length; ++j) {
+                    childSums[j] = (childSums[j] + childSums[j - 1]) % MODULO;
+                }
+                long[] newAns = new long[ans.length + child.length];
+                for (int oldAns = 0; oldAns < ans.length; ++oldAns)
+                    for (int dest = oldAns + 1; dest <= oldAns + child.length; ++dest) {
+                        newAns[dest] = (newAns[dest] + ans[oldAns] * childSums[dest - oldAns - 1] % MODULO * comb[dest][oldAns] % MODULO * comb[newAns.length - 1 - dest][ans.length - 1 - oldAns]) % MODULO;
+                    }
+                ans = newAns;
+            }
+        }
+        return ans;
+    }
+}
+
+class InputReader {
+    BufferedReader reader;
+    StringTokenizer tokenizer;
+
+    public InputReader(InputStream stream) {
+        reader = new BufferedReader(new InputStreamReader(stream));
+        tokenizer = null;
+    }
+
+    public String next() {
+        while (tokenizer == null || !tokenizer.hasMoreTokens()) {
+            try {
+                tokenizer = new StringTokenizer(reader.readLine());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return tokenizer.nextToken();
+    }
+
+    public int nextInt() {
+        return Integer.parseInt(next());
+    }
+
+    }
+

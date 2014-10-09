@@ -1,0 +1,94 @@
+import java.io.*;
+import java.util.StringTokenizer;
+
+public class B {
+    FastScanner in;
+    PrintWriter out;
+
+    public void solve() throws IOException {
+        int testNo = in.nextInt();
+        for (int test = 1; test <= testNo; test++) {
+            long n = in.nextLong();
+            long k = in.nextLong();
+            long p = in.nextLong();
+            long q = 100;
+
+            long s = n % k;
+            if (s == 0) {
+                s = k;
+            }
+
+            long ans = 1;
+            while (s < n) {
+                long z = 0;
+                long upans = (n - s) / k;
+                long lwans = 0;
+                while (lwans < upans - 1) {
+                    long mans = (lwans + upans) / 2;
+                    z = mans * k;
+                    if (z * q >= p * (s + z)) {
+                        upans = mans;
+                    } else {
+                        lwans = mans;
+                    }
+                }
+                z = upans * k;
+                if (z * q >= p * (s + z)) {
+                    ans = 1;
+                } else {
+                    ans = upans + 1;
+                }
+                s = s + z;
+            }
+
+            System.out.println("Case #" + test + ": " + ans);
+            out.println("Case #" + test + ": " + ans);
+        }
+    }
+
+    public void run() {
+        try {
+            in = new FastScanner(new File("roboelection.txt"));
+            out = new PrintWriter(new File("roboelection.ans"));
+
+            solve();
+
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] arg) {
+        new B().run();
+    }
+
+    static class FastScanner {
+        BufferedReader br;
+        StringTokenizer st;
+
+        FastScanner(File file) throws IOException {
+            br = new BufferedReader(new FileReader(file));
+        }
+
+        String next() {
+            while (st == null || !st.hasMoreTokens()) {
+                try {
+                    st = new StringTokenizer(br.readLine());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return "";
+                }
+            }
+            return st.nextToken();
+        }
+
+        int nextInt() {
+            return Integer.parseInt(next());
+        }
+
+        long nextLong() {
+            return Long.parseLong(next());
+        }
+   }
+}
