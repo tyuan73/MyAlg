@@ -31,13 +31,13 @@ public class EgorKSolution {
         OutputStream outputStream = System.out;
         InputReader in = new InputReader(inputStream);
         OutputWriter out = new OutputWriter(outputStream);
-        DynamicSummation solver = new DynamicSummation();
+        DynamicSummation1 solver = new DynamicSummation1();
         solver.solve(1, in, out);
         out.close();
     }
 }
 
-class DynamicSummation {
+class DynamicSummation1 {
     public void solve(int testNumber, InputReader in, OutputWriter out) {
         int count = in.readInt();
         int[] from = new int[count - 1];

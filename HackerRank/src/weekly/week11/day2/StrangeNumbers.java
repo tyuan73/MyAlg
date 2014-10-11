@@ -59,13 +59,13 @@ import java.io.*;
 
 public class StrangeNumbers {
     static void go() {
-        long[] ans = new long[285];
+        long[] ans = new long[302];
         int count = 0;
         for (int i = 0; i <= 9; i++) {
             ans[count++] = i;
         }
 
-        for (int i = 2; i < 18; i++) {
+        for (int i = 2; i <= 18; i++) {
             int c = count;
             for (int j = 0; j < c; j++) {
                 long x = ans[j];
@@ -77,7 +77,7 @@ public class StrangeNumbers {
                 }
             }
         }
-        ans[284] = Long.MAX_VALUE;
+        ans[301] = Long.MAX_VALUE;
 
         Arrays.sort(ans);
 
@@ -88,18 +88,19 @@ public class StrangeNumbers {
             int i1 = 0;
             while (ans[i1] < l)
                 i1++;
-            int i2 = count - 1;
+            int i2 = 301;
             while (ans[i2] > r)
                 i2--;
             out.println(i2 - i1 + 1);
         }
 
+        for(long x : ans)
+            out.println(x);
         /* make sure there is no duplicated values in ans[]
         for(int i = 1; i < count; i++) {
             if (ans[i] == ans[i-1])
                 out.println("something is wrong: " + ans[i]);
-        }
-        */
+        }*/
     }
 
     static long getBound(int c) {
