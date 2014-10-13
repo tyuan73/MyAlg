@@ -56,10 +56,10 @@ public class StonesGame {
     static void go() {
         int[][] table = new int[32][33];
         table[1][1] = 1;
-        for(int i = 2; i < 32; i++) {
-            table[i][1] = 1 << (i-2);
-            for(int j = 2; j <= i; j++)
-                table[i][j] = (1 << (i-1)) - (1 << (i-j)) + 1;
+        for (int i = 2; i < 32; i++) {
+            table[i][1] = 1 << (i - 2);
+            for (int j = 2; j <= i; j++)
+                table[i][j] = (1 << (i - 1)) - (1 << (i - j)) + 1;
 
         }
 
@@ -85,7 +85,7 @@ public class StonesGame {
         */
 
         int t = in.nextInt();
-        while(t-- > 0) {
+        while (t-- > 0) {
             long n = in.nextLong();
 
             if ((n & 1) == 1) {
@@ -95,17 +95,17 @@ public class StonesGame {
 
             long p = 1;
             int max = 0;
-            while(p <= n) {
+            while (p <= n) {
                 p <<= 1;
                 max++;
             }
 
-            p>>=1;
-            long res = p-1; // default
+            p >>= 1;
+            long res = p - 1; // default
             int target = 1 ^ max;
 
             //System.out.println("p = " + p + " target =" + target + " max = " + max + " out for now = " + out);
-            for(int nim = 2; nim < max; nim++) {
+            for (int nim = 2; nim < max; nim++) {
                 int j = target ^ nim;
                 if (nim > j) {
                     res = Math.min(res, table[nim][nim - j]);
@@ -206,74 +206,6 @@ public class StonesGame {
         }
     }
 }
-
-/*
-public class StonesGame {
-    static int T = 9;
-
-    static public void main(String[] args) {
-
-        int[] stones = new int[T];
-        for(int i = 0; i < T; i++)
-            stones[i] = i;
-
-        for (int i = 1; i < T; i++) {
-            int pre = stones[i];
-            System.out.println("i= " + i + " pre = " + pre);
-            for (int j = 0; j <= pre/2; j++) {
-                System.out.println("j= " + j);
-                stones[i] = j;
-
-                if (!play(stones)) {
-                    System.out.println("win by removing " + (pre-j) + " from pile: " + i);
-                }
-            }
-            stones[i] = pre;
-        }
-
-        int x = 123456;
-        int y = x-1;
-        while(x > 0) {
-            y = x-1;
-            x = x & y;
-        }
-        System.out.println(y);
-    }
-
-    static boolean play(int[] s) {
-        //System.out.println("here");
-        if (isWin(s))
-            return true;
-
-        for (int i = 1; i < T; i++) {
-            if (s[i] == 0)
-                continue;
-            int pre = s[i];
-            for (int j = (pre+1)/2; j <= pre; j++) {
-                //System.out.println("j= " + j);
-                s[i] -= j;
-
-                if (!play(s)) {
-                    s[i] += j;
-                    return true;
-                }
-
-                s[i] += j;
-            }
-        }
-        return false;
-    }
-
-    static boolean isWin(int[] s) {
-        int rem = 0;
-        for(int i : s) {
-            if (i > 0)
-                rem++;
-        }
-        return rem == 1;
-    }
-}
-*/
 
 /*
 input:
