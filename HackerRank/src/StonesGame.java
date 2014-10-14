@@ -53,18 +53,13 @@ import java.io.Writer;
 import java.io.IOException;
 
 public class StonesGame {
-    static public void main(String[] args) {
-        InputStream inputStream = System.in;
-        OutputStream outputStream = System.out;
-        InputReader in = new InputReader(inputStream);
-        OutputWriter out = new OutputWriter(outputStream);
-
+    static void go() {
         int[][] table = new int[32][33];
         table[1][1] = 1;
-        for(int i = 2; i < 32; i++) {
-            table[i][1] = 1 << (i-2);
-            for(int j = 2; j <= i; j++)
-                table[i][j] = (1 << (i-1)) - (1 << (i-j)) + 1;
+        for (int i = 2; i < 32; i++) {
+            table[i][1] = 1 << (i - 2);
+            for (int j = 2; j <= i; j++)
+                table[i][j] = (1 << (i - 1)) - (1 << (i - j)) + 1;
 
         }
 
@@ -89,237 +84,128 @@ public class StonesGame {
           64 65 97 113 121 125 127 128
         */
 
-        int t = in.readInt();
-        while(t-- > 0) {
-            long n = in.readLong();
+        int t = in.nextInt();
+        while (t-- > 0) {
+            long n = in.nextLong();
 
             if ((n & 1) == 1) {
-                out.printLine(1);
+                out.println(1);
                 continue;
             }
 
             long p = 1;
             int max = 0;
-            while(p <= n) {
+            while (p <= n) {
                 p <<= 1;
                 max++;
             }
 
-            p>>=1;
-            long res = p-1; // default
+            p >>= 1;
+            long res = p - 1; // default
             int target = 1 ^ max;
 
             //System.out.println("p = " + p + " target =" + target + " max = " + max + " out for now = " + out);
-            for(int nim = 2; nim < max; nim++) {
+            for (int nim = 2; nim < max; nim++) {
                 int j = target ^ nim;
                 if (nim > j) {
                     res = Math.min(res, table[nim][nim - j]);
                     break;
                 }
             }
-            out.printLine(res);
+            out.println(res);
         }
         out.close();
     }
-}
 
-class InputReader {
 
-    private InputStream stream;
-    private byte[] buf = new byte[1024];
-    private int curChar;
-    private int numChars;
-    private SpaceCharFilter filter;
+    static InputReader in;
+    static PrintWriter out;
 
-    public InputReader(InputStream stream) {
-        this.stream = stream;
+    public static void main(String[] args) {
+        in = new InputReader(System.in);
+        out = new PrintWriter(System.out);
+
+        go();
+
+        out.close();
     }
 
-    public int read() {
-        if (numChars == -1)
-            throw new InputMismatchException();
-        if (curChar >= numChars) {
-            curChar = 0;
-            try {
-                numChars = stream.read(buf);
-            } catch (IOException e) {
+    static class InputReader {
+        private InputStream stream;
+        private byte[] buf = new byte[1024];
+        private int curChar;
+        private int numChars;
+
+        public InputReader(InputStream stream) {
+            this.stream = stream;
+        }
+
+        public int read() {
+            if (numChars == -1)
                 throw new InputMismatchException();
-            }
-            if (numChars <= 0)
-                return -1;
-        }
-        return buf[curChar++];
-    }
-
-    public int peek() {
-        if (numChars == -1)
-            return -1;
-        if (curChar >= numChars) {
-            curChar = 0;
-            try {
-                numChars = stream.read(buf);
-            } catch (IOException e) {
-                return -1;
-            }
-            if (numChars <= 0)
-                return -1;
-        }
-        return buf[curChar];
-    }
-
-    public int readInt() {
-        int c = read();
-        while (isSpaceChar(c))
-            c = read();
-        int sgn = 1;
-        if (c == '-') {
-            sgn = -1;
-            c = read();
-        }
-        int res = 0;
-        do {
-            if (c < '0' || c > '9')
-                throw new InputMismatchException();
-            res *= 10;
-            res += c - '0';
-            c = read();
-        } while (!isSpaceChar(c));
-        return res * sgn;
-    }
-
-    public long readLong() {
-        int c = read();
-        while (isSpaceChar(c))
-            c = read();
-        int sgn = 1;
-        if (c == '-') {
-            sgn = -1;
-            c = read();
-        }
-        long res = 0;
-        do {
-            if (c < '0' || c > '9')
-                throw new InputMismatchException();
-            res *= 10;
-            res += c - '0';
-            c = read();
-        } while (!isSpaceChar(c));
-        return res * sgn;
-    }
-
-    public boolean isSpaceChar(int c) {
-        if (filter != null)
-            return filter.isSpaceChar(c);
-        return isWhitespace(c);
-    }
-
-    public static boolean isWhitespace(int c) {
-        return c == ' ' || c == '\n' || c == '\r' || c == '\t' || c == -1;
-    }
-
-    public boolean isExhausted() {
-        int value;
-        while (isSpaceChar(value = peek()) && value != -1)
-            read();
-        return value == -1;
-    }
-
-    public interface SpaceCharFilter {
-        public boolean isSpaceChar(int ch);
-    }
-}
-
-class OutputWriter {
-    private final PrintWriter writer;
-
-    public OutputWriter(OutputStream outputStream) {
-        writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(outputStream)));
-    }
-
-    public OutputWriter(Writer writer) {
-        this.writer = new PrintWriter(writer);
-    }
-
-    public void close() {
-        writer.close();
-    }
-
-    public void printLine(long i) {
-        writer.println(i);
-    }
-
-    public void printLine(int i) {
-        writer.println(i);
-    }
-}
-
-/*
-public class StonesGame {
-    static int T = 9;
-
-    static public void main(String[] args) {
-
-        int[] stones = new int[T];
-        for(int i = 0; i < T; i++)
-            stones[i] = i;
-
-        for (int i = 1; i < T; i++) {
-            int pre = stones[i];
-            System.out.println("i= " + i + " pre = " + pre);
-            for (int j = 0; j <= pre/2; j++) {
-                System.out.println("j= " + j);
-                stones[i] = j;
-
-                if (!play(stones)) {
-                    System.out.println("win by removing " + (pre-j) + " from pile: " + i);
+            if (curChar >= numChars) {
+                curChar = 0;
+                try {
+                    numChars = stream.read(buf);
+                } catch (IOException e) {
+                    throw new InputMismatchException();
                 }
+                if (numChars <= 0)
+                    return -1;
             }
-            stones[i] = pre;
+            return buf[curChar++];
         }
 
-        int x = 123456;
-        int y = x-1;
-        while(x > 0) {
-            y = x-1;
-            x = x & y;
+        public int nextInt() {
+            return (int) nextLong();
         }
-        System.out.println(y);
-    }
 
-    static boolean play(int[] s) {
-        //System.out.println("here");
-        if (isWin(s))
-            return true;
+        public long nextLong() {
+            int c = read();
+            while (isSpaceChar(c))
+                c = read();
+            int sgn = 1;
+            if (c == '-') {
+                sgn = -1;
+                c = read();
+            }
+            long res = 0;
+            do {
+                if (c < '0' || c > '9')
+                    throw new InputMismatchException();
+                res *= 10;
+                res += c - '0';
+                c = read();
+            } while (!isSpaceChar(c));
+            return res * sgn;
+        }
 
-        for (int i = 1; i < T; i++) {
-            if (s[i] == 0)
-                continue;
-            int pre = s[i];
-            for (int j = (pre+1)/2; j <= pre; j++) {
-                //System.out.println("j= " + j);
-                s[i] -= j;
+        public String nextString() {
+            int c = read();
+            while (isSpaceChar(c))
+                c = read();
+            StringBuilder sb = new StringBuilder(1024);
+            do {
+                sb.append((char) c);
+                c = read();
+            } while (!isSpaceChar(c));
+            return sb.toString();
+        }
 
-                if (!play(s)) {
-                    s[i] += j;
+        public static boolean isSpaceChar(int c) {
+            switch (c) {
+                case -1:
+                case ' ':
+                case '\n':
+                case '\r':
+                case '\t':
                     return true;
-                }
-
-                s[i] += j;
+                default:
+                    return false;
             }
         }
-        return false;
-    }
-
-    static boolean isWin(int[] s) {
-        int rem = 0;
-        for(int i : s) {
-            if (i > 0)
-                rem++;
-        }
-        return rem == 1;
     }
 }
-*/
 
 /*
 input:
