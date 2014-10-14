@@ -1,7 +1,8 @@
-#if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
+package weekly.week11.day4;
 
-
-#parse("File Header.java")
+/**
+ * Created by yuantian on 10/14/14.
+ */
 
 /*
 
@@ -10,20 +11,56 @@
 import java.util.*;
 import java.io.*;
 
-public class ${NAME} {
+public class TrainingTheArmy {
     static void go() {
+        int n = in.nextInt();
         int t = in.nextInt();
-        long l = in.nextLong();
-        String s = in.nextString();
-        out.print(t);
-        out.println();
-        out.println(t);
-        out.print(l);
-        out.println();
-        out.println(l);
-        out.print(s);
-        out.println();
-        out.println(s);
+        int[][] g = new int[n + t + 2][n + t + 2];
+        for (int i = 1; i <= n; i++) {
+            g[0][i] = in.nextInt();
+            g[i][n + t + 1] = 1;
+        }
+
+        for (int i = n + 1; i <= n + t; i++) {
+            int a = in.nextInt();
+            for (int j = 0; j < a; j++) {
+                int from = in.nextInt();
+                g[from][i] = 1;
+            }
+
+            int b = in.nextInt();
+            for (int j = 0; j < b; j++) {
+                int to = in.nextInt();
+                g[i][to] = 1;
+            }
+        }
+
+        int count = 0;
+        boolean[] visited = new boolean[n + t + 2];
+        while (dfs(0, g, visited)) {
+            count++;
+            Arrays.fill(visited, false);
+        }
+
+        out.println(count);
+    }
+
+    static boolean dfs(int from, int[][] g, boolean[] visited) {
+        if (from == g.length - 1)
+            return true;
+
+        visited[from] = true;
+        for (int i = 0; i < g.length; i++) {
+            if (visited[i] || g[from][i] == 0)
+                continue;
+            if (dfs(i, g, visited)) {
+                g[from][i]--;
+                g[i][from]++;
+                return true;
+            }
+        }
+
+        return false;
     }
 
     static InputReader in;
@@ -77,7 +114,6 @@ public class ${NAME} {
                 ret[i] = nextLong();
             return ret;
         }
-
 
         public int nextInt() {
             return (int) nextLong();
