@@ -50,7 +50,7 @@ public class SherlockAndSquare {
         int t = in.nextInt();
         while (t-- > 0) {
             int n = in.nextInt();
-            out.println(pow(n + 1) + 2);
+            out.println((pow(n + 1) + 2) % P);
         }
     }
 
