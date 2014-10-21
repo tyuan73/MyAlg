@@ -1,4 +1,4 @@
-package problem440.b;
+package problemset440;
 
 /**
  * Created by yuantian on 6/12/14.
@@ -6,7 +6,7 @@ package problem440.b;
 
 import java.util.*;
 
-public class Balancer {
+public class Balancer440B {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
 

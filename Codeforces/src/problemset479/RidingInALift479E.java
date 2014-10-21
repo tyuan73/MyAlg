@@ -1,91 +1,53 @@
-/**
- * Created by yuantian on 10/20/14.
+package problemset479; /**
+ * Created with IntelliJ IDEA.
+ * User: yuantian
+ * Date: 10/20/14
+ * Time: 10:54 PM
+ * Copyright (c) 2013 All Right Reserved, http://github.com/tyuan73
  */
 
-/*
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.InputMismatchException;
 
-*/
+public class RidingInALift479E {
+    static long P = 1000000007;
 
-import java.util.*;
-import java.io.*;
-
-public class LongJumps479D {
     static void go() {
         int n = in.nextInt();
-        int l = in.nextInt();
-        int x = in.nextInt();
-        int y = in.nextInt();
-        int[] a = in.nextIntArray(n);
-        boolean found1 = false;
-        for (int i = 0; i < n; i++) {
-            if (bseach(a, a[i] + x, i) > 0) {
-                found1 = true;
-                break;
-            }
+        int a = in.nextInt();
+        int b = in.nextInt();
+        int k = in.nextInt();
+        int max = n;
+        if (b > a) {
+            a = b - a;
+            max = b;
+        } else {
+            max -= b - 1;
+            a -= b;
         }
+        long[] dp = new long[max];
+        Arrays.fill(dp, 1);
+        dp[0] = dp[1] = 0;
 
-        boolean found2 = false;
-        for (int i = 0; i < n; i++) {
-            if (bseach(a, a[i] + y, i) > 0) {
-                found2 = true;
-                break;
-            }
-        }
-
-        // if both found
-        if (found1 && found2) {
-            out.println(0);
-            return;
-        }
-        // if only one found
-        if (found1 || found2) {
-            out.println(1);
-            out.println(found1 ? y : x);
-            return;
-        }
-
-        // both not found
-        // if found (x+y)
-        for (int i = 0; i < n; i++) {
-            if (bseach(a, a[i] + x + y, i) > 0) {
-                out.println(1);
-                out.println(a[i] + x);
-                return;
-            }
-        }
-
-        // if found (y-x)
-        for (int i = 0; i < n; i++) {
-            if (bseach(a, a[i] + y - x, i) > 0) {
-                if (a[i] - x >= 0) {
-                    out.println(1);
-                    out.println(a[i] - x);
-                    return;
+        for (int j = 1; j <= k; j++) {
+            long subtotal = j == 1 ? 1 : 0;
+            for (int i = 2; i < max; i++) {
+                if (i * 2 - 2 < max) {
+                    subtotal += dp[i * 2 - 2];
+                    if (i * 2 - 1 < max) {
+                        subtotal += dp[i * 2 - 1];
+                    }
                 }
-                if (a[i] + y < l) {
-                    out.println(1);
-                    out.println(a[i] + y);
-                    return;
-                }
+                subtotal %= P;
+                dp[i] = subtotal - dp[i];
+                if (dp[i] < 0)
+                    dp[i] += P;
             }
         }
-        // otherwise
-        out.println(2);
-        out.println(x + " " + y);
-    }
-
-    static int bseach(int[] a, int x, int from) {
-        int l = from, r = a.length - 1;
-        while (l <= r) {
-            int m = (l + r) / 2;
-            if (a[m] == x)
-                return m;
-            else if (a[m] > x)
-                r = m - 1;
-            else
-                l = m + 1;
-        }
-        return -1;
+        out.println(dp[a]);
     }
 
     static InputReader in;

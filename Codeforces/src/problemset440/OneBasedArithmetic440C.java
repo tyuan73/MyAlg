@@ -1,4 +1,4 @@
-package problem440.c;
+package problemset440;
 
 /**
  * Created by yuantian on 6/12/14.
@@ -6,7 +6,7 @@ package problem440.c;
 
 import java.util.*;
 
-public class OneBasedArithmetic {
+public class OneBasedArithmetic440C {
     static long[] t = null;
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
