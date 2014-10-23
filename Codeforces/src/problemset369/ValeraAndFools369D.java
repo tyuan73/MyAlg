@@ -8,22 +8,33 @@ package problemset369;
 
 */
 
-import java.util.*;
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.util.InputMismatchException;
 
 public class ValeraAndFools369D {
     static int n = 0;
     static int k = 0;
-    static int[][] dp = null;
+    static boolean[][] dp = null;
     static boolean[][] s = null;
     static int[] p = null;
+    static int ans = 0;
 
     static void go() {
         n = in.nextInt();
         k = in.nextInt();
-        p = in.nextIntArray(n);
-        dp = new int[n + 3][n + 3];
-        s = new boolean[n + 3][2];
+        //p = in.nextIntArray(n);
+        p = new int[n];
+        for(int i = 0; i < n; i++)
+            p[i] = 1;
+
+        if (n == 1) {
+            out.println(1);
+            return;
+        }
+        dp = new boolean[n+1][n+1];
+        s = new boolean[n + 1][2];
         for (int i = n - 1; i >= 0; i--) {
             s[i][0] = s[i + 1][0];
             s[i][1] = s[i + 1][1];
@@ -34,37 +45,49 @@ public class ValeraAndFools369D {
         }
 
         dfs(0, 0, 1);
-        out.println(dp[0][1]);
+        out.println(ans);
     }
 
-    static int dfs(int step, int a1, int a2) {
-        if (step > k || a1 >= n || a2 >= n)
-            return 0;
-        if (dp[a1][a2] != 0)
-            return dp[a1][a2];
+    static void dfs(int step, int a1, int a2) {
+        if (step > k)
+            return;
 
-        dp[a1][a2] = 1;
+        a1 = Math.min(a1, n); a2 = Math.min(n, a2);
+        if (a1 == n || a2 == n) {
+            if (!dp[a1][a2]) {
+                dp[a1][a2] = true;
+                ans++;
+            }
+            return;
+        }
+        if (!dp[a1][a2]) {
+            ans++;
+        }
+        dp[a1][a2] = true;
         if (p[a1] == 100) {
             if (s[a2][0]) {
-                dp[a1][a2] += dfs(step + 1, a2 + 1, a2 + 2);
+                dfs(step + 1, a2 + 1, a2 + 2);
             } else if (s[a2][1]) {
-                dp[a1][a2] += dfs(step + 1, a1, a2 + 1) + dfs(step + 1, a2 + 1, a2 + 2);
+                dfs(step + 1, a1, a2 + 1);
+                dfs(step + 1, a2 + 1, a2 + 2);
             } else {
-                dp[a1][a2] += dfs(step + 1, a1, a2 + 1);
+                dfs(step + 1, a1, a2 + 1);
             }
         } else if (p[a1] > 0) {
             if (s[a2][0]) {
-                dp[a1][a2] += dfs(step + 1, a2, a2 + 1) + dfs(step + 1, a2 + 1, a2 + 2);
+                dfs(step + 1, a2, a2 + 1);
+                dfs(step + 1, a2 + 1, a2 + 2);
             } else if (s[a2][1]) {
-                dp[a1][a2] += dfs(step + 1, a1, a2 + 1) + dfs(step + 1, a2 + 1, a2 + 2) + dfs(step + 1, a2, a2 + 1);
+                dfs(step + 1, a1, a2 + 1);
+                dfs(step + 1, a2 + 1, a2 + 2);
+                dfs(step + 1, a2, a2 + 1);
             } else {
-                dp[a1][a2] += dfs(step + 1, a1, a2 + 1);
+                dfs(step + 1, a1, a2 + 1);
             }
         } else {
-            dp[a1][a2] += dfs(step + 1, a2, a2 + 1);
+            if (s[a2][0] || s[a2][1])
+                dfs(step + 1, a2, a2 + 1);
         }
-
-        return dp[a1][a2];
     }
 
     static InputReader in;
