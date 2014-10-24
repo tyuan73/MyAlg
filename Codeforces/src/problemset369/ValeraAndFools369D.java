@@ -12,29 +12,21 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.InputMismatchException;
+import java.util.LinkedList;
 
 public class ValeraAndFools369D {
-    static int n = 0;
-    static int k = 0;
-    static boolean[][] dp = null;
-    static boolean[][] s = null;
-    static int[] p = null;
-    static int ans = 0;
 
     static void go() {
-        n = in.nextInt();
-        k = in.nextInt();
-        //p = in.nextIntArray(n);
-        p = new int[n];
-        for(int i = 0; i < n; i++)
-            p[i] = 1;
+        int n = in.nextInt();
+        int k = in.nextInt();
+        int[] p = in.nextIntArray(n);
 
         if (n == 1) {
             out.println(1);
             return;
         }
-        dp = new boolean[n+1][n+1];
-        s = new boolean[n + 1][2];
+        boolean[][] visited = new boolean[n + 10][n + 10];
+        boolean[][] s = new boolean[n + 1][2];
         for (int i = n - 1; i >= 0; i--) {
             s[i][0] = s[i + 1][0];
             s[i][1] = s[i + 1][1];
@@ -44,50 +36,40 @@ public class ValeraAndFools369D {
                 s[i][1] = true;
         }
 
-        dfs(0, 0, 1);
-        out.println(ans);
-    }
+        // BFS, not DFS
+        int ans = 0;
+        LinkedList<int[]> dp = new LinkedList<>();
+        int[] aa = {0, 1, 0};
+        dp.add(aa);
+        while (dp.size() > 0) {
+            int[] bb = dp.removeFirst();
+            int first = bb[0];
+            int second = bb[1];
+            int step = bb[2];
 
-    static void dfs(int step, int a1, int a2) {
-        if (step > k)
-            return;
-
-        a1 = Math.min(a1, n); a2 = Math.min(n, a2);
-        if (a1 == n || a2 == n) {
-            if (!dp[a1][a2]) {
-                dp[a1][a2] = true;
-                ans++;
-            }
-            return;
-        }
-        if (!dp[a1][a2]) {
             ans++;
-        }
-        dp[a1][a2] = true;
-        if (p[a1] == 100) {
-            if (s[a2][0]) {
-                dfs(step + 1, a2 + 1, a2 + 2);
-            } else if (s[a2][1]) {
-                dfs(step + 1, a1, a2 + 1);
-                dfs(step + 1, a2 + 1, a2 + 2);
-            } else {
-                dfs(step + 1, a1, a2 + 1);
+            if (first >= n || second >= n || step >= k) {
+                continue;
             }
-        } else if (p[a1] > 0) {
-            if (s[a2][0]) {
-                dfs(step + 1, a2, a2 + 1);
-                dfs(step + 1, a2 + 1, a2 + 2);
-            } else if (s[a2][1]) {
-                dfs(step + 1, a1, a2 + 1);
-                dfs(step + 1, a2 + 1, a2 + 2);
-                dfs(step + 1, a2, a2 + 1);
-            } else {
-                dfs(step + 1, a1, a2 + 1);
+
+            if (p[first] > 0 && (s[second][0] || s[second][1]) && !visited[second + 1][second + 2]) {
+                int[] cc = {second + 1, second + 2, step + 1};
+                dp.addLast(cc);
+                visited[second + 1][second + 2] = true;
             }
-        } else {
-            if (s[a2][0] || s[a2][1])
-                dfs(step + 1, a2, a2 + 1);
+            if (p[first] > 0 && !s[second][0] && !visited[first][second + 1]) {
+                int[] cc = {first, second + 1, step + 1};
+                dp.addLast(cc);
+                visited[first][second + 1] = true;
+            }
+            if (p[first] != 100 && (s[second][0] || s[second][1]) && !visited[second][second + 1]) {
+                int[] cc = {second, second + 1, step + 1};
+                dp.addLast(cc);
+                visited[second][second + 1] = true;
+            }
         }
+
+        out.println(ans);
     }
 
     static InputReader in;
