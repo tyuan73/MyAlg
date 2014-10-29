@@ -24,6 +24,14 @@ public class FenwickTree {
             ft[i] += val;
     }
 
+    // assume i < j
+    static private int fenwickDiff(int[] ft, int i, int j) {
+        int ret = 0;
+        for (; i != j; i -= i & -i, j -= j & -j)
+            ret += ft[j] - ft[i];
+        return ret;
+    }
+
     static private int readSingle(int[] ft, int i) {
         int sum = ft[i]; // sum will be decreased
         if (i > 0) { // special case
@@ -41,8 +49,8 @@ public class FenwickTree {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         int n = in.nextInt();
-        for(int i = 0; i < n; i++) {
-            System.out.print(i +"->");
+        for (int i = 0; i < n; i++) {
+            System.out.print(i + "->");
             System.out.println(i + (i & -i));
         }
     }
