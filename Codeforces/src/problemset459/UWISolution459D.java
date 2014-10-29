@@ -229,7 +229,7 @@ public class UWISolution459D {
         }
     }
 
-    private boolean oj = System.getProperty("ONLINE_JUDGE") != null;
+    private boolean oj = true;
 
     private void tr(Object... o) {
         if (!oj) System.out.println(Arrays.deepToString(o));
