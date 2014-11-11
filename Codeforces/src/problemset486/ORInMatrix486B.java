@@ -19,6 +19,7 @@ public class ORInMatrix486B {
         boolean[] cAllZero = new boolean[n];
         int countR = 0;
         int countC = 0;
+        boolean allZero = false;
         int[][] A = new int[m][n];
         for (int i = 0; i < m; i++)
             A[i] = in.nextIntArray(n);
@@ -35,17 +36,12 @@ public class ORInMatrix486B {
                     }
                 }
             }
-        if (countR == m) {
-            for (int i = 0; i < n; i++)
-                cAllZero[i] = true;
-        }
-        if (countC == n) {
-            for (int i = 0; i < m; i++)
-                rAllZero[i] = true;
+        if (countR == m || countC == n) {
+            allZero = true;
         }
         for (int i = 0; i < m; i++)
             for (int j = 0; j < n; j++) {
-                if (A[i][j] == 1 && rAllZero[i] && cAllZero[j]) {
+                if (A[i][j] == 1 && ((rAllZero[i] && cAllZero[j]) || allZero)) {
                     out.println("NO");
                     return;
                 }
