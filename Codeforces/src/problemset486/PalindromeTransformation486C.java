@@ -8,25 +8,36 @@ package problemset486;
 
 */
 
-import java.util.*;
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.util.InputMismatchException;
 
 public class PalindromeTransformation486C {
     static void go() {
         int n = in.nextInt();
-        int p = in.nextInt();
-        String str = in.nextString();
+        int p = in.nextInt() - 1;
+        char[] str = in.nextString().toCharArray();
+
+        if (p >= n / 2)
+            p = n - p - 1;
         int total = 0;
-        boolean[] v = new boolean[n];
-        for(int i = 0, j = n-1; i < j; i++, j--) {
-            if (str.charAt(i) == str.charAt(j)) {
-                v[i] = true; v[j] = true;
-            } else {
-                total += Math.min((str.charAt(i) + 26 - str.charAt(j)) % 26, (str.charAt(j) + 26 - str.charAt(i)) % 26);
+        int first = p, last = p;
+        for (int i = 0, j = n - 1; i < j; i++, j--) {
+            if (str[i] != str[j]) {
+                if (first == p) {
+                    first = i;
+                    last = i;
+                } else {
+                    last = i;
+                }
+                total += Math.min((str[i] + 26 - str[j]) % 26, (str[j] + 26 - str[i]) % 26);
+                //total += Math.min(Math.abs(str[i] - str[j]), 26 - Math.abs(str[i] - str[j]));
             }
         }
 
-
+        int min = Math.min(Math.abs(first - p), Math.abs(last - p));
+        out.println(total + min + (last - first));
     }
 
     static InputReader in;
