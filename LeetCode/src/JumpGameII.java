@@ -20,7 +20,7 @@ public class JumpGameII {
                 count++;
             }
         }
-        // if there is no way to get the end, return -1
+        // if there is no way to get to the end, return -1
         return max >= A.length - 1 ? count : -1;
     }
 
