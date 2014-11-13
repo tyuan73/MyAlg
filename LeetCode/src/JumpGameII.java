@@ -6,31 +6,28 @@
  * To change this template use File | Settings | File Templates.
  */
 
-import java.util.Scanner;
-
 public class JumpGameII {
-    public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
 
-    }
-
-    /**
-     * Assume there is always a way you can get to the end.
-     */
     public int jump(int[] A) {
         if (A == null || A.length == 0)
             return 0;
 
-        int max = 0;
-        int count = 0;
-        int nextmax = 0;
-        for (int i = 0; i <= max && i < A.length - 1; i++) {
-            nextmax = Math.max(nextmax, i + A[i]);
+        int count = 0, max = 0;
+        for (int i = 0, nextMax = 0; i <= max && i < A.length - 1; i++) {
+            nextMax = Math.max(nextMax, i + A[i]);
             if (i == max) {
-                max = nextmax;
+                max = nextMax;
                 count++;
             }
         }
-        return count;
+        // if there is no way to get the end, return -1
+        return max >= A.length - 1 ? count : -1;
     }
+
+    public static void main(String[] args) {
+        int[] test = {3, 2, 1, 0, 4};
+        JumpGameII jg = new JumpGameII();
+        System.out.println(jg.jump(test));
+    }
+
 }
