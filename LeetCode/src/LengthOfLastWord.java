@@ -7,11 +7,6 @@
  */
 
 public class LengthOfLastWord {
-    public static void main(String[] args) {
-        //Scanner in = new Scanner(System.in);
-
-    }
-
     public int lengthOfLastWord(String s) {
         int r = s.length() - 1;
         while (r >= 0 && s.charAt(r) == ' ')
@@ -21,5 +16,20 @@ public class LengthOfLastWord {
             l--;
 
         return r - l;
+    }
+
+    // another solution
+    public int lengthOfLastWord1(String s) {
+        int end = s.length() - 1;
+        int i = end;
+        for (; i >= 0; i--) {
+            if (s.charAt(i) == ' ') {
+                if (end != i) {
+                    return end - i;
+                }
+                end = i - 1;
+            }
+        }
+        return end - i;
     }
 }
