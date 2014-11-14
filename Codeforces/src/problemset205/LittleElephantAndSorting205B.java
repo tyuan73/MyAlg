@@ -1,4 +1,4 @@
-/**
+package problemset205; /**
  * Created with IntelliJ IDEA.
  * User: yuantian
  * Date: 5/1/13
@@ -8,7 +8,7 @@
 
 import java.util.Scanner;
 
-public class LittleElephantAndSorting129Div2 {
+public class LittleElephantAndSorting205B {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
 
