@@ -13,8 +13,22 @@ import java.io.*;
 
 public class ChiefHopper {
     static void go() {
-        int t = in.nextInt();
+        int n = in.nextInt();
+        long[] h = in.nextLongArray(n);
 
+        /*
+        Random rd = new Random();
+        int n = rd.nextInt(1000)+ 1;
+        long[] h = new long[n];
+        for(int i = 0; i < n; i++)
+            h[i] = rd.nextInt(10000) + 1;
+        */
+
+        long min = 0;
+        for (int i = n - 1; i >= 0; i--) {
+            min = (min + h[i] + 1) / 2;
+        }
+        out.println(min);
     }
 
     static InputReader in;
