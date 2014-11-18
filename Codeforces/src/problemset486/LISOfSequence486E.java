@@ -8,30 +8,33 @@ package problemset486;
 
 */
 
-import java.util.*;
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.InputMismatchException;
 
 public class LISOfSequence486E {
     static void go() {
         int n = in.nextInt();
         int[] a = in.nextIntArray(n);
 
-        int[] m = new int[n+1];
-        //m[1] = 0;
+        int[] m = new int[n + 1];
         int maxLen = 1;
         int[] lis1 = new int[n];
-        for(int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++) {
             if (a[i] > a[m[maxLen]]) {
-                m[++maxLen] = i;
+                maxLen++;
+                m[maxLen] = i;
                 lis1[i] = maxLen;
                 continue;
             }
 
-            int l = 0, r = m[maxLen];
-            while(l < r) {
-                int mid = (l+r+1)/2;
+            int l = 1, r = maxLen;
+            while (l < r) {
+                int mid = (l + r + 1) / 2;
                 if (a[m[mid]] >= a[i])
-                    r = mid-1;
+                    r = mid - 1;
                 else
                     l = mid;
             }
@@ -40,54 +43,45 @@ public class LISOfSequence486E {
                 lis1[i] = 1;
                 m[l] = i;
             } else {
-                m[l+1] = i;
-                lis1[i] = l+1;
+                m[l + 1] = i;
+                lis1[i] = l + 1;
             }
         }
 
         int[] lis2 = new int[n];
-        Arrays.fill(m, 0);
-        m[1] = n-1;
+        m[n - 1] = n - 1;
         maxLen = 1;
-        for(int i = n-1; i >= 0; i--) {
-            if (a[i] < a[m[maxLen]]) {
-                m[++maxLen] = i;
+        for (int i = n - 1; i >= 0; i--) {
+            if (a[i] < a[m[n - maxLen]]) {
+                maxLen++;
+                m[n - maxLen] = i;
                 lis2[i] = maxLen;
                 continue;
             }
 
-            int l = m[maxLen], r = 0;
-            while(l < r) {
-                int mid = (l+r+1)/2;
+            int l = n - maxLen, r = n - 1;
+            while (l < r) {
+                int mid = (l + r) / 2;
                 if (a[m[mid]] <= a[i])
-                    r = mid-1;
+                    l = mid + 1;
                 else
-                    l = mid;
+                    r = mid;
             }
 
             if (a[i] >= a[m[l]]) {
                 lis2[i] = 1;
                 m[l] = i;
             } else {
-                m[l+1] = i;
-                lis2[i] = l+1;
+                m[l - 1] = i;
+                lis2[i] = n - l + 1;
             }
         }
 
-        for(int x : lis1)
-            System.out.print(x + " ");
-        System.out.println();
-        for(int x : lis2)
-            System.out.print(x + " ");
-        System.out.println();
-
-        System.out.println("maxLen = " + maxLen);
-
         char[] ans = new char[n];
-        int[] exist = new int[n+1];
+        int[] exist = new int[n + 1];
         Arrays.fill(exist, -1);
 
-        for(int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++) {
             if (lis1[i] + lis2[i] - 1 != maxLen) {
                 ans[i] = '1';
                 continue;
