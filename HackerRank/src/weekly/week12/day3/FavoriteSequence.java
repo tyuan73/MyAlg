@@ -13,8 +13,53 @@ import java.io.*;
 
 public class FavoriteSequence {
     static void go() {
-        int t = in.nextInt();
+        int n = in.nextInt();
+        int[] ans = new int[1000001];
+        int[] tmp = new int[1000001];
+        int[] index = new int[1000001];
+        Arrays.fill(index, -1);
+        int count = 0;
+        for (int i = 0; i < n; i++) {
+            int k = in.nextInt();
+            int[] s = in.nextIntArray(k);
+            int p = 0, q = 0, r = 0;
+            while (p < count && q < k) {
+                if (index[s[q]] != -1) {
+                    for (; p <= index[s[q]]; p++, r++) {
+                        tmp[r] = ans[p];
+                    }
+                    q++;
+                } else {
+                    while (p < count && ans[p] < s[q]) {
+                        tmp[r] = ans[p];
+                        r++;
+                        p++;
+                    }
+                    tmp[r] = s[q++];
+                    r++;
+                }
+            }
+            while (p < count) {
+                tmp[r] = ans[p];
+                r++;
+                p++;
+            }
+            while (q < k) {
+                tmp[r] = s[q];
+                r++;
+                q++;
+            }
+            int[] t = ans;
+            ans = tmp;
+            tmp = t;
+            count = r;
+            for (int j = 0; j < count; j++)
+                index[ans[j]] = j;
+        }
 
+        for (int i = 0; i < count; i++)
+            out.print(ans[i] + " ");
+        out.println();
     }
 
     static InputReader in;
