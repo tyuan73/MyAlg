@@ -12,9 +12,78 @@ import java.util.*;
 import java.io.*;
 
 public class WhiteFalconAndTree {
-    static void go() {
-        int t = in.nextInt();
+    static List<Integer>[] tree = null;
+    static boolean[] visited = null;
+    static int[] next = null;
+    static long P = (long) 1e9 + 7;
 
+    static void go() {
+        int n = in.nextInt();
+        int[][] ln = new int[n][2];
+        for (int i = 0; i < n; i++) {
+            ln[i][0] = in.nextInt();
+            ln[i][1] = in.nextInt();
+        }
+        tree = new List[n];
+        for (int i = 0; i < n; i++)
+            tree[i] = new ArrayList<Integer>();
+
+        for (int i = 0; i < n - 1; i++) {
+            int from = in.nextInt() - 1;
+            int to = in.nextInt() - 1;
+            tree[from].add(to);
+            tree[to].add(from);
+        }
+
+        visited = new boolean[n];
+        next = new int[n];
+        int t = in.nextInt();
+        while (t-- > 0) {
+            Arrays.fill(visited, false);
+            Arrays.fill(next, -1);
+
+            int q = in.nextInt();
+            if (q == 1) {
+                int from = in.nextInt() - 1;
+                int to = in.nextInt() - 1;
+                int a = in.nextInt();
+                int b = in.nextInt();
+                dfs(from, to);
+                while (next[from] != -1) {
+                    ln[from][0] = a;
+                    ln[from][1] = b;
+                    from = next[from];
+                }
+                ln[from][0] = a;
+                ln[from][1] = b;
+            } else {
+                int from = in.nextInt() - 1;
+                int to = in.nextInt() - 1;
+                long x = in.nextInt();
+                dfs(from, to);
+                while (next[from] != -1) {
+                    x = (ln[from][0] * x + ln[from][1]) % P;
+                    from = next[from];
+                }
+                x = (ln[from][0] * x + ln[from][1]) % P;
+                out.println(x);
+            }
+        }
+    }
+
+    static boolean dfs(int from, int to) {
+        visited[from] = true;
+        if (from == to)
+            return true;
+        for (int step : tree[from]) {
+            if (!visited[step]) {
+                if (dfs(step, to)) {
+                    next[from] = step;
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     static InputReader in;
