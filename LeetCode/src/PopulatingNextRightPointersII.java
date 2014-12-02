@@ -8,31 +8,31 @@
 
 public class PopulatingNextRightPointersII {
     public void connect(TreeLinkNode root) {
-        TreeLinkNode p;
-        while ((p = getNext(root)) != null) {
-            TreeLinkNode q = root;
-            while (q != null) {
-                if (q.left != null && q.right != null) {
-                    q.left.next = q.right;
-                    q.right.next = getNext(q.next);
-                } else if (q.left != null || q.right != null) {
-                    TreeLinkNode child = q.left != null ? q.left : q.right;
-                    child.next = getNext(q.next);
+        while (root != null) {
+            TreeLinkNode p = root;
+            while (p != null) {
+                if (p.left != null) {
+                    if (p.right != null)
+                        p.left.next = p.right;
+                    else
+                        p.left.next = getNext(p.next);
                 }
-                q = q.next;
+                if (p.right != null) {
+                    p.right.next = getNext(p.next);
+                }
+                p = p.next;
             }
-
-            root = p;
+            root = getNext(root);
         }
     }
 
-    TreeLinkNode getNext(TreeLinkNode root) {
-        while (root != null) {
-            if (root.left != null)
-                return root.left;
-            if (root.right != null)
-                return root.right;
-            root = root.next;
+    private TreeLinkNode getNext(TreeLinkNode p) {
+        while (p != null) {
+            if (p.left != null)
+                return p.left;
+            if (p.right != null)
+                return p.right;
+            p = p.next;
         }
         return null;
     }

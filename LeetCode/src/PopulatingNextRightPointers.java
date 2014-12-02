@@ -8,11 +8,9 @@
 
 public class PopulatingNextRightPointers {
     public void connect(TreeLinkNode root) {
-        if (root == null)
-            return;
-        while (root.left != null) {
+        while (root != null) {
             TreeLinkNode p = root;
-            while (p != null) {
+            while (p != null && p.left != null) {
                 p.left.next = p.right;
                 if (p.next != null)
                     p.right.next = p.next.left;
