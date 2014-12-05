@@ -11,52 +11,91 @@ package problemset490;
 import java.util.*;
 import java.io.*;
 
-public class Queue490B {
-    static int[] order = null;
-    static int index = 0;
-    static int[] a = null;
-
+public class Chocolate490D {
     static void go() {
-        int n = in.nextInt();
-
-        a = new int[1000001];
-        Arrays.fill(a, -2);
-        for (int i = 0; i < n; i++) {
-            a[in.nextInt()] = in.nextInt();
+        long a1 = in.nextInt();
+        long b1 = in.nextInt();
+        long a2 = in.nextInt();
+        long b2 = in.nextInt();
+        long s1 = a1 * b1, s2 = a2 * b2;
+        int d12 = 0, d13 = 0, d22 = 0, d23 = 0;
+        while (s1 % 2 == 0) {
+            d12++;
+            s1 /= 2;
+        }
+        while (s1 % 3 == 0) {
+            d13++;
+            s1 /= 3;
+        }
+        while (s2 % 2 == 0) {
+            d22++;
+            s2 /= 2;
+        }
+        while (s2 % 3 == 0) {
+            d23++;
+            s2 /= 3;
+        }
+        if (s1 != s2) {
+            out.println(-1);
+            return;
         }
 
-        order = new int[n];
-        int i = 0;
-        index = 1;
-        while (a[i] > 0) {
-            order[index] = a[i];
-            a[i] = -1;  // mark as visited
-            i = order[index];
-            index += 2;
+        int total = 0;
+        while (d13 > d23 && a1 % 3 == 0) {
+            a1 /= 3;
+            a1 *= 2;
+            total++;
+            d13--;
+            d12++;
         }
-        a[i] = -1; // mark as visited
-
-        index = order[n - 1] == 0 ? n - 1 : n - 2;
-        for (i = 1; i < 1000001; i++) {
-            if (a[i] >= 0) {
-                dfs(i);
-            }
+        while (d13 > d23 && b1 % 3 == 0) {
+            b1 /= 3;
+            b1 *= 2;
+            total++;
+            d13--;
+            d12++;
         }
 
-        for (int x : order)
-            out.print(x + " ");
-        out.println();
-    }
-
-    static void dfs(int i) {
-        int next = a[i];
-        a[i] = -1; // mark as visited
-        if (next >= 0 && a[next] != -1) {
-            dfs(next);
+        while (d23 > d13 && a2 % 3 == 0) {
+            a2 /= 3;
+            a2 *= 2;
+            total++;
+            d23--;
+            d22++;
+        }
+        while (d23 > d13 && b2 % 3 == 0) {
+            b2 /= 3;
+            b2 *= 2;
+            total++;
+            d23--;
+            d22++;
         }
 
-        order[index] = i;
-        index -= 2;
+        while (d12 > d22 && a1 % 2 == 0) {
+            a1 /= 2;
+            total++;
+            d12--;
+        }
+        while (d12 > d22 && b1 % 2 == 0) {
+            b1 /= 2;
+            total++;
+            d12--;
+        }
+
+        while (d22 > d12 && a2 % 2 == 0) {
+            a2 /= 2;
+            total++;
+            d22--;
+        }
+        while (d22 > d12 && b2 % 2 == 0) {
+            b2 /= 2;
+            total++;
+            d22--;
+        }
+
+        out.println(total);
+        out.println(a1 + " " + b1);
+        out.println(a2 + " " + b2);
     }
 
     static InputReader in;
@@ -162,28 +201,3 @@ public class Queue490B {
         }
     }
 }
-
-/*
-
-input:
-5
-0 7
-92 31
-7 141
-31 5
-141 0
-
-output:
-92 7 31 141 5
-
-input:
-4
-92 31
-0 7
-31 0
-7 141
-
-output:
-92 7 31 141
-
- */
