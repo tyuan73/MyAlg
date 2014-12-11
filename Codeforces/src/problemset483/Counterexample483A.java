@@ -1,78 +1,40 @@
-package problemset484;
+package problemset483;
 
 /**
- * Created with IntelliJ IDEA.
- * User: yuantian
- * Date: 11/13/14
- * Time: 11:40 PM
- * Copyright (c) 2013 All Right Reserved, http://github.com/tyuan73
+ * Created by yuantian on 12/10/14.
  */
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
-import java.util.Arrays;
-import java.util.InputMismatchException;
+/*
 
-public class MaximumValue484B {
+*/
+
+import java.util.*;
+import java.io.*;
+
+public class Counterexample483A {
     static void go() {
-        int n = in.nextInt();
-        int[] a = new int[1000001];
-        for (int i = 0; i < n; i++) {
-            int x = in.nextInt();
-            a[x] = x;
-        }
-        int[] b = new int[n];
-        int count = 0;
-        for (int i = 1; i < 1000001; i++) {
-            if (i != a[i]) {
-                a[i] = a[i - 1];
-            } else {
-                b[count++] = i;
+        Long l = in.nextLong();
+        Long r = in.nextLong();
+        for (long x = l; x < r; x++) {
+            for (long y = x + 1; y < r; y++) {
+                if (gcd(x, y) == 1) {
+                    for (long z = y + 1; z <= r; z++)
+                        if (gcd(y, z) == 1) {
+                            if (gcd(x, z) != 1) {
+                                out.println(x + " " + y + " " + z);
+                                return;
+                            }
+                        }
+                }
             }
         }
-
-        int max = 0;
-        int maxB = b[count - 1];
-        for (int i = count - 1; i >= 0 && b[i] > max; i--) {
-            int x = b[i];
-            for (int j = x * 2; j <= maxB; j += x) {
-                max = Math.max(max, a[j - 1] - j + x);
-            }
-            max = Math.max(max, maxB % x);
-        }
-        out.println(max);
+        out.println(-1);
     }
 
-    static void go1() {
-        int n = in.nextInt();
-        int[] a = in.nextIntArray(n);
-        Arrays.sort(a);
-
-        int count = 1;
-        for (int i = 1; i < n; i++) {
-            if (a[i] != a[i - 1])
-                a[count++] = a[i];
-        }
-
-        int M = a[count - 1] * 2;
-        int[] b = new int[M];
-        int pre = -1;
-        for (int i = 0, j = 0; i < M; i++) {
-            b[i] = pre;
-            if (j < n && i == a[j]) {
-                pre = a[j++];
-            }
-        }
-
-        int max = 0;
-        for (int i = 0; i < count - 1; i++) {
-            for (int j = a[i] * 2; j < M; j += a[i]) {
-                max = Math.max(max, b[j] - j + a[i]);
-            }
-        }
-
-        out.println(max);
+    static long gcd(long x, long y) {
+        if (x == 0)
+            return y;
+        return gcd(y % x, x);
     }
 
     static InputReader in;
