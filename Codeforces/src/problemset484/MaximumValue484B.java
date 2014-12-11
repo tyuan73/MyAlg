@@ -14,6 +14,19 @@ import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.InputMismatchException;
 
+/*
+
+ How to find maximum in O(1) ?
+
+For example consider sorted array [2,4,7,11], then
+A(0 indexed) will be [-1,-1,-1,2,2,4,4,4,7,7,7,7,11...]
+-1 means no element is smaller than i.
+
+
+http://codeforces.com/blog/entry/14592
+
+ */
+
 public class MaximumValue484B {
     static void go() {
         int n = in.nextInt();

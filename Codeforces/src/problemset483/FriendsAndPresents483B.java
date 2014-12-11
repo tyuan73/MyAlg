@@ -18,6 +18,25 @@ public class FriendsAndPresents483B {
         int x = in.nextInt();
         int y = in.nextInt();
 
+        int l = 0, r = Integer.MAX_VALUE;
+        while (l < r) {
+            int mid = l + (r - l) / 2;
+            if (!ok(mid, c1, c2, x, y)) {
+                l = mid + 1;
+            } else {
+                r = mid;
+            }
+        }
+        out.println(l);
+    }
+
+    static boolean ok(int val, int c1, int c2, int x, int y) {
+        int xy = val / (x * y);
+        int xc = val / x;
+        int yc = val / y;
+        c1 = Math.max(0, c1 - yc + xy);
+        c2 = Math.max(0, c2 - xc + xy);
+        return (val - xc - yc + xy >= c1 + c2);
     }
 
     static InputReader in;
