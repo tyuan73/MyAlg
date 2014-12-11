@@ -1,72 +1,37 @@
-package problemset484;
+package problemset485;
 
 /**
  * Created with IntelliJ IDEA.
  * User: yuantian
- * Date: 11/13/14
- * Time: 11:40 PM
+ * Date: 12/10/14
+ * Time: 10:48 PM
  * Copyright (c) 2013 All Right Reserved, http://github.com/tyuan73
  */
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
-import java.util.Arrays;
 import java.util.InputMismatchException;
 
-public class MaximumValue484B {
+public class Factory485A {
     static void go() {
-        int n = in.nextInt();
-        int[] a = new int[1000001];
-        for (int i = 0; i < n; i++) {
-            int x = in.nextInt();
-            a[x] = x;
-        }
-        for (int i = 1; i < 1000001; i++) {
-            a[i] = Math.max(a[i - 1], a[i]);
-        }
-
-        int max = 0;
-        for (int i = 2; i < 1000000; i++) {
-            if (a[i] != i)
-                continue;
-            for (int j = i * 2; j < 1000000; j += i) {
-                max = Math.max(max, a[j - 1] - j + i);
+        int a = in.nextInt();
+        int m = in.nextInt();
+        boolean[] e = new boolean[m];
+        e[a % m] = true;
+        for (int i = 0; i < m; i++) {
+            a = (a + a % m) % m;
+            if (a == 0) {
+                out.println("Yes");
+                return;
             }
-            max = Math.max(max, a[1000000] % i);
+            if (e[a]) {
+                out.println("No");
+                return;
+            } else
+                e[a] = true;
         }
-        out.println(max);
-    }
-
-    static void go1() {
-        int n = in.nextInt();
-        int[] a = in.nextIntArray(n);
-        Arrays.sort(a);
-
-        int count = 1;
-        for (int i = 1; i < n; i++) {
-            if (a[i] != a[i - 1])
-                a[count++] = a[i];
-        }
-
-        int M = a[count - 1] * 2;
-        int[] b = new int[M];
-        int pre = -1;
-        for (int i = 0, j = 0; i < M; i++) {
-            b[i] = pre;
-            if (j < n && i == a[j]) {
-                pre = a[j++];
-            }
-        }
-
-        int max = 0;
-        for (int i = 0; i < count - 1; i++) {
-            for (int j = a[i] * 2; j < M; j += a[i]) {
-                max = Math.max(max, b[j] - j + a[i]);
-            }
-        }
-
-        out.println(max);
+        out.println("No");
     }
 
     static InputReader in;

@@ -1,10 +1,10 @@
-package problemset484;
+package problemset490;
 
 /**
  * Created with IntelliJ IDEA.
  * User: yuantian
- * Date: 11/13/14
- * Time: 11:40 PM
+ * Date: 12/8/14
+ * Time: 10:55 PM
  * Copyright (c) 2013 All Right Reserved, http://github.com/tyuan73
  */
 
@@ -14,59 +14,80 @@ import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.InputMismatchException;
 
-public class MaximumValue484B {
+public class RestoringIncreasingSequence490E {
     static void go() {
         int n = in.nextInt();
-        int[] a = new int[1000001];
+        char[][] seq = new char[n + 1][8];
+        Arrays.fill(seq[0], '0');
+        int[] val = new int[n + 1];
+        int[] base = new int[8];
+        base[7] = 1;
+        for (int i = 6; i >= 0; i--)
+            base[i] = base[i + 1] * 10;
         for (int i = 0; i < n; i++) {
-            int x = in.nextInt();
-            a[x] = x;
-        }
-        for (int i = 1; i < 1000001; i++) {
-            a[i] = Math.max(a[i - 1], a[i]);
-        }
-
-        int max = 0;
-        for (int i = 2; i < 1000000; i++) {
-            if (a[i] != i)
-                continue;
-            for (int j = i * 2; j < 1000000; j += i) {
-                max = Math.max(max, a[j - 1] - j + i);
-            }
-            max = Math.max(max, a[1000000] % i);
-        }
-        out.println(max);
-    }
-
-    static void go1() {
-        int n = in.nextInt();
-        int[] a = in.nextIntArray(n);
-        Arrays.sort(a);
-
-        int count = 1;
-        for (int i = 1; i < n; i++) {
-            if (a[i] != a[i - 1])
-                a[count++] = a[i];
-        }
-
-        int M = a[count - 1] * 2;
-        int[] b = new int[M];
-        int pre = -1;
-        for (int i = 0, j = 0; i < M; i++) {
-            b[i] = pre;
-            if (j < n && i == a[j]) {
-                pre = a[j++];
+            Arrays.fill(seq[i+1], '0');
+            String str = in.nextString();
+            for (int p = 7, q = str.length() - 1; q >= 0; p--, q--) {
+                seq[i + 1][p] = str.charAt(q);
+                if (seq[i + 1][p] != '?') {
+                    val[i + 1] += (seq[i + 1][p] - '0') * base[p];
+                }
             }
         }
 
-        int max = 0;
-        for (int i = 0; i < count - 1; i++) {
-            for (int j = a[i] * 2; j < M; j += a[i]) {
-                max = Math.max(max, b[j] - j + a[i]);
+        for (int i = 1; i <= n; i++) {
+            int diff = val[i] - val[i - 1];
+            int inc = 0;
+            if (diff <= 0)
+            for (int j = 0; j < 8; j++) {
+                if (seq[i][j] == '?')
+                    inc += (seq[i - 1][j] - '0') * base[j];
             }
+            int last = 8;
+            for (int j = 7; j >= 0; j--) {
+                if (seq[i][j] != '?')
+                    continue;
+                last = j;
+                if (inc + diff > 0)
+                    continue;
+                if (seq[i - 1][j] != '9' && inc + base[j] + diff > 0) {
+                    inc = inc / base[j] * base[j] + base[j];
+                    continue;
+                }
+                //inc = inc / base[j] * base[j];
+            }
+            if (diff + inc <= 0) {
+                out.println("NO");
+                out.println("i = " + i);
+                for(int j = 0; j <= n; j++)
+                    out.println(val[j]);
+                return;
+            }
+
+            if (last < 8 && inc < base[last]) {
+                boolean first = true;
+                for (int j = last - 1; j >= 0; j--) {
+                    if (seq[i][j] != '0') {
+                        first = false;
+                        break;
+                    }
+                }
+                if (first) {
+                    inc = base[last];
+                }
+            }
+            for (int j = 7; j >= 0; j--) {
+                if (seq[i][j] == '?') {
+                    seq[i][j] = (char) (((inc / base[j]) % 10) + '0');
+                }
+            }
+
+            val[i] += inc;
         }
 
-        out.println(max);
+        out.println("YES");
+        for (int i = 1; i <= n; i++)
+            out.println(val[i]);
     }
 
     static InputReader in;
@@ -172,3 +193,18 @@ public class MaximumValue484B {
         }
     }
 }
+
+
+/*
+3
+??
+11
+12
+ */
+
+/*
+3
+99
+???
+110
+ */

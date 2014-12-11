@@ -1,72 +1,33 @@
-package problemset484;
+package problemset485;
 
 /**
  * Created with IntelliJ IDEA.
  * User: yuantian
- * Date: 11/13/14
- * Time: 11:40 PM
+ * Date: 12/10/14
+ * Time: 11:13 PM
  * Copyright (c) 2013 All Right Reserved, http://github.com/tyuan73
  */
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
-import java.util.Arrays;
 import java.util.InputMismatchException;
 
-public class MaximumValue484B {
+public class ValuableResources485B {
     static void go() {
         int n = in.nextInt();
-        int[] a = new int[1000001];
+        long l = Long.MAX_VALUE, r = Long.MIN_VALUE, u = Long.MIN_VALUE, b = Long.MAX_VALUE;
         for (int i = 0; i < n; i++) {
             int x = in.nextInt();
-            a[x] = x;
-        }
-        for (int i = 1; i < 1000001; i++) {
-            a[i] = Math.max(a[i - 1], a[i]);
-        }
-
-        int max = 0;
-        for (int i = 2; i < 1000000; i++) {
-            if (a[i] != i)
-                continue;
-            for (int j = i * 2; j < 1000000; j += i) {
-                max = Math.max(max, a[j - 1] - j + i);
-            }
-            max = Math.max(max, a[1000000] % i);
-        }
-        out.println(max);
-    }
-
-    static void go1() {
-        int n = in.nextInt();
-        int[] a = in.nextIntArray(n);
-        Arrays.sort(a);
-
-        int count = 1;
-        for (int i = 1; i < n; i++) {
-            if (a[i] != a[i - 1])
-                a[count++] = a[i];
+            int y = in.nextInt();
+            l = Math.min(l, x);
+            r = Math.max(r, x);
+            u = Math.max(u, y);
+            b = Math.min(b, y);
         }
 
-        int M = a[count - 1] * 2;
-        int[] b = new int[M];
-        int pre = -1;
-        for (int i = 0, j = 0; i < M; i++) {
-            b[i] = pre;
-            if (j < n && i == a[j]) {
-                pre = a[j++];
-            }
-        }
-
-        int max = 0;
-        for (int i = 0; i < count - 1; i++) {
-            for (int j = a[i] * 2; j < M; j += a[i]) {
-                max = Math.max(max, b[j] - j + a[i]);
-            }
-        }
-
-        out.println(max);
+        long max = Math.max(r - l, u - b);
+        out.println(max * max);
     }
 
     static InputReader in;
