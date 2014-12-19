@@ -1,7 +1,7 @@
 package problemset496;
 
 /**
- * Created by yuantian on 12/18/14.
+ * Created by yuantian on 12/19/14.
  */
 
 /*
@@ -11,41 +11,10 @@ package problemset496;
 import java.util.*;
 import java.io.*;
 
-public class RemovingColumns496C {
-
+public class TennisGame496D {
     static void go() {
-        int n = in.nextInt();
-        int m = in.nextInt();
-        char[][] str = new char[n][];
-        for (int i = 0; i < n; i++) {
-            str[i] = in.nextString().toCharArray();
-        }
-        int total = 0;
-        boolean delete;
-        boolean[] greater = new boolean[n];
-        for (int col = 0; col < m; col++) {
-            boolean[] g1 = new boolean[n];
-            delete = false;
-            for (int row = 1; row < n; row++) {
-                if (greater[row]) {
-                    g1[row] = true;
-                    continue;
-                }
-                if (str[row][col] > str[row - 1][col])
-                    g1[row] = true;
-                else if (str[row][col] < str[row - 1][col]) {
-                    delete = true;
-                    break;
-                }
-            }
-            if (delete)
-                total++;
-            else {
-                greater = g1;
-            }
-        }
+        int t = in.nextInt();
 
-        out.println(total);
     }
 
     static InputReader in;
