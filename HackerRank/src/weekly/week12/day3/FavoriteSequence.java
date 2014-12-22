@@ -14,51 +14,45 @@ import java.io.*;
 public class FavoriteSequence {
     static void go() {
         int n = in.nextInt();
-        int[] ans = new int[1000001];
-        int[] tmp = new int[1000001];
-        int[] index = new int[1000001];
-        Arrays.fill(index, -1);
-        int count = 0;
+        @SuppressWarnings("unchecked")
+        ArrayList<Integer>[] g = new ArrayList[1000001];
+        int[] inDeg = new int[1000001];
         for (int i = 0; i < n; i++) {
             int k = in.nextInt();
-            int[] s = in.nextIntArray(k);
-            int p = 0, q = 0, r = 0;
-            while (p < count && q < k) {
-                if (index[s[q]] != -1) {
-                    for (; p <= index[s[q]]; p++, r++) {
-                        tmp[r] = ans[p];
-                    }
-                    q++;
-                } else {
-                    while (p < count && ans[p] < s[q]) {
-                        tmp[r] = ans[p];
-                        r++;
-                        p++;
-                    }
-                    tmp[r] = s[q++];
-                    r++;
-                }
+            int a = in.nextInt();
+            if (g[a] == null) {
+                g[a] = new ArrayList<>();
             }
-            while (p < count) {
-                tmp[r] = ans[p];
-                r++;
-                p++;
+            for (int j = 1; j < k; j++) {
+                int b = in.nextInt();
+                g[a].add(b);
+                inDeg[b]++;
+                if (g[b] == null)
+                    g[b] = new ArrayList<>();
+                a = b;
             }
-            while (q < k) {
-                tmp[r] = s[q];
-                r++;
-                q++;
-            }
-            int[] t = ans;
-            ans = tmp;
-            tmp = t;
-            count = r;
-            for (int j = 0; j < count; j++)
-                index[ans[j]] = j;
         }
 
-        for (int i = 0; i < count; i++)
-            out.print(ans[i] + " ");
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        for (int i = 1; i <= 1000000; i++) {
+            if (g[i] != null && inDeg[i] == 0)
+                pq.add(i);
+        }
+
+        ArrayList<Integer> ans = new ArrayList<>();
+        while (pq.size() > 0) {
+            int x = pq.poll();
+            ans.add(x);
+            for (int next : g[x]) {
+                inDeg[next]--;
+                if (inDeg[next] == 0) {
+                    pq.add(next);
+                }
+            }
+        }
+        for (int x : ans) {
+            out.print(x + " ");
+        }
         out.println();
     }
 
