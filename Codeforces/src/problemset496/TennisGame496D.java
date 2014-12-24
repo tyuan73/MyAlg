@@ -8,8 +8,13 @@ package problemset496;
 
 */
 
-import java.util.*;
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.InputMismatchException;
 
 public class TennisGame496D {
     static class Pair {
@@ -50,40 +55,42 @@ public class TennisGame496D {
         if (max1 > max2) {
             ans.add(new Pair(1, max1));
         }
-        for (int i = max1 / 2; i >= 1; i--) {
-            int index, s = 0, t1 = 0, t2 = 0;
-            if (map[i][winner] < map[i][loser] || map[i][loser] == 0) {
-                index = map[i][winner] - 1;
-                s = score[index][winner];
+        for (int s = max1 / 2; s >= 1; s--) {
+            int index, t1 = 0, t2 = 0;
+            if (map[s][winner] < map[s][loser] || map[s][loser] == 0) {
+                index = map[s][winner] - 1;
                 t1 = 1;
             } else {
-                index = map[i][loser] - 1;
-                s = score[index][loser];
+                index = map[s][loser] - 1;
                 t2 = 1;
             }
-            while (index < n - 1) {
-                int next1 = score[index][winner] + s;
-                int next2 = score[index][loser] + s;
-                int i1, i2;
-                if (next1 <= max1) {
-                    i1 = map[next1][winner] - 1;
-                } else {
+            int next1, next2, i1, i2;
+            while (true) {
+                next1 = score[index][winner] + s;
+                next2 = score[index][loser] + s;
+                if (next1 > max1)
+                    break;
+
+                if (next2 > max2) {
+                    if ((max1 - score[index][winner]) % s == 0) {
+                        t1 += (max1 - score[index][winner]) / s;
+                        if (t1 > t2) {
+                            ans.add(new Pair(t1, s));
+                        }
+                    }
                     break;
                 }
-                i2 = next2 <= max2 ? map[next2][loser] - 1 : n;
 
+                i1 = map[next1][winner] - 1;
+                i2 = map[next2][loser] - 1;
                 if (i1 > i2) {
                     t2++;
                     index = i2;
-                } else if (i1 < i2) {
+                } else {
+                    // i1 must be < i2. i1 can not be equals to i2
+                    // because any number appears only once in map[x][winner] and map[x][loser]
                     t1++;
                     index = i1;
-                    if (i1 == n - 1 && t1 > t2) {
-                        ans.add(new Pair(t1, s));
-                        break;
-                    }
-                } else {
-                    break;
                 }
             }
         }
