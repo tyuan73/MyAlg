@@ -19,42 +19,84 @@ public class CookingTheBooks {
         int t = in.nextInt();
 
         for (int k = 1; k <= t; k++) {
-            char[] str = in.next().toCharArray();
+            String str = in.next();
+            int n = str.length();
+            char[] ans = str.toCharArray();
+
+            /* first, find the smallest */
+            /**
+             * Check if the first (most significant) digit can be swapped.
+             * The digit it can change to must satisfy these conditions:
+             *  1. greater than 0
+             *  2. the smallest in whole string
+             *  3. if not unique, the last one is selected
+             *
+             * If the digit is the same as the first, don't swap.
+             */
             int to = 0;
-            char x = str[0];
-            for (int i = 1; i < str.length; i++) {
-                if (str[i] > '0' && str[i] <= x) {
-                    x = str[i];
+            char x = ans[0];
+            for (int i = 1; i < n; i++) {
+                if (ans[i] > '0' && ans[i] <= x) {
+                    x = ans[i];
                     to = i;
                 }
             }
             StringBuilder sb = new StringBuilder();
-            char[] ans = str.clone();
-            char temp = ans[0];
-            ans[0] = ans[to];
-            ans[to] = temp;
-            sb.append(ans).append(" ");
 
-            for (int i = 1; i < str.length; i++) {
-                if (str[i] >= x) {
-                    x = str[i];
-                    to = i;
+            if (ans[0] > ans[to]) { /* yes, the first digit can be swap with a smaller one */
+                swap(ans, 0, to);
+            } else {
+                int[] min = new int[n];
+                min[n - 1] = n - 1;
+                for (int i = n - 2; i > 0; i--) {
+                    if (ans[i] >= ans[min[i + 1]])
+                        min[i] = min[i + 1];
+                    else
+                        min[i] = i;
+                }
+                for (int i = 1; i < n - 1; i++) {
+                    if (ans[i] > ans[min[i]]) {
+                        swap(ans, i, min[i]);
+                        break;
+                    }
                 }
             }
-            ans = str.clone();
-            temp = ans[0];
-            ans[0] = ans[to];
-            ans[to] = temp;
+            sb.append(ans).append(" ");
+
+            /* now, find the largest */
+            ans = str.toCharArray();
+            int[] max = new int[n];
+            max[n - 1] = n - 1;
+            for (int i = n - 2; i >= 0; i--) {
+                if (ans[i] <= ans[max[i + 1]])
+                    max[i] = max[i + 1];
+                else
+                    max[i] = i;
+            }
+            for (int i = 0; i < n - 1; i++) {
+                if (ans[i] < ans[max[i]]) {
+                    swap(ans, i, max[i]);
+                    break;
+                }
+            }
             sb.append(ans);
+
+            /* output */
             out.println("Case #" + k + ": " + sb.toString());
             System.out.println("Case #" + k + ": " + sb.toString());
         }
     }
 
+    private void swap(char[] c, int a, int b) {
+        char temp = c[a];
+        c[a] = c[b];
+        c[b] = temp;
+    }
+
     public void run() {
         try {
             in = new FastScanner(new File("/Users/yuantian/MyAlg/HackerCup_Facebook/src/hc2015/Qualification/CookingTheBooks.in"));
-            out = new PrintWriter(new File("CookingTheBooks.out"));
+            out = new PrintWriter(new File("/tmp/test/CookingTheBooks.out"));
 
             solve();
 
