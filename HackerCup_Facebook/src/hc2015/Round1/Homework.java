@@ -7,9 +7,6 @@ package hc2015.Round1;/**
  */
 
 import java.io.*;
-import java.net.Inet4Address;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Homework {
