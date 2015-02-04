@@ -15,7 +15,7 @@ public class ModMultiplyInverse {
         // calculate mmi for number from 1 to n;
         int n = 9;
         long[] b = new long[n+1];
-        invserseArray(n, b, P);
+        inverseArray(n, b, P);
         for(int i = 1; i <= n; i++) {
             System.out.print(b[i] + " ");
         }
@@ -29,7 +29,8 @@ public class ModMultiplyInverse {
      * @param a -> the array which hold the result
      * @param p -> the prime
      */
-    static void invserseArray(int n, long[] a, long p) {
+    static void inverseArray(int n, long[] a, long p) {
+        a[0] = 1;
         a[1] = 1;
         for(int i = 2; i <= n; i++) {
             a[i] = (-(p/i) * a[(int)p%i]) % p + p;
