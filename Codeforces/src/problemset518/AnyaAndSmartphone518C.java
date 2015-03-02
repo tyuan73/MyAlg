@@ -11,33 +11,33 @@ package problemset518;
 import java.util.*;
 import java.io.*;
 
-public class IlyaAndEscalator518D {
+public class AnyaAndSmartphone518C {
     static void go() {
         int n = in.nextInt();
-        double p = Double.parseDouble(in.nextString());
-        int t = in.nextInt();
+        int m = in.nextInt();
+        int k = in.nextInt();
 
-        double q = 1 - p;
-        int m = Math.min(n, t);
-        double[] dp = new double[m + 1];
-        dp[0] = 1;
+        int[] order = new int[n];
+        int[] app = new int[n];
+        for (int i = 0; i < n; i++) {
+            int x = in.nextInt() - 1;
+            app[x] = i;
+            order[i] = x;
+        }
 
-        for (int i = 0; i < t; i++) {
-            for (int j = Math.min(m - 1, i); j >= 0; j--) {
-                dp[j + 1] += dp[j] * p;
-                dp[j] *= q;
+        long ans = 0;
+        for (int i = 0; i < m; i++) {
+            int x = in.nextInt() - 1;
+            int pos = app[x];
+            ans += pos / k + 1;
+            if (pos > 0) {
+                int preApp = order[pos - 1];
+                app[x] = pos - 1;
+                app[preApp] = pos;
+                order[pos - 1] = x;
+                order[pos] = preApp;
             }
         }
-        double ans = 0;
-        for (int i = 1; i <= m; i++) {
-            ans += i * dp[i];
-        }
-
-        /*
-        for (double d : dp)
-            out.print(d + " ");
-        out.println();
-        */
 
         out.println(ans);
     }

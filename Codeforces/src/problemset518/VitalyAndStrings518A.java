@@ -11,35 +11,34 @@ package problemset518;
 import java.util.*;
 import java.io.*;
 
-public class IlyaAndEscalator518D {
+public class VitalyAndStrings518A {
     static void go() {
-        int n = in.nextInt();
-        double p = Double.parseDouble(in.nextString());
-        int t = in.nextInt();
-
-        double q = 1 - p;
-        int m = Math.min(n, t);
-        double[] dp = new double[m + 1];
-        dp[0] = 1;
-
-        for (int i = 0; i < t; i++) {
-            for (int j = Math.min(m - 1, i); j >= 0; j--) {
-                dp[j + 1] += dp[j] * p;
-                dp[j] *= q;
+        char[] ans = in.nextString().toCharArray();
+        String b = in.nextString();
+        // "found" is not necessary since  "string s is lexicographically less than string t."
+        // you are garenteed to find a string is lexicographically bigger than ans.
+        //
+        boolean found = false;
+        for (int i = ans.length - 1; i >= 0; i--) {
+            ans[i]++;
+            if (ans[i] <= 'z') {
+                found = true;
+                break;
+            }
+            ans[i] = 'a';
+        }
+        if (found) {
+            for (int i = 0; i < ans.length; i++) {
+                if (ans[i] < b.charAt(i)) {
+                    out.println(ans);
+                    return;
+                }
+                if (ans[i] > b.charAt(i)) {
+                    break;
+                }
             }
         }
-        double ans = 0;
-        for (int i = 1; i <= m; i++) {
-            ans += i * dp[i];
-        }
-
-        /*
-        for (double d : dp)
-            out.print(d + " ");
-        out.println();
-        */
-
-        out.println(ans);
+        out.println("No such string");
     }
 
     static InputReader in;

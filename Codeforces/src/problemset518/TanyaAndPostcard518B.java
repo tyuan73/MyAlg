@@ -11,35 +11,43 @@ package problemset518;
 import java.util.*;
 import java.io.*;
 
-public class IlyaAndEscalator518D {
+public class TanyaAndPostcard518B {
     static void go() {
-        int n = in.nextInt();
-        double p = Double.parseDouble(in.nextString());
-        int t = in.nextInt();
+        String s = in.nextString();
+        String t = in.nextString();
+        int[] upper = new int[26];
+        int[] lower = new int[26];
+        count(t, upper, lower);
 
-        double q = 1 - p;
-        int m = Math.min(n, t);
-        double[] dp = new double[m + 1];
-        dp[0] = 1;
-
-        for (int i = 0; i < t; i++) {
-            for (int j = Math.min(m - 1, i); j >= 0; j--) {
-                dp[j + 1] += dp[j] * p;
-                dp[j] *= q;
+        int y = 0, w = 0;
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            if (ch >= 'a' && ch <= 'z') {
+                lower[ch - 'a']--;
+                if (lower[ch - 'a'] >= 0)
+                    y++;
+            } else if (ch >= 'A' && ch <= 'Z') {
+                upper[ch - 'A']--;
+                if (upper[ch - 'A'] >= 0)
+                    y++;
             }
         }
-        double ans = 0;
-        for (int i = 1; i <= m; i++) {
-            ans += i * dp[i];
+        for (int i = 0; i < 26; i++) {
+            if (lower[i] * (long) upper[i] < 0) {
+                w += Math.min(Math.abs(lower[i]), Math.abs(upper[i]));
+            }
         }
+        out.println(y + " " + w);
+    }
 
-        /*
-        for (double d : dp)
-            out.print(d + " ");
-        out.println();
-        */
-
-        out.println(ans);
+    static void count(String s, int[] u, int[] l) {
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            if (ch >= 'a' && ch <= 'z')
+                l[ch - 'a']++;
+            else if (ch >= 'A' && ch <= 'Z')
+                u[ch - 'A']++;
+        }
     }
 
     static InputReader in;
