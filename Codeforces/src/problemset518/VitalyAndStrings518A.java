@@ -16,7 +16,7 @@ public class VitalyAndStrings518A {
         char[] ans = in.nextString().toCharArray();
         String b = in.nextString();
         // "found" is not necessary since  "string s is lexicographically less than string t."
-        // you are garenteed to find a string is lexicographically bigger than ans.
+        // you are guaranteed to find a string is lexicographically bigger than ans.
         //
         boolean found = false;
         for (int i = ans.length - 1; i >= 0; i--) {
