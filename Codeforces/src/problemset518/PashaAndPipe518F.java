@@ -1,7 +1,7 @@
 package problemset518;
 
 /**
- * Created by yuantian on 3/4/15.
+ * Created by yuantian on 3/9/15.
  */
 
 /*
@@ -12,105 +12,130 @@ import java.util.*;
 import java.io.*;
 
 public class PashaAndPipe518F {
-    static long count = 0;
-    static int[][] map = null;
-    static int n = 0;
-    static int m = 0;
-
     static void go() {
-        n = in.nextInt();
-        m = in.nextInt();
-        map = new int[n][m];
+        /*
+        int n = 2000;
+        int m = 2000;
+        char[][] field = new char[n][m];
+        for(int i = 0; i < n; i++)
+            for(int j = 0; j < m ;j++)
+                field[i][j] = '.';
+        */
+        int n = in.nextInt();
+        int m = in.nextInt();
+        char[][] field = new char[n][];
         for (int i = 0; i < n; i++) {
-            String line = in.nextString();
+            field[i] = in.nextString().toCharArray();
+        }
+
+        int[][][] v = new int[n][m][2];
+        int[][][] h = new int[n][m][2];
+
+        for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
-                if (line.charAt(j) == '.')
-                    map[i][j] = 2;
-                else
-                    map[i][j] = 0;
+                if (field[i][j] == '.') {
+                    if (i == 0)
+                        v[i][j][0] = 0;
+                    else
+                        v[i][j][0] = v[i - 1][j][0];
+                    if (j == 0)
+                        h[i][j][0] = 0;
+                    else
+                        h[i][j][0] = h[i][j - 1][0];
+                } else {
+                    v[i][j][0] = i + 1;
+                    h[i][j][0] = j + 1;
+                }
+            }
+        }
+        for (int i = n - 1; i >= 0; i--) {
+            for (int j = m - 1; j >= 0; j--) {
+                if (field[i][j] == '.') {
+                    if (i == n - 1)
+                        v[i][j][1] = n - 1;
+                    else
+                        v[i][j][1] = v[i + 1][j][1];
+                    if (j == m - 1)
+                        h[i][j][1] = m - 1;
+                    else
+                        h[i][j][1] = h[i][j + 1][1];
+                } else {
+                    v[i][j][1] = i - 1;
+                    h[i][j][1] = j - 1;
+                }
             }
         }
 
-        map[0][0] = map[0][m - 1] = map[n - 1][0] = map[n - 1][m - 1] = 0;
+        long total = 0;
+        // no turn
+        for (int i = 1; i < n - 1; i++)
+            if (h[i][m - 1][0] == 0)
+                total++;
+        for (int i = 1; i < m - 1; i++)
+            if (v[n - 1][i][0] == 0)
+                total++;
 
-        count = 0;
-        // dir : 0 = down, 1 = up, 2 = left, 3 = right
-        for (int i = 1; i < m - 1; i++) {
-            if (map[0][i] != 0) {
-                map[0][i] = 1;
-                dfs(0, 1, i, 0);
-                map[0][i] = 2;
-            }
-            if (map[n - 1][i] != 0) {
-                map[n - 1][i] = 1;
-                dfs(1, n - 2, i, 0);
-                map[n - 1][i] = 2;
-            }
-        }
+        int[][][] dp = new int[n][m][2];
+        // one turn
         for (int i = 1; i < n - 1; i++) {
-            if (map[i][0] != 0) {
-                map[i][0] = 1;
-                dfs(3, i, 1, 0);
-                map[i][0] = 2;
+            for (int j = 1; j < m - 1; j++) {
+                if (field[i][j] != '.')
+                    continue;
+                int x = 0;
+                if (v[i][j][0] == 0)
+                    x++;
+                if (v[i][j][1] == n - 1)
+                    x++;
+                int y = 0;
+                if (h[i][j][0] == 0)
+                    y++;
+                if (h[i][j][1] == m - 1)
+                    y++;
+                total += x * y;
+                dp[i][j][0] = dp[i][j - 1][0] + x;
+                dp[i][j][1] = dp[i - 1][j][1] + y;
             }
-            if (map[i][m - 1] != 0) {
-                map[i][m - 1] = 1;
-                dfs(2, i, m - 2, 0);
-                map[i][m - 1] = 2;
+        }
+
+        // two turns
+        for (int i = 1; i < n - 1; i++) {
+            for (int j = 1; j < m - 1; j++) {
+                if (field[i][j] != '.')
+                    continue;
+                int x = 0;
+                if (v[i][j][0] == 0) {
+                    x++;
+                    if (j != m - 2 && v[i][j + 1][1] == n - 1)
+                        total++;
+                }
+                if (v[i][j][1] == n - 1) {
+                    x++;
+                    if (j != m - 2 && v[i][j + 1][0] == 0)
+                        total++;
+                }
+                if (x > 0 && h[i][j][1] > j + 1) {
+                    int index = Math.min(h[i][j][1], m - 2);
+                    total += x * (dp[i][index][0] - dp[i][j + 1][0]);
+                }
+                int y = 0;
+                if (h[i][j][0] == 0) {
+                    y++;
+                    if (i != n - 2 && h[i + 1][j][1] == m - 1)
+                        total++;
+                }
+                if (h[i][j][1] == m - 1) {
+                    y++;
+                    if (i != n - 2 && h[i + 1][j][0] == 0)
+                        total++;
+                }
+                if (y > 0 && v[i][j][1] > i + 1) {
+                    int index = Math.min(v[i][j][1], n - 2);
+                    total += y * (dp[index][j][1] - dp[i + 1][j][1]);
+                }
             }
         }
 
-        out.println(count / 2);
-    }
-
-    static void dfs(int dir, int r, int c, int turn) {
-
-        if (r < 0 || r >= n || c < 0 || c >= m || map[r][c] == 0)
-            return;
-        if (dir <= 1 && (map[r][c - 1] == 1 || map[r][c + 1] == 1)) {
-            // from up or down
-            return;
-        }
-        if (dir >= 2 && (map[r - 1][c] == 1 || map[r + 1][c] == 1)) {
-            // from left or right
-            return;
-        }
-        if (r == 0 || r == n - 1 || c == 0 || c == m - 1) {
-            count++;
-            return;
-        }
-        map[r][c] = 1;
-        switch (dir) {
-            case 0:
-                dfs(0, r + 1, c, turn);
-                if (turn <= 1) {
-                    dfs(2, r, c - 1, turn + 1);
-                    dfs(3, r, c + 1, turn + 1);
-                }
-                break;
-            case 1:
-                dfs(1, r - 1, c, turn);
-                if (turn <= 1) {
-                    dfs(2, r, c - 1, turn + 1);
-                    dfs(3, r, c + 1, turn + 1);
-                }
-                break;
-            case 2:
-                dfs(2, r, c - 1, turn);
-                if (turn <= 1) {
-                    dfs(0, r + 1, c, turn + 1);
-                    dfs(1, r - 1, c, turn + 1);
-                }
-                break;
-            case 3:
-                dfs(3, r, c + 1, turn);
-                if (turn <= 1) {
-                    dfs(0, r + 1, c, turn + 1);
-                    dfs(1, r - 1, c, turn + 1);
-                }
-                break;
-        }
-        map[r][c] = 2;
+        out.println(total);
     }
 
     static InputReader in;
@@ -216,3 +241,25 @@ public class PashaAndPipe518F {
         }
     }
 }
+
+/*
+5 4
+####
+....
+..##
+..##
+####
+
+5 5
+.....
+.....
+.....
+.....
+.....
+
+2000 2000
+.....
+......
+
+output: 31888139940
+ */
