@@ -115,6 +115,17 @@ public class ${NAME} {
             return sb.toString();
         }
 
+        public char[] nextCharArray(int n) {
+            char[] ca = new char[n];
+            for (int i = 0; i < n; i++) {
+                int c = read();
+                while (isSpaceChar(c))
+                    c = read();
+                ca[i] = (char) c;
+            }
+            return ca;
+        }
+
         public static boolean isSpaceChar(int c) {
             switch (c) {
                 case -1:
