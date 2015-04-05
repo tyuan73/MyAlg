@@ -1,4 +1,4 @@
-package p00665;
+package p11340;
 
 /**
  * Created by yuantian on 4/1/15.
@@ -11,79 +11,36 @@ package p00665;
 import java.util.*;
 import java.io.*;
 
-class Main1 {
+class Main {
     static void go() {
         int t = in.nextInt();
 
         while (t-- > 0) {
             int n = in.nextInt();
-            int k = in.nextInt();
-
-            // bit map
-            // bit[x] meaning:
-            //   0 => not weighted
-            //   1 => weighted at least once, and it's always on the light side
-            //   2 => weighted at least once, and it's always on the heavy side
-            //   3 => weighted at least once, could be on a balanced side ('=') or at least one
-            //            time on the light side and at least one time on the heavy side ( 1 | 2)
-            //            if a coin has been on both light and heavy side, it must be a good one.
-            int[] bit = new int[n + 1];
-            for (int i = 0; i < k; i++) {
-                int m = in.nextInt();
-                int[] first = in.nextIntArray(m);
-                int[] second = in.nextIntArray(m);
-                char op = in.nextString().charAt(0);
-                int b1 = 0, b2 = 0;
-                switch (op) {
-                    case '=':
-                        b1 = b2 = 3;
-                        break;
-                    case '<':
-                        b1 = 1;
-                        b2 = 2;
-                        break;
-                    case '>':
-                        b1 = 2;
-                        b2 = 1;
-                        break;
-                }
-                for (int x : first)
-                    bit[x] |= b1;
-                for (int x : second)
-                    bit[x] |= b2;
+            int[] value = new int[n];
+            HashMap<Character, Integer> map = new HashMap<>();
+            for (int i = 0; i < n; i++) {
+                String line = in.nextLine();
+                map.put(line.charAt(0), i);
+                value[i] = Integer.parseInt(line.substring(2));
             }
 
-            // count how many coins have bit map: 0, 1, 2, 3
-            int[] c = new int[4];
-            for (int b : bit)
-                c[b]++;
-
-            // if
-            // there is only 1 light ('1') and 0 heavy ('2'),
-            // or,
-            // there is only 1 heavy ('2') and 0 light ('1'),
-            // then we got it.
-            if (c[1] + c[2] == 1) {
-                for (int i = 1; i <= n; i++) {
-                    if (bit[i] == 1 || bit[i] == 2) {
-                        out.println(i);
-                        break;
-                    }
+            int m = in.nextInt();
+            int[] count = new int[n];
+            for (int i = 0; i < m; i++) {
+                String line = in.nextLine();
+                for (int j = 0; j < line.length(); j++) {
+                    if (map.containsKey(line.charAt(j)))
+                        count[map.get(line.charAt(j))]++;
                 }
-            } else if (c[3] == n - 1) {
-                // if we got n-1 good ones, we can also identify the fake one
-                for (int i = 1; i <= n; i++) {
-                    if (bit[i] == 0) {
-                        out.println(i);
-                        break;
-                    }
-                }
-            } else {
-                out.println(0);
             }
 
-            if (t != 0)
-                out.println();
+            double ans = 0;
+            for (int i = 0; i < n; i++) {
+                ans += value[i] * (long) count[i];
+            }
+
+            out.printf("%.2f$\n", ans / 100);
         }
     }
 
@@ -176,6 +133,16 @@ class Main1 {
             return sb.toString();
         }
 
+        public String nextLine() {
+            int c = read();
+            StringBuilder sb = new StringBuilder(1024);
+            do {
+                sb.append((char) c);
+                c = read();
+            } while (!isNewLine(c));
+            return sb.toString();
+        }
+
         public char[] nextCharArray(int n) {
             char[] ca = new char[n];
             for (int i = 0; i < n; i++) {
@@ -185,6 +152,10 @@ class Main1 {
                 ca[i] = (char) c;
             }
             return ca;
+        }
+
+        public static boolean isNewLine(int c) {
+            return c == '\n' || c == '\r' || c == -1;
         }
 
         public static boolean isSpaceChar(int c) {

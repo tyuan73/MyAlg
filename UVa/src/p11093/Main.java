@@ -1,4 +1,4 @@
-package p00665;
+package p11093;
 
 /**
  * Created by yuantian on 4/1/15.
@@ -11,80 +11,41 @@ package p00665;
 import java.util.*;
 import java.io.*;
 
-class Main1 {
+class Main {
     static void go() {
         int t = in.nextInt();
-
-        while (t-- > 0) {
+        for (int j = 1; j <= t; j++) {
             int n = in.nextInt();
-            int k = in.nextInt();
-
-            // bit map
-            // bit[x] meaning:
-            //   0 => not weighted
-            //   1 => weighted at least once, and it's always on the light side
-            //   2 => weighted at least once, and it's always on the heavy side
-            //   3 => weighted at least once, could be on a balanced side ('=') or at least one
-            //            time on the light side and at least one time on the heavy side ( 1 | 2)
-            //            if a coin has been on both light and heavy side, it must be a good one.
-            int[] bit = new int[n + 1];
-            for (int i = 0; i < k; i++) {
-                int m = in.nextInt();
-                int[] first = in.nextIntArray(m);
-                int[] second = in.nextIntArray(m);
-                char op = in.nextString().charAt(0);
-                int b1 = 0, b2 = 0;
-                switch (op) {
-                    case '=':
-                        b1 = b2 = 3;
-                        break;
-                    case '<':
-                        b1 = 1;
-                        b2 = 2;
-                        break;
-                    case '>':
-                        b1 = 2;
-                        b2 = 1;
-                        break;
-                }
-                for (int x : first)
-                    bit[x] |= b1;
-                for (int x : second)
-                    bit[x] |= b2;
+            int[] gas = new int[2 * n];
+            for (int i = 0; i < n; i++) {
+                gas[i] = in.nextInt();
             }
-
-            // count how many coins have bit map: 0, 1, 2, 3
-            int[] c = new int[4];
-            for (int b : bit)
-                c[b]++;
-
-            // if
-            // there is only 1 light ('1') and 0 heavy ('2'),
-            // or,
-            // there is only 1 heavy ('2') and 0 light ('1'),
-            // then we got it.
-            if (c[1] + c[2] == 1) {
-                for (int i = 1; i <= n; i++) {
-                    if (bit[i] == 1 || bit[i] == 2) {
-                        out.println(i);
-                        break;
-                    }
-                }
-            } else if (c[3] == n - 1) {
-                // if we got n-1 good ones, we can also identify the fake one
-                for (int i = 1; i <= n; i++) {
-                    if (bit[i] == 0) {
-                        out.println(i);
-                        break;
-                    }
-                }
-            } else {
-                out.println(0);
+            for (int i = 0; i < n; i++) {
+                gas[i] -= in.nextInt();
+                gas[i + n] = gas[i];
             }
-
-            if (t != 0)
-                out.println();
+            if (!check(gas, n, j)) {
+                out.println("Case " + j + ": Not possible");
+            }
         }
+    }
+
+    static boolean check(int[] gas, int n, int j) {
+        int from = 0, rem = 0;
+        for (int i = 0; i < 2 * n; i++) {
+            if (rem < 0) {
+                from = i;
+                rem = gas[i];
+            } else {
+                rem += gas[i];
+                if (rem >= 0 && i == from + n - 1) {
+                    out.println("Case " + j + ": Possible from station " + (from + 1));
+                    return true;
+                }
+            }
+
+        }
+        return false;
     }
 
     static InputReader in;

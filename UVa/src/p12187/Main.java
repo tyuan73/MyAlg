@@ -1,7 +1,7 @@
-package p00665;
+package p12187;
 
 /**
- * Created by yuantian on 4/1/15.
+ * Created by yuantian on 4/3/15.
  */
 
 /*
@@ -11,79 +11,48 @@ package p00665;
 import java.util.*;
 import java.io.*;
 
-class Main1 {
+class Main {
     static void go() {
-        int t = in.nextInt();
-
-        while (t-- > 0) {
-            int n = in.nextInt();
-            int k = in.nextInt();
-
-            // bit map
-            // bit[x] meaning:
-            //   0 => not weighted
-            //   1 => weighted at least once, and it's always on the light side
-            //   2 => weighted at least once, and it's always on the heavy side
-            //   3 => weighted at least once, could be on a balanced side ('=') or at least one
-            //            time on the light side and at least one time on the heavy side ( 1 | 2)
-            //            if a coin has been on both light and heavy side, it must be a good one.
-            int[] bit = new int[n + 1];
-            for (int i = 0; i < k; i++) {
-                int m = in.nextInt();
-                int[] first = in.nextIntArray(m);
-                int[] second = in.nextIntArray(m);
-                char op = in.nextString().charAt(0);
-                int b1 = 0, b2 = 0;
-                switch (op) {
-                    case '=':
-                        b1 = b2 = 3;
-                        break;
-                    case '<':
-                        b1 = 1;
-                        b2 = 2;
-                        break;
-                    case '>':
-                        b1 = 2;
-                        b2 = 1;
-                        break;
+        int n, r, c, k;
+        while ((n = in.nextInt()) != 0) {
+            r = in.nextInt();
+            c = in.nextInt();
+            k = in.nextInt();
+            int[][] country = new int[r + 2][c + 2];
+            for (int i = 1; i <= r; i++) {
+                for (int j = 1; j <= c; j++) {
+                    country[i][j] = in.nextInt();
                 }
-                for (int x : first)
-                    bit[x] |= b1;
-                for (int x : second)
-                    bit[x] |= b2;
             }
 
-            // count how many coins have bit map: 0, 1, 2, 3
-            int[] c = new int[4];
-            for (int b : bit)
-                c[b]++;
+            while (k-- > 0) {
+                int[][] c1 = new int[r + 2][c + 2];
+                for (int i = 1; i <= r; i++)
+                    System.arraycopy(country[i], 1, c1[i], 1, c);
 
-            // if
-            // there is only 1 light ('1') and 0 heavy ('2'),
-            // or,
-            // there is only 1 heavy ('2') and 0 light ('1'),
-            // then we got it.
-            if (c[1] + c[2] == 1) {
-                for (int i = 1; i <= n; i++) {
-                    if (bit[i] == 1 || bit[i] == 2) {
-                        out.println(i);
-                        break;
+                for (int i = 1; i <= r; i++) {
+                    for (int j = 1; j <= c; j++) {
+                        int atk = (country[i][j] + 1) % n;
+                        if (country[i - 1][j] == atk)
+                            c1[i - 1][j] = country[i][j];
+                        if (country[i + 1][j] == atk)
+                            c1[i + 1][j] = country[i][j];
+                        if (country[i][j - 1] == atk)
+                            c1[i][j - 1] = country[i][j];
+                        if (country[i][j + 1] == atk)
+                            c1[i][j + 1] = country[i][j];
                     }
                 }
-            } else if (c[3] == n - 1) {
-                // if we got n-1 good ones, we can also identify the fake one
-                for (int i = 1; i <= n; i++) {
-                    if (bit[i] == 0) {
-                        out.println(i);
-                        break;
-                    }
-                }
-            } else {
-                out.println(0);
+                country = c1;
             }
 
-            if (t != 0)
+            for (int i = 1; i <= r; i++) {
+                out.print(country[i][1]);
+                for (int j = 2; j <= c; j++) {
+                    out.print(" " + country[i][j]);
+                }
                 out.println();
+            }
         }
     }
 
