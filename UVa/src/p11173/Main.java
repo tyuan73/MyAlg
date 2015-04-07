@@ -1,7 +1,7 @@
-package p10107;
+package p11173;
 
 /**
- * Created by yuantian on 4/6/15.
+ * Created by yuantian on 4/7/15.
  */
 
 /*
@@ -12,41 +12,14 @@ import java.util.*;
 import java.io.*;
 
 class Main {
-    static class Person implements Comparable<Person> {
-        int year, mon, day;
-        String name;
-
-        Person(String name, int year, int mon, int day) {
-            this.name = name;
-            this.year = year;
-            this.mon = mon;
-            this.day = day;
-        }
-
-        public int compareTo(Person p) {
-            if (this.year != p.year)
-                return this.year - p.year;
-            if (this.mon != p.mon)
-                return this.mon - p.mon;
-            return this.day - this.day;
-        }
-    }
-
     static void go() {
-        int n = in.nextInt();
-        Person[] persons = new Person[n];
+        int t = in.nextInt();
 
-        for (int i = 0; i < n; i++) {
-            String name = in.nextString();
-            int day = in.nextInt();
-            int mon = in.nextInt();
-            int year = in.nextInt();
-            persons[i] = new Person(name, year, mon, day);
+        while (t-- > 0) {
+            in.nextInt();
+            int k = in.nextInt();
+            out.println(k ^ (k >> 1));
         }
-
-        Arrays.sort(persons);
-        out.println(persons[n - 1].name);
-        out.println(persons[0].name);
     }
 
     static InputReader in;

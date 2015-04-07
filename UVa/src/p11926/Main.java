@@ -1,7 +1,7 @@
-package p10107;
+package p11926;
 
 /**
- * Created by yuantian on 4/6/15.
+ * Created by yuantian on 4/7/15.
  */
 
 /*
@@ -12,41 +12,88 @@ import java.util.*;
 import java.io.*;
 
 class Main {
-    static class Person implements Comparable<Person> {
-        int year, mon, day;
-        String name;
+    static class Seg {
+        int start, end;
+        Seg left, right;
 
-        Person(String name, int year, int mon, int day) {
-            this.name = name;
-            this.year = year;
-            this.mon = mon;
-            this.day = day;
+        Seg(int s, int e) {
+            this.start = s;
+            this.end = e;
+            this.left = null;
+            this.right = null;
         }
 
-        public int compareTo(Person p) {
-            if (this.year != p.year)
-                return this.year - p.year;
-            if (this.mon != p.mon)
-                return this.mon - p.mon;
-            return this.day - this.day;
+        boolean checkAndInsert(Seg f) {
+            if (f.end > this.start && this.end > f.start) {
+                return false;
+            }
+
+            if (f.start < this.start) {
+                if (this.left != null)
+                    return this.left.checkAndInsert(f);
+                else {
+                    this.left = f;
+                    return true;
+                }
+            } else {
+                if (this.right != null)
+                    return this.right.checkAndInsert(f);
+                else {
+                    this.right = f;
+                    return true;
+                }
+            }
+
+            //return false;
         }
     }
 
     static void go() {
-        int n = in.nextInt();
-        Person[] persons = new Person[n];
+        while (true) {
+            int n = in.nextInt();
+            int m = in.nextInt();
+            if ( n == 0 && m == 0)
+                break;
+            int[][] one = new int[n][];
+            for (int i = 0; i < n; i++)
+                one[i] = in.nextIntArray(2);
+            int[][] mul = new int[m][];
+            for (int i = 0; i < m; i++)
+                mul[i] = in.nextIntArray(3);
 
-        for (int i = 0; i < n; i++) {
-            String name = in.nextString();
-            int day = in.nextInt();
-            int mon = in.nextInt();
-            int year = in.nextInt();
-            persons[i] = new Person(name, year, mon, day);
+            Seg root = null;
+            boolean ok = true;
+            for (int[] pair : one) {
+                Seg f = new Seg(pair[0], pair[1]);
+                if (root == null) {
+                    root = f;
+                } else if (!root.checkAndInsert(f)) {
+                    ok = false;
+                    break;
+                }
+            }
+            if (!ok) {
+                out.println("CONFLICT");
+                continue;
+            }
+
+            for (int[] tri : mul) {
+                for (int s = tri[0], e = tri[1]; s < 1000000; s += tri[2], e += tri[2]) {
+                    Seg f = new Seg(s, e);
+                    if (root == null) {
+                        root = f;
+                    } else if (!root.checkAndInsert(f)) {
+                        ok = false;
+                        break;
+                    }
+                }
+            }
+            if (!ok) {
+                out.println("CONFLICT");
+            } else {
+                out.println("NO CONFLICT");
+            }
         }
-
-        Arrays.sort(persons);
-        out.println(persons[n - 1].name);
-        out.println(persons[0].name);
     }
 
     static InputReader in;
