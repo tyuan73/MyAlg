@@ -4,55 +4,59 @@ package p11926;
  * Created with IntelliJ IDEA.
  * User: yuantian
  * Date: 4/8/15
- * Time: 10:50 PM
+ * Time: 11:20 PM
  * Copyright (c) 2013 All Right Reserved, http://github.com/tyuan73
  */
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.BitSet;
 import java.util.InputMismatchException;
 
-class Main {
+public class MainBitSet {
     static void go() {
         int n, m;
+        BitSet bs = new BitSet(1000001);
         while (true) {
             n = in.nextInt();
             m = in.nextInt();
             if (n == 0 && m == 0)
                 break;
 
-            int[] map = new int[1000001];
+            bs.clear();
+            boolean ok = true;
             for (int i = 0; i < n; i++) {
-                map[in.nextInt()]++;
+                int x = in.nextInt();
                 int y = in.nextInt();
-                if (y <= 1000000) map[y]--;
+                if (ok) {
+                    if (y > 1000000) y = 1000000;
+                    if (bs.get(x, y).cardinality() > 0) {
+                        ok = false;
+                    } else {
+                        bs.set(x, y);
+                    }
+                }
             }
 
             for (int i = 0; i < m; i++) {
                 int x = in.nextInt();
                 int y = in.nextInt();
                 int inv = in.nextInt();
-                while (x <= 1000000) {
-                    map[x]++;
-                    if (y <= 1000000) map[y]--;
-                    x += inv;
-                    y += inv;
+                while (ok && x <= 1000000) {
+                    if (y > 1000000) y = 1000000;
+                    if (bs.get(x, y).cardinality() > 0) {
+                        ok = false;
+                    } else {
+                        bs.set(x, y);
+                        x += inv;
+                        y += inv;
+                    }
                 }
             }
 
-            int count = 0;
-            boolean ok = true;
-            for (int x : map) {
-                count += x;
-                if (count > 1) {
-                    ok = false;
-                    break;
-                }
-            }
             out.println(ok ? "NO CONFLICT" : "CONFLICT");
         }
-
     }
 
     static InputReader in;

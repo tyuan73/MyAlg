@@ -1,10 +1,10 @@
-package p11926;
+package p11933;
 
 /**
  * Created with IntelliJ IDEA.
  * User: yuantian
  * Date: 4/8/15
- * Time: 10:50 PM
+ * Time: 11:45 PM
  * Copyright (c) 2013 All Right Reserved, http://github.com/tyuan73
  */
 
@@ -13,46 +13,25 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.InputMismatchException;
 
-class Main {
+public class Main {
     static void go() {
-        int n, m;
-        while (true) {
-            n = in.nextInt();
-            m = in.nextInt();
-            if (n == 0 && m == 0)
-                break;
-
-            int[] map = new int[1000001];
-            for (int i = 0; i < n; i++) {
-                map[in.nextInt()]++;
-                int y = in.nextInt();
-                if (y <= 1000000) map[y]--;
-            }
-
-            for (int i = 0; i < m; i++) {
-                int x = in.nextInt();
-                int y = in.nextInt();
-                int inv = in.nextInt();
-                while (x <= 1000000) {
-                    map[x]++;
-                    if (y <= 1000000) map[y]--;
-                    x += inv;
-                    y += inv;
+        long n;
+        while ((n = in.nextLong()) != 0) {
+            long a = 0, b = 0;
+            boolean isA = true;
+            long bit = 1;
+            while (bit <= n) {
+                if ((bit & n) > 0) {
+                    if (isA)
+                        a |= bit;
+                    else
+                        b |= bit;
+                    isA ^= true;
                 }
+                bit <<= 1;
             }
-
-            int count = 0;
-            boolean ok = true;
-            for (int x : map) {
-                count += x;
-                if (count > 1) {
-                    ok = false;
-                    break;
-                }
-            }
-            out.println(ok ? "NO CONFLICT" : "CONFLICT");
+            out.println(a + " " + b);
         }
-
     }
 
     static InputReader in;

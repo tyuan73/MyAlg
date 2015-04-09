@@ -1,58 +1,99 @@
 package p11926;
 
 /**
- * Created with IntelliJ IDEA.
- * User: yuantian
- * Date: 4/8/15
- * Time: 10:50 PM
- * Copyright (c) 2013 All Right Reserved, http://github.com/tyuan73
+ * Created by yuantian on 4/7/15.
  */
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
-import java.util.InputMismatchException;
+/*
 
-class Main {
-    static void go() {
-        int n, m;
-        while (true) {
-            n = in.nextInt();
-            m = in.nextInt();
-            if (n == 0 && m == 0)
-                break;
+*/
 
-            int[] map = new int[1000001];
-            for (int i = 0; i < n; i++) {
-                map[in.nextInt()]++;
-                int y = in.nextInt();
-                if (y <= 1000000) map[y]--;
+import java.util.*;
+import java.io.*;
+
+class Main1 {
+    static class Seg {
+        int start, end;
+        Seg left, right;
+
+        Seg(int s, int e) {
+            this.start = s;
+            this.end = e;
+            this.left = null;
+            this.right = null;
+        }
+
+        boolean checkAndInsert(Seg f) {
+            if (f.end > this.start && this.end > f.start) {
+                return false;
             }
 
-            for (int i = 0; i < m; i++) {
-                int x = in.nextInt();
-                int y = in.nextInt();
-                int inv = in.nextInt();
-                while (x <= 1000000) {
-                    map[x]++;
-                    if (y <= 1000000) map[y]--;
-                    x += inv;
-                    y += inv;
+            if (f.start < this.start) {
+                if (this.left != null)
+                    return this.left.checkAndInsert(f);
+                else {
+                    this.left = f;
+                    return true;
+                }
+            } else {
+                if (this.right != null)
+                    return this.right.checkAndInsert(f);
+                else {
+                    this.right = f;
+                    return true;
                 }
             }
 
-            int count = 0;
+            //return false;
+        }
+    }
+
+    static void go() {
+        while (true) {
+            int n = in.nextInt();
+            int m = in.nextInt();
+            if ( n == 0 && m == 0)
+                break;
+            int[][] one = new int[n][];
+            for (int i = 0; i < n; i++)
+                one[i] = in.nextIntArray(2);
+            int[][] mul = new int[m][];
+            for (int i = 0; i < m; i++)
+                mul[i] = in.nextIntArray(3);
+
+            Seg root = null;
             boolean ok = true;
-            for (int x : map) {
-                count += x;
-                if (count > 1) {
+            for (int[] pair : one) {
+                Seg f = new Seg(pair[0], pair[1]);
+                if (root == null) {
+                    root = f;
+                } else if (!root.checkAndInsert(f)) {
                     ok = false;
                     break;
                 }
             }
-            out.println(ok ? "NO CONFLICT" : "CONFLICT");
-        }
+            if (!ok) {
+                out.println("CONFLICT");
+                continue;
+            }
 
+            for (int[] tri : mul) {
+                for (int s = tri[0], e = tri[1]; s < 1000000; s += tri[2], e += tri[2]) {
+                    Seg f = new Seg(s, e);
+                    if (root == null) {
+                        root = f;
+                    } else if (!root.checkAndInsert(f)) {
+                        ok = false;
+                        break;
+                    }
+                }
+            }
+            if (!ok) {
+                out.println("CONFLICT");
+            } else {
+                out.println("NO CONFLICT");
+            }
+        }
     }
 
     static InputReader in;
@@ -142,6 +183,17 @@ class Main {
                 c = read();
             } while (!isSpaceChar(c));
             return sb.toString();
+        }
+
+        public char[] nextCharArray(int n) {
+            char[] ca = new char[n];
+            for (int i = 0; i < n; i++) {
+                int c = read();
+                while (isSpaceChar(c))
+                    c = read();
+                ca[i] = (char) c;
+            }
+            return ca;
         }
 
         public static boolean isSpaceChar(int c) {
