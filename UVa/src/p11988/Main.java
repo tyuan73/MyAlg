@@ -16,34 +16,36 @@ import java.io.*;
 
 class Main {
     static void go() {
-        while(true) {
-            String line = null;
+        while (true) {
+            char[] line = null;
             try {
-                line = "[" + in.nextString();
+                line = ("[" + in.nextString()).toCharArray();
             } catch (Exception e) {
                 break;
             }
-            int n = line.length();
-            char[] ans = new char[n];
+            int n = line.length;
+            Stack<Integer> s = new Stack<>();
             int l = 0, r = n - 1;
             int idx = n - 1, preE = n, preS = n;
             for (; idx >= 0; idx--) {
-                if (line.charAt(idx) == ']') {
+                if (line[idx] == ']') {
                     preE = idx;
-                } else if (line.charAt(idx) == '[') {
-                    for (int i = idx; i < preE; i++) {
-                        ans[l++] = line.charAt(i);
+                } else if (line[idx] == '[') {
+                    for (int i = idx + 1; i < preE; i++) {
+                        out.print(line[i]);
                     }
-                    for (int i = preS - 1; i >= preE; i--) {
-                        ans[r--] = line.charAt(i);
-                    }
+                    s.push(preE);
+                    s.push(preS);
                     preS = idx;
                     preE = idx;
                 }
             }
-            for (char c : ans) {
-                if (c != '[' && c != ']')
-                    out.print(c);
+            while (!s.empty()) {
+                int end = s.pop();
+                int start = s.pop();
+                for (; start < end; start++)
+                    if (line[start] != ']')
+                        out.print(line[start]);
             }
             out.println();
         }

@@ -13,7 +13,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.InputMismatchException;
 
-public class Main {
+class Main {
     static void go() {
         long n;
         while ((n = in.nextLong()) != 0) {
