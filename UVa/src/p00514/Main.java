@@ -26,30 +26,26 @@ class Main {
                 for (int i = 1; i < n; i++)
                     b[i] = in.nextInt();
                 S.clear();
-                int iA = 1, iB = 0;
-                while (iA <= n && iB < n) {
+                S.push(0);
+                int iA = n, iB = n - 1;
+                while (iB >= 0) {
                     if (iA == b[iB]) {
-                        iA++;
-                        iB++;
+                        iA--;
+                        iB--;
                     } else {
-                        if (!S.empty() && b[iB] == S.peek()) {
+                        if (iA == S.peek()) {
                             S.pop();
-                            iB++;
+                            iA--;
+                        } else if (b[iB] > S.peek()) {
+                            S.push(b[iB]);
+                            iB--;
                         } else {
-                            S.push(iA);
-                            iA++;
+                            break;
                         }
                     }
                 }
-                while (!S.empty()) {
-                    if (b[iB] == S.peek()) {
-                        iB++;
-                        S.pop();
-                    } else {
-                        break;
-                    }
-                }
-                if (!S.empty()) {
+
+                if (iB != -1) {
                     out.println("No");
                 } else {
                     out.println("Yes");
