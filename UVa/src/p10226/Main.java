@@ -1,0 +1,182 @@
+package p10226;
+
+/**
+ * Created by yuantian on 4/14/15.
+ */
+
+/*
+
+*/
+
+import java.util.*;
+import java.io.*;
+
+class Main {
+    static void go() {
+        int t = in.nextInt();
+        in.nextLine();
+        HashMap<String, Integer> map = new HashMap<>();
+        ArrayList<String> order = new ArrayList<>();
+        int total = 0;
+        while (true) {
+            String line;
+            try {
+                line = in.nextLine();
+            } catch (Exception e) {
+                print(map, order, total);
+                break;
+            }
+
+            if (line.length() == 0) {
+                print(map, order, total);
+                out.println();
+                map.clear();
+                order.clear();
+                total = 0;
+                continue;
+            }
+
+            total++;
+            if (map.containsKey(line)) {
+                int p = map.get(line) + 1;
+                map.put(line, p);
+            } else {
+                map.put(line, 1);
+                order.add(line);
+            }
+        }
+    }
+
+    static void print(HashMap<String, Integer> map, ArrayList<String> order, int total) {
+        Collections.sort(order);
+
+        for (String str : order) {
+            out.printf("%s %.4f\n", str, map.get(str) / (double) total * 100);
+        }
+    }
+
+    static InputReader in;
+    static PrintWriter out;
+
+    public static void main(String[] args) {
+        in = new InputReader(System.in);
+        out = new PrintWriter(System.out);
+
+        go();
+
+        out.close();
+    }
+
+    static class InputReader {
+        private InputStream stream;
+        private byte[] buf = new byte[1024];
+        private int curChar;
+        private int numChars;
+
+        public InputReader(InputStream stream) {
+            this.stream = stream;
+        }
+
+        public int read() {
+            if (numChars == -1)
+                throw new InputMismatchException();
+            if (curChar >= numChars) {
+                curChar = 0;
+                try {
+                    numChars = stream.read(buf);
+                } catch (IOException e) {
+                    throw new InputMismatchException();
+                }
+                if (numChars <= 0)
+                    new InputMismatchException();
+            }
+            return buf[curChar++];
+        }
+
+        public int[] nextIntArray(int len) {
+            int[] ret = new int[len];
+            for (int i = 0; i < len; i++)
+                ret[i] = nextInt();
+            return ret;
+        }
+
+        public long[] nextLongArray(int len) {
+            long[] ret = new long[len];
+            for (int i = 0; i < len; i++)
+                ret[i] = nextLong();
+            return ret;
+        }
+
+
+        public int nextInt() {
+            return (int) nextLong();
+        }
+
+        public long nextLong() {
+            int c = read();
+            while (isSpaceChar(c))
+                c = read();
+            int sgn = 1;
+            if (c == '-') {
+                sgn = -1;
+                c = read();
+            }
+            long res = 0;
+            do {
+                if (c < '0' || c > '9')
+                    throw new InputMismatchException();
+                res *= 10;
+                res += c - '0';
+                c = read();
+            } while (!isSpaceChar(c));
+            return res * sgn;
+        }
+
+        public String nextLine() {
+            StringBuilder sb = new StringBuilder(1024);
+            int c = read();
+            while (!(c == '\n' || c == '\r')) {
+                sb.append((char) c);
+                c = read();
+            }
+            ;
+            return sb.toString();
+        }
+
+        public String nextString() {
+            int c = read();
+            while (isSpaceChar(c))
+                c = read();
+            StringBuilder sb = new StringBuilder(1024);
+            do {
+                sb.append((char) c);
+                c = read();
+            } while (!isSpaceChar(c));
+            return sb.toString();
+        }
+
+        public char[] nextCharArray(int n) {
+            char[] ca = new char[n];
+            for (int i = 0; i < n; i++) {
+                int c = read();
+                while (isSpaceChar(c))
+                    c = read();
+                ca[i] = (char) c;
+            }
+            return ca;
+        }
+
+        public static boolean isSpaceChar(int c) {
+            switch (c) {
+                case -1:
+                case ' ':
+                case '\n':
+                case '\r':
+                case '\t':
+                    return true;
+                default:
+                    return false;
+            }
+        }
+    }
+}
