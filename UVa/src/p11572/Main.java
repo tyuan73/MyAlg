@@ -14,14 +14,20 @@ import java.io.*;
 class Main {
     static void go() {
         int t = in.nextInt();
-        HashSet<Integer> set = new HashSet<>();
+        HashMap<Integer, Integer> map = new HashMap<>();
         while (t-- > 0) {
             int n = in.nextInt();
-            set.clear();
-            while (n-- > 0) {
-                set.add(in.nextInt());
+            map.clear();
+            int max = 0, from = 0;
+            for (int i = 0; i < n; i++) {
+                int x = in.nextInt();
+                if (map.containsKey(x)) {
+                    from = Math.max(from, map.get(x) + 1);
+                }
+                map.put(x, i);
+                max = Math.max(max, i - from + 1);
             }
-            out.println(set.size());
+            out.println(max);
         }
     }
 
