@@ -59,7 +59,7 @@ public class ${NAME} {
                     throw new InputMismatchException();
                 }
                 if (numChars <= 0)
-                    new InputMismatchException();
+                    return -1;
             }
             return buf[curChar++];
         }
