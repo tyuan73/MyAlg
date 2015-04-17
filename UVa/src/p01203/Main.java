@@ -1,4 +1,4 @@
-package p11136;
+package p01203;
 
 /**
  * Created by yuantian on 4/16/15.
@@ -8,37 +8,54 @@ package p11136;
 
 */
 
+
 import java.util.*;
 import java.io.*;
 
 class Main {
-    static void go() {
-        int n;
-        TreeMap<Integer, Integer> map = new TreeMap<>();
-        while ((n = in.nextInt()) != 0) {
-            map.clear();
-            long total = 0;
-            for (int i = 0; i < n; i++) {
-                int m = in.nextInt();
-                for (int j = 0; j < m; j++) {
-                    int x = in.nextInt();
-                    if (map.containsKey(x)) {
-                        map.put(x, map.get(x) + 1);
-                    } else {
-                        map.put(x, 1);
-                    }
-                }
-                int l = map.firstKey(), r = map.lastKey();
-                total += r - l;
-                int v = map.remove(l);
-                if (v > 1)
-                    map.put(l, v - 1);
-                v = map.remove(r);
-                if (v > 1)
-                    map.put(r, v - 1);
-            }
-            out.println(total);
+    static class CheckPoint implements Comparable<CheckPoint> {
+        int time, qid;
+
+        CheckPoint(int t, int q) {
+            this.time = t;
+            this.qid = q;
         }
+
+        public int compareTo(CheckPoint c) {
+            if (this.time == c.time)
+                return c.qid - this.qid;
+            return c.time - this.time;
+        }
+    }
+
+    static void go() {
+        String str;
+        ArrayList<String> input = new ArrayList<>();
+        while (!(str = in.nextLine()).equals("#")) {
+            input.add(str);
+        }
+        int n = in.nextInt();
+        PriorityQueue<CheckPoint> pq = new PriorityQueue<>();
+        for (String s : input) {
+            String[] sp = s.split(" ");
+            int id = Integer.parseInt(sp[1]);
+            int intv = Integer.parseInt(sp[2]);
+            for (int i = 0, time = intv; i < n; i++, time += intv) {
+                CheckPoint max = pq.peek();
+                CheckPoint cur = new CheckPoint(time, id);
+                if (pq.size() >= n && max.compareTo(cur) > 0)
+                    break;
+                pq.add(cur);
+                if (pq.size() > n)
+                    pq.remove();
+            }
+        }
+        int[] output = new int[n];
+        for (int i = n - 1; i >= 0; i--)
+            output[i] = pq.remove().qid;
+
+        for (int qid : output)
+            out.println(qid);
     }
 
     static InputReader in;

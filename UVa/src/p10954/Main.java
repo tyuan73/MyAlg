@@ -1,4 +1,4 @@
-package p11136;
+package p10954;
 
 /**
  * Created by yuantian on 4/16/15.
@@ -14,28 +14,19 @@ import java.io.*;
 class Main {
     static void go() {
         int n;
-        TreeMap<Integer, Integer> map = new TreeMap<>();
+
         while ((n = in.nextInt()) != 0) {
-            map.clear();
             long total = 0;
-            for (int i = 0; i < n; i++) {
-                int m = in.nextInt();
-                for (int j = 0; j < m; j++) {
-                    int x = in.nextInt();
-                    if (map.containsKey(x)) {
-                        map.put(x, map.get(x) + 1);
-                    } else {
-                        map.put(x, 1);
-                    }
+            PriorityQueue<Long> pq = new PriorityQueue<>();
+            for (int i = 0; i < n; i++)
+                pq.add(in.nextLong());
+            while (pq.size() > 0) {
+                long x = pq.poll();
+                if (pq.size() > 0) {
+                    long y = x + pq.poll();
+                    total += y;
+                    pq.add(y);
                 }
-                int l = map.firstKey(), r = map.lastKey();
-                total += r - l;
-                int v = map.remove(l);
-                if (v > 1)
-                    map.put(l, v - 1);
-                v = map.remove(r);
-                if (v > 1)
-                    map.put(r, v - 1);
             }
             out.println(total);
         }
@@ -74,7 +65,7 @@ class Main {
                     throw new InputMismatchException();
                 }
                 if (numChars <= 0)
-                    new InputMismatchException();
+                    return -1;
             }
             return buf[curChar++];
         }

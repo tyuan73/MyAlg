@@ -1,4 +1,4 @@
-package p11136;
+package p11849;
 
 /**
  * Created by yuantian on 4/16/15.
@@ -13,29 +13,27 @@ import java.io.*;
 
 class Main {
     static void go() {
-        int n;
-        TreeMap<Integer, Integer> map = new TreeMap<>();
-        while ((n = in.nextInt()) != 0) {
-            map.clear();
-            long total = 0;
-            for (int i = 0; i < n; i++) {
-                int m = in.nextInt();
-                for (int j = 0; j < m; j++) {
-                    int x = in.nextInt();
-                    if (map.containsKey(x)) {
-                        map.put(x, map.get(x) + 1);
-                    } else {
-                        map.put(x, 1);
-                    }
-                }
-                int l = map.firstKey(), r = map.lastKey();
-                total += r - l;
-                int v = map.remove(l);
-                if (v > 1)
-                    map.put(l, v - 1);
-                v = map.remove(r);
-                if (v > 1)
-                    map.put(r, v - 1);
+        int n, m;
+        while (true) {
+            n = in.nextInt();
+            m = in.nextInt();
+            if (n == 0 && m == 0) {
+                break;
+            }
+
+            int[] j1 = in.nextIntArray(n);
+            int[] j2 = in.nextIntArray(m);
+            int total = 0;
+            int i1 = 0, i2 = 0;
+            while (i1 < n && i2 < m) {
+                if (j1[i1] == j2[i2]) {
+                    total++;
+                    i1++;
+                    i2++;
+                } else if (j1[i1] < j2[i2]) {
+                    i1++;
+                } else
+                    i2++;
             }
             out.println(total);
         }

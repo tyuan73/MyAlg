@@ -1,41 +1,113 @@
 package p11136;
 
 /**
- * Created by yuantian on 4/16/15.
+ * Created by yuantian on 4/15/15.
  */
 
 /*
-
+    This one does not work. See Main.java
 */
 
 import java.util.*;
 import java.io.*;
 
-class Main {
+class Main1 {
+    static class DS {
+        int[] ele;
+        int count;
+
+        DS(int n) {
+            this.count = n;
+            ele = new int[n + 1];
+            init();
+        }
+
+        void init() {
+            for (int i = 0; i <= count; i++)
+                ele[i] = i;
+        }
+
+        int get(int i) {
+            int p = ele[i];
+            if (ele[p] != p) {
+                p = get(p);
+                ele[i] = p;
+            }
+            return p;
+        }
+
+        void join(int a, int b) {
+            if (a > b) {
+                join(b, a);
+            } else {
+                ele[a] = get(b);
+            }
+        }
+    }
+
+    static class Bill implements Comparable<Bill> {
+        int val, day;
+
+        Bill(int v, int d) {
+            this.val = v;
+            this.day = d;
+        }
+
+        public int compareTo(Bill b) {
+            return this.val - b.val;
+        }
+    }
+
     static void go() {
         int n;
-        TreeMap<Integer, Integer> map = new TreeMap<>();
+        ArrayList<Bill> all = new ArrayList<>();
         while ((n = in.nextInt()) != 0) {
-            map.clear();
-            long total = 0;
+            all.clear();
             for (int i = 0; i < n; i++) {
                 int m = in.nextInt();
-                for (int j = 0; j < m; j++) {
-                    int x = in.nextInt();
-                    if (map.containsKey(x)) {
-                        map.put(x, map.get(x) + 1);
-                    } else {
-                        map.put(x, 1);
-                    }
+                while (m-- > 0)
+                    all.add(new Bill(in.nextInt(), i));
+            }
+
+            Collections.sort(all);
+
+            int[][] prom = new int[n][2];
+            DS ds = new DS(n);
+            int idx = all.size() - 1, count = 0;
+            while (count < n) {
+                Bill b = all.get(idx);
+                int i = ds.get(b.day);
+                if (i < n) {
+                    count++;
+                    prom[i][0] = b.val;
+                    ds.join(i, i + 1);
                 }
-                int l = map.firstKey(), r = map.lastKey();
-                total += r - l;
-                int v = map.remove(l);
-                if (v > 1)
-                    map.put(l, v - 1);
-                v = map.remove(r);
-                if (v > 1)
-                    map.put(r, v - 1);
+                idx--;
+            }
+
+            ds.init();
+            idx = 0;
+            count = 0;
+            while (count < n) {
+                Bill b = all.get(idx);
+                int i = ds.get(b.day);
+                if (i < n) {
+                    count++;
+                    prom[i][1] = b.val;
+                    ds.join(i, i + 1);
+                }
+                idx++;
+            }
+
+            System.out.println("--------");
+            for(int[] x : prom) {
+                System.out.println(x[0] + " - " + x[1]);
+            }
+            System.out.println("--------");
+
+            long total = 0;
+            for (int[] pair : prom) {
+                total += pair[0] - pair[1];
             }
             out.println(total);
         }
@@ -165,3 +237,14 @@ class Main {
         }
     }
 }
+
+/*
+input:
+2
+2 1 1
+2 2 5
+0
+
+output:
+3
+ */

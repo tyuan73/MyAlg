@@ -1,7 +1,7 @@
-package p11136;
+package p11995;
 
 /**
- * Created by yuantian on 4/16/15.
+ * Created by yuantian on 4/17/15.
  */
 
 /*
@@ -12,32 +12,60 @@ import java.util.*;
 import java.io.*;
 
 class Main {
+    static final String[] ANS = {
+            "impossible",       // 0
+            "stack",            // 1
+            "priority queue",   // 2
+            "not sure",         // 3
+            "queue",            // 4
+            "not sure",         // 5
+            "not sure",         // 6
+            "not sure"          // 7
+    };
+
     static void go() {
         int n;
-        TreeMap<Integer, Integer> map = new TreeMap<>();
-        while ((n = in.nextInt()) != 0) {
-            map.clear();
-            long total = 0;
+        Stack<Integer> stack = new Stack<>();
+        PriorityQueue<Integer> pq = new PriorityQueue<>(100, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o2 - o1;
+            }
+        });
+        LinkedList<Integer> queue = new LinkedList<>();
+        while (true) {
+            try {
+                n = in.nextInt();
+            } catch (Exception e) {
+                break;
+            }
+            stack.clear();
+            pq.clear();
+            queue.clear();
+            int result = 7;
             for (int i = 0; i < n; i++) {
-                int m = in.nextInt();
-                for (int j = 0; j < m; j++) {
-                    int x = in.nextInt();
-                    if (map.containsKey(x)) {
-                        map.put(x, map.get(x) + 1);
-                    } else {
-                        map.put(x, 1);
+                int op = in.nextInt();
+                int num = in.nextInt();
+                if (op == 1) {
+                    if ((result & 1) > 0)
+                        stack.add(num);
+                    if ((result & 2) > 0)
+                        pq.add(num);
+                    if ((result & 4) > 0)
+                        queue.addLast(num);
+                } else {
+                    if ((result & 1) > 0 && num != stack.pop()) {
+                        result ^= 1;
+                    }
+                    if ((result & 2) > 0 && num != pq.poll()) {
+                        result ^= 2;
+                    }
+                    if ((result & 4) > 0 && num != queue.removeFirst()) {
+                        result ^= 4;
                     }
                 }
-                int l = map.firstKey(), r = map.lastKey();
-                total += r - l;
-                int v = map.remove(l);
-                if (v > 1)
-                    map.put(l, v - 1);
-                v = map.remove(r);
-                if (v > 1)
-                    map.put(r, v - 1);
             }
-            out.println(total);
+            out.println(ANS[result]);
         }
     }
 
@@ -74,7 +102,7 @@ class Main {
                     throw new InputMismatchException();
                 }
                 if (numChars <= 0)
-                    new InputMismatchException();
+                    return -1;
             }
             return buf[curChar++];
         }
