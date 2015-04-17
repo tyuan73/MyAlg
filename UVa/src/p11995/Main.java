@@ -39,6 +39,7 @@ class Main {
             } catch (Exception e) {
                 break;
             }
+
             stack.clear();
             pq.clear();
             queue.clear();
@@ -54,13 +55,13 @@ class Main {
                     if ((result & 4) > 0)
                         queue.addLast(num);
                 } else {
-                    if ((result & 1) > 0 && num != stack.pop()) {
+                    if ((result & 1) > 0 && (stack.isEmpty() || num != stack.pop())) {
                         result ^= 1;
                     }
-                    if ((result & 2) > 0 && num != pq.poll()) {
+                    if ((result & 2) > 0 && (pq.isEmpty() || num != pq.poll())) {
                         result ^= 2;
                     }
-                    if ((result & 4) > 0 && num != queue.removeFirst()) {
+                    if ((result & 4) > 0 && (queue.isEmpty() || num != queue.removeFirst())) {
                         result ^= 4;
                     }
                 }
