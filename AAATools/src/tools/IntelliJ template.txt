@@ -106,7 +106,7 @@ public class ${NAME} {
         public String nextLine() {
             StringBuilder sb = new StringBuilder(1024);
             int c = read();
-            while (!(c == '\n' || c == '\r')) {
+            while (!(c == '\n' || c == '\r' || c == -1)) {
                 sb.append((char) c);
                 c = read();
             }
