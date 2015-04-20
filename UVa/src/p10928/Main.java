@@ -29,11 +29,12 @@ class Main {
                 count[i] = split.length;
                 min = Math.min(min, count[i]);
             }
+            StringBuilder sb = new StringBuilder();
             for (int i = 0; i < p; i++) {
                 if (count[i] == min)
-                    out.print((i + 1) + " ");
+                    sb.append(" " + (i + 1));
             }
-            out.println();
+            out.println(sb.substring(1));
             if (t != 0) in.nextLine();
         }
     }
