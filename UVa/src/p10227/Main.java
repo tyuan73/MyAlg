@@ -12,49 +12,67 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.Arrays;
-import java.util.BitSet;
-import java.util.Comparator;
 import java.util.InputMismatchException;
 
 class Main {
-    static void go() {
-        in.nextInt();
-        in.nextLine();
-        while (true) {
-            int p, t;
-            try {
-                p = in.nextInt();
-                t = in.nextInt();
-            } catch (Exception e) {
-                break;
-            }
+    static class Opinion implements Comparable<Opinion> {
+        long hi = 0L, lo = 0L;
 
-            BitSet[] bs = new BitSet[p];
+        public void set(int v) {
+            if (v <= 50)
+                lo |= 1 << v;
+            else
+                hi |= 1 << (v - 50);
+        }
+
+        public boolean equals(Opinion o) {
+            return this.hi == o.hi && this.lo == o.lo;
+        }
+
+        public int compareTo(Opinion o) {
+            if (this.hi == o.hi)
+                if (this.lo == o.lo)
+                    return 0;
+                else
+                    return this.lo > o.lo ? 1 : -1;
+            return this.hi > o.hi ? 1 : -1;
+        }
+    }
+
+    static void go() {
+        int k = in.nextInt();
+        in.nextLine();
+        int p, t;
+        while (k-- > 0) {
+            p = in.nextInt();
+            t = in.nextInt();
+
+            Opinion[] op = new Opinion[p];
             for (int i = 0; i < p; i++)
-                bs[i] = new BitSet(t + 1);
+                op[i] = new Opinion();
 
             String line;
-            while ((line = in.nextLine()).length() > 0) {
+            while (true) {
+                try {
+                    line = in.nextLine();
+                } catch (Exception e) {
+                    break;
+                }
+                if (line.length() == 0) break;
+
                 String[] split = line.split(" ");
                 int pi = Integer.parseInt(split[0]) - 1;
                 int ti = Integer.parseInt(split[1]) - 1;
-                bs[pi].set(ti);
+                op[pi].set(ti);
             }
 
-            Arrays.sort(bs, new Comparator<BitSet>() {
-                @Override
-                public int compare(BitSet o1, BitSet o2) {
-                    if (o1.equals(o2)) return 0;
-                    BitSet clone = (BitSet) o1.clone();
-                    clone.xor(o2);
-                    return clone.length() == o2.length() ? 1 : -1;
-                }
-            });
+            Arrays.sort(op);
             int count = 1;
             for (int i = 1; i < p; i++)
-                if (!bs[i].equals(bs[i - 1]))
+                if (!op[i].equals(op[i - 1]))
                     count++;
             out.println(count);
+            if (k != 0) out.println();
         }
     }
 
