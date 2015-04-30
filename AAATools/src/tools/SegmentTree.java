@@ -8,8 +8,12 @@ package tools;
  * Copyright (c) 2013 All Right Reserved, http://github.com/tyuan73
  */
 
-import java.util.Scanner;
+import java.util.Random;
 
+/**
+ * 0-based segment tree
+ * len("st") = 4 * len("val")
+ */
 public class SegmentTree {
     private int[] val, st;
     private int len;
@@ -18,13 +22,13 @@ public class SegmentTree {
         this.len = val.length;
         this.val = new int[this.len];
         System.arraycopy(val, 0, this.val, 0, this.len);
-        this.st = new int[this.len];
+        this.st = new int[4 * this.len];
         build(0, 0, this.len - 1);
     }
 
     private int build(int idx, int l, int r) {
         if (l == r) {
-            return l;
+            return st[idx] = l;
         }
         int lv = build((idx << 1) + 1, l, (l + r) / 2);
         int rv = build((idx << 1) + 2, (l + r) / 2 + 1, r);
@@ -33,21 +37,18 @@ public class SegmentTree {
     }
 
     private int rmq(int idx, int from, int to, int rl, int rr) {
-        if (from == to) return from;
         if (rl > to || rr < from) return -1;
-        if (rl == rr) return st[rl];
+        if (rl <= from && rr >= to) return st[idx];
 
-        if (rl >= from && rr <= to) return st[idx];
-
-        int lv = rmq((idx << 1) + 1, from, to, rl, (rl + rr) / 2);
-        int rv = rmq((idx << 1) + 2, from, to, (rl + rr) / 2 + 1, rr);
+        int lv = rmq((idx << 1) + 1, from, (from + to) / 2, rl, rr);
+        int rv = rmq((idx << 1) + 2, (from + to) / 2 + 1, to, rl, rr);
         if (lv == -1) return rv;
         if (rv == -1) return lv;
         return val[lv] <= val[rv] ? lv : rv;
     }
 
-    public int rmq(int from, int to) {
-        return rmq(0, from, to, 0, len - 1);
+    public int rmq(int rl, int rr) {
+        return rmq(0, 0, len - 1, rl, rr);
     }
 
     public static void main(String[] args) {
@@ -68,5 +69,48 @@ public class SegmentTree {
         System.out.println("rmq(4, 6) = " + stree.rmq(4, 6));
         System.out.println("rmq(0, 7) = " + stree.rmq(0, 7));
         System.out.println("rmq(2, 3) = " + stree.rmq(2, 3));
+        System.out.println("rmq(0, 8) = " + stree.rmq(0, 8));
+        System.out.println("rmq(0, 0) = " + stree.rmq(0, 0));
+
+        int n = 1000;
+        int[] a = new int[n];
+        Random    rnd = new Random();
+        for(int i = 0; i < n; i++) {
+            a[i] = rnd.nextInt(100000);
+        }
+
+        SegmentTree st = new SegmentTree(a);
+        int testcase = 10000;
+        boolean ok = true;
+        while(testcase-- > 0) {
+            int x = rnd.nextInt(n);
+            int y = rnd.nextInt(n);
+            if (x > y) {
+                int z = x;
+                x = y;
+                y = z;
+            }
+
+            int ret = st.rmq(x, y);
+            int myret = x;
+            for(int i = x; i <= y; i++) {
+                if (a[i] < a[myret])
+                    myret = i;
+            }
+            if (ret != myret) {
+                ok = false;
+
+                for(int d : a)
+                    System.out.print(" " + d);
+                System.out.println();
+                System.out.println(" x = " + x + " y = " + y);
+                System.out.println("SegTree:" + ret);
+                System.out.println("My answer:" + myret);
+
+                break;
+            }
+        }
+        System.out.println(ok ? "good!" : "wrong!");
+
     }
 }
