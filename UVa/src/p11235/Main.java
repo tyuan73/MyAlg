@@ -16,38 +16,40 @@ public class Main {
         int n, q;
         while ((n = in.nextInt()) != 0) {
             q = in.nextInt();
-            int[] a = in.nextIntArray(n);
+            //int[] a = in.nextIntArray(n);
 
             // pre-process
-            int[] index = new int[n];
-            int[] first = new int[n];
-            int nextIndex = 1;
-            int cur = 0, next = 0, count = 0;
-            ArrayList<Integer> num = new ArrayList<>();
-            while (next < n) {
-                index[next] = nextIndex;
-                first[next] = cur;
-                if (a[next] == a[cur]) {
-                    count++;
-                    next++;
-                } else {
-                    num.add(count);
-                    count = 0;
-                    nextIndex++;
-                    cur = next;
+            int[] st = new int[n];
+            int pre = -100000000;
+            int count = 1;
+            for (int i = 0; i < n; i++) {
+                int x = in.nextInt();
+                if (x != pre) {
+                    count = 1;
+                    pre = x;
                 }
+                st[i] = count++;
             }
-            num.add(count);
+
+            int[] index = new int[n];
+            index[n - 1] = n;
+            int last = n;
+            for (int i = n - 2; i >= 0; i--) {
+                if (st[i] >= st[i + 1]) {
+                    last = i + 1;
+                }
+                index[i] = last;
+            }
 
             // build DP
-            int len = 32 - Integer.numberOfLeadingZeros(num.size());
-            int[][] dp = new int[num.size()][len];
-            for (int i = 0; i < num.size(); i++) {
+            int len = 32 - Integer.numberOfLeadingZeros(n);
+            int[][] dp = new int[n][len];
+            for (int i = 0; i < n; i++) {
                 dp[i][0] = i;
             }
             for (int i = 1; i < len; i++) {
-                for (int j = 0; j + (1 << (i - 1)) < num.size(); j++) {
-                    if (num.get(dp[j][i - 1]) > num.get(dp[j + (1 << (i - 1))][i - 1])) {
+                for (int j = 0; j + (1 << (i - 1)) < n; j++) {
+                    if (st[dp[j][i - 1]] > st[dp[j + (1 << (i - 1))][i - 1]]) {
                         dp[j][i] = dp[j][i - 1];
                     } else {
                         dp[j][i] = dp[j + (1 << (i - 1))][i - 1];
@@ -58,24 +60,19 @@ public class Main {
             // answer queries
             while (q-- > 0) {
                 int l = in.nextInt() - 1, r = in.nextInt() - 1;
-                int from = index[l], to = index[r] - 2;
-                if (from - to == 2) {
+                int from = index[l];
+                if (from > r) {
                     out.println(r - l + 1);
                     continue;
                 }
 
-                int leftC = num.get(index[l] - 1) - (l - first[l]);
-                int rightC = r - first[r] + 1;
-                if (from - to == 1) {
-                    out.println(Math.max(leftC, rightC));
-                    continue;
-                }
+                int c1 = index[l] - l;
 
-                // search range(from, to)
-                int k = 31 - Integer.numberOfLeadingZeros(to - from + 1);
-                int c1 = num.get(dp[from][k]);
-                int c2 = num.get(dp[to - (1 << k) + 1][k]);
-                out.println(Math.max(Math.max(leftC, rightC), Math.max(c1, c2)));
+                // search range(from, r)
+                int k = 31 - Integer.numberOfLeadingZeros(r - from + 1);
+                int c2 = st[dp[from][k]];
+                int c3 = st[dp[r - (1 << k) + 1][k]];
+                out.println(Math.max(c1, Math.max(c2, c3)));
             }
         }
     }
