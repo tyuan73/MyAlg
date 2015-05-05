@@ -8,11 +8,10 @@ package p11402;
 
 */
 
-import javax.swing.text.Segment;
 import java.util.*;
 import java.io.*;
 
-public class Main {
+public class MainLTE {
     static class Ele {
         int ones = 0, act = 0;
     }
@@ -41,10 +40,18 @@ public class Main {
         }
 
         int query(int idx, int l, int r, int rl, int rr) {
-            if (rl > r || rr < l) return 0;
-            if (l >= rl && r <= rr) return node[idx].ones;
+            if (rl > r || rr < l)
+                return 0;
 
-            pushUpdate(idx, l, r, 0);
+            if (l >= rl && r <= rr)
+                return node[idx].ones;
+
+            int cur = node[idx].act;
+            if (cur != 0) {
+                pushUpdate((idx << 1) + 1, l, (r + l) / 2, cur);
+                pushUpdate((idx << 1) + 2, (r + l) / 2 + 1, r, cur);
+                node[idx].act = 0;
+            }
 
             int left = query((idx << 1) + 1, l, (l + r) / 2, rl, rr);
             int right = query((idx << 1) + 2, (l + r) / 2 + 1, r, rl, rr);
@@ -53,36 +60,41 @@ public class Main {
 
         // lazy update
         int update(int idx, int l, int r, int rl, int rr, int action) {
-            if (rl > r || l > rr) return node[idx].ones;
-
-            pushUpdate(idx, l, r, action);
-            if (rl <= l && r <= rr) {
+            if (rl > r || l > rr)
                 return node[idx].ones;
+
+            if (rl <= l && r <= rr) {
+                pushUpdate(idx, l, r, action);
+                return node[idx].ones;
+            }
+
+            int cur = node[idx].act;
+            if (cur != 0) {
+                pushUpdate((idx << 1) + 1, l, (r + l) / 2, cur);
+                pushUpdate((idx << 1) + 2, (r + l) / 2 + 1, r, cur);
+                node[idx].act = 0;
             }
 
             int left = update((idx << 1) + 1, l, (l + r) / 2, rl, rr, action);
             int right = update((idx << 1) + 2, (l + r) / 2 + 1, r, rl, rr, action);
-            node[idx].act = 0;
 
             return (node[idx].ones = left + right);
         }
 
         // push update down
         void pushUpdate(int idx, int l, int r, int action) {
-            int cur = node[idx].act;
-            if (cur != 0) {
-                pushUpdate((idx << 1) + 1, l, (l + r) / 2, cur);
-                pushUpdate((idx << 1) + 2, (l + r) / 2 + 1, r, cur);
-                node[idx].act = 0;
-            }
             if (action == 1) {
                 node[idx].ones = 0;
+                node[idx].act = 1;
             } else if (action == 2) {
                 node[idx].ones = r - l + 1;
+                node[idx].act = 2;
             } else if (action == 3) {
                 node[idx].ones = (r - l + 1) - node[idx].ones;
+                node[idx].act = 3 - node[idx].act; // 1 => 2, 2 => 1, 0 => 3, 3 => 0
             }
-            node[idx].act = l == r ? 0 : action;
+            if (l == r)
+                node[idx].act = 0;
         }
 
         public int query(int rl, int rr) {
