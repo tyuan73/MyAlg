@@ -44,45 +44,42 @@ public class Main {
             if (rl > r || rr < l) return 0;
             if (l >= rl && r <= rr) return node[idx].ones;
 
-            int cur = node[idx].act;
-            if (cur != 0) {
-                pushUpdate((idx << 1) + 1, l, (l + r) / 2, cur);
-                pushUpdate((idx << 1) + 2, (l + r) / 2 + 1, r, cur);
-                node[idx].act = 0;
-            }
+            pushUpdate(idx, l, r, 0);
 
             int left = query((idx << 1) + 1, l, (l + r) / 2, rl, rr);
             int right = query((idx << 1) + 2, (l + r) / 2 + 1, r, rl, rr);
             return left + right;
         }
 
+        // lazy update
         int update(int idx, int l, int r, int rl, int rr, int action) {
             if (rl > r || l > rr) return node[idx].ones;
 
+            pushUpdate(idx, l, r, action);
+            if (rl <= l && r <= rr) {
+                return node[idx].ones;
+            }
+
+            int left = update((idx << 1) + 1, l, (l + r) / 2, rl, rr, action);
+            int right = update((idx << 1) + 2, (l + r) / 2 + 1, r, rl, rr, action);
+            node[idx].act = 0;
+
+            return (node[idx].ones = left + right);
+        }
+
+        // push update down
+        void pushUpdate(int idx, int l, int r, int action) {
             int cur = node[idx].act;
             if (cur != 0) {
                 pushUpdate((idx << 1) + 1, l, (l + r) / 2, cur);
                 pushUpdate((idx << 1) + 2, (l + r) / 2 + 1, r, cur);
                 node[idx].act = 0;
             }
-
-            if (rl <= l && r <= rr) {
-                pushUpdate(idx, l, r, action);
-                return node[idx].ones;
-            }
-
-            int left = update((idx << 1) + 1, l, (l + r) / 2, rl, rr, action);
-            int right = update((idx << 1) + 2, (l + r) / 2 + 1, r, rl, rr, action);
-
-            return (node[idx].ones = left + right);
-        }
-
-        void pushUpdate(int idx, int l, int r, int action) {
             if (action == 1) {
                 node[idx].ones = 0;
             } else if (action == 2) {
                 node[idx].ones = r - l + 1;
-            } else { // action == 3
+            } else if (action == 3) {
                 node[idx].ones = (r - l + 1) - node[idx].ones;
             }
             node[idx].act = l == r ? 0 : action;
@@ -100,6 +97,7 @@ public class Main {
     static void go() {
         int t = in.nextInt();
         for (int tt = 1; tt <= t; tt++) {
+            out.printf("Case %d:\n", tt);
             int k = in.nextInt();
             StringBuilder sb = new StringBuilder();
             while (k-- > 0) {
@@ -110,11 +108,12 @@ public class Main {
             //System.out.println("String = " + sb.toString());
             SegmentTree st = new SegmentTree(sb.toString());
             int q = in.nextInt();
+            int qn = 1;
             while (q-- > 0) {
                 String qry = in.nextString();
 
                 int l = in.nextInt(), r = in.nextInt();
-                System.out.println("op = " + qry.charAt(0) + " from : " + l + " to: " + r);
+                //System.out.println("op = " + qry.charAt(0) + " from : " + l + " to: " + r);
                 char op = qry.charAt(0);
                 if (op == 'E') {
                     st.update(l, r, 1);
@@ -123,7 +122,7 @@ public class Main {
                 } else if (op == 'I') {
                     st.update(l, r, 3);
                 } else {
-                    System.out.println(st.query(l, r));
+                    out.printf("Q%d: %d\n", qn++, st.query(l, r));
                 }
             }
         }
