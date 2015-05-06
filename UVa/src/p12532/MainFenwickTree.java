@@ -1,78 +1,103 @@
-package p12086;
+package p12532;
 
 /**
- * Created with IntelliJ IDEA.
- * User: yuantian
- * Date: 5/1/15
- * Time: 11:41 PM
- * Copyright (c) 2013 All Right Reserved, http://github.com/tyuan73
+ * Created by yuantian on 5/6/15.
  */
 
-import java.util.*;
+/*
 
+*/
 
 import java.util.*;
 import java.io.*;
 
-public class Main {
+public class MainFenwickTree {
+
+    final static int MAXN = 100005;
+    static int[] ZEROS = new int[MAXN];
+    static int[] NEGS = new int[MAXN];
+    static int[] SEQ = new int[MAXN];
+
+    static void update(int i, int top, int[] fwt, int val) {
+        for (; i <= top; i += i & -i) {
+            fwt[i] += val;
+        }
+    }
+
+    static int sum(int i, int j, int[] fwt) {
+        int ret = 0;
+        while (i != j) {
+            if (j > i) {
+                ret += fwt[j];
+                j -= j & -j;
+            } else {
+                ret -= fwt[i];
+                i -= i & -i;
+            }
+        }
+        return ret;
+    }
+
+    static int process(int x) {
+        return x == 0 ? 0 : x < 0 ? -1 : 1;
+    }
+
     static void go() {
-        int n, tc = 1;
-        while ((n = in.nextInt()) != 0) {
-            int[] a = new int[n + 1];
-            int[] b = new int[n + 1];
-            for (int i = 1; i <= n; i++) {
-                b[i] = in.nextInt();
-                add(a, i, b[i]);
+        int n, k;
+        while (true) {
+            try {
+                n = in.nextInt();
+            } catch (Exception e) {
+                break;
             }
 
-            if (tc != 1) out.println();
-            out.println("Case " + tc + ":");
+            k = in.nextInt();
 
-            String op;
-            while (!(op = in.nextString()).equals("END")) {
-                if (op.charAt(0) == 'S') {
-                    int idx = in.nextInt();
-                    int val = in.nextInt();
-                    add(a, idx, val - b[idx]);
-                    b[idx] = val;
-                } else {
-                    int l = in.nextInt() - 1;
-                    int r = in.nextInt();
-                    out.println(diff(a, l, r));
+            Arrays.fill(ZEROS, 0);
+            Arrays.fill(NEGS, 0);
+
+            for (int i = 1; i <= n; i++) {
+                SEQ[i] = process(in.nextInt());
+                if (SEQ[i] == 0) {
+                    update(i, n, ZEROS, 1);
+                } else if (SEQ[i] == -1) {
+                    update(i, n, NEGS, 1);
                 }
             }
 
-            tc++;
-        }
-    }
+            while (k-- > 0) {
+                String op = in.nextString();
+                int a = in.nextInt(), b = in.nextInt();
+                if (op.charAt(0) == 'C') {
+                    b = process(b);
+                    if (b != SEQ[a]) {
+                        if (SEQ[a] == 0) {
+                            update(a, n, ZEROS, -1);
+                        } else if (SEQ[a] == -1) {
+                            update(a, n, NEGS, -1);
+                        }
+                        if (b == 0) {
+                            update(a, n, ZEROS, 1);
+                        } else if (b == -1) {
+                            update(a, n, NEGS, 1);
+                        }
+                        SEQ[a] = b;
+                    }
+                } else {
+                    a--;
+                    int ret = sum(a, b, ZEROS);
+                    if (ret > 0)
+                        out.print('0');
+                    else {
+                        ret = sum(a, b, NEGS);
+                        out.print((ret & 1) > 0 ? '-' : '+');
+                    }
+                }
 
-    static void add(int[] a, int i, int val) {
-        for (; i < a.length; i += i & -i) {
-            a[i] += val;
-        }
-    }
-
-    static int sum(int[] a, int i) {
-        int ret = 0;
-        for (; i > 0; i -= i & -i)
-            ret += a[i];
-        return ret;
-    }
-
-    static int diff(int[] a, int i, int j) {
-        int ret = 0;
-        while (i != j) {
-            if (i > j) {
-                ret -= a[i];
-                i -= i & -i;
-            } else {
-                ret += a[j];
-                j -= j & -j;
             }
+            out.println();
         }
-        return ret;
     }
-
 
     static InputReader in;
     static PrintWriter out;

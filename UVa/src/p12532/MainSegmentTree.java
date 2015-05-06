@@ -1,78 +1,114 @@
-package p12086;
+package p12532;
 
 /**
- * Created with IntelliJ IDEA.
- * User: yuantian
- * Date: 5/1/15
- * Time: 11:41 PM
- * Copyright (c) 2013 All Right Reserved, http://github.com/tyuan73
+ * Created by yuantian on 5/6/15.
  */
 
-import java.util.*;
+/*
 
+*/
 
 import java.util.*;
 import java.io.*;
 
-public class Main {
+public class MainSegmentTree {
+    final static int ZEROS = 0;
+    final static int NEGS = 1;
+
+    static int[] seq = new int[100001];
+    static int[][] st = new int[400004][2];
+
+    static void buildST(int idx, int l, int r) {
+        if (l == r) {
+            st[idx][ZEROS] = seq[l] == 0 ? 1 : 0;
+            st[idx][NEGS] = seq[l] < 0 ? 1 : 0;
+            return;
+        }
+        int mid = (l + r) / 2;
+        buildST((idx << 1) + 1, l, mid);
+        buildST((idx << 1) + 2, mid + 1, r);
+
+        recalc(idx);
+    }
+
+    static void recalc(int idx) {
+        st[idx][ZEROS] = st[(idx << 1) + 1][ZEROS] + st[(idx << 1) + 2][ZEROS];
+        st[idx][NEGS] = st[(idx << 1) + 1][NEGS] + st[(idx << 1) + 2][NEGS];
+    }
+
+    static void update(int idx, int l, int r, int pos, int val) {
+        if (pos < l || r < pos)
+            return;
+
+        if (l == r) { // == "pos" too
+            if (seq[l] == 0) {
+                st[idx][ZEROS]--;
+            } else if (seq[l] < 0) {
+                st[idx][NEGS]--;
+            }
+            if (val == 0) {
+                st[idx][ZEROS]++;
+            } else if (val < 0) {
+                st[idx][NEGS]++;
+            }
+            seq[l] = val;
+            return;
+        }
+
+        int mid = (l + r) / 2;
+        if (pos <= mid) {
+            update((idx << 1) + 1, l, mid, pos, val);
+        } else {
+            update((idx << 1) + 2, mid + 1, r, pos, val);
+        }
+
+        recalc(idx);
+    }
+
+    static int query(int idx, int l, int r, int rl, int rr) {
+        if (rr < l || r < rl)
+            return 1;
+
+        if (rl <= l && r <= rr) {
+            if (st[idx][ZEROS] > 0)
+                return 0;
+            if ((st[idx][NEGS] & 1) > 0)
+                return -1;
+            return 1;
+        }
+
+        int mid = (l + r) / 2;
+        return query((idx << 1) + 1, l, mid, rl, rr) * query((idx << 1) + 2, mid + 1, r, rl, rr);
+    }
+
     static void go() {
-        int n, tc = 1;
-        while ((n = in.nextInt()) != 0) {
-            int[] a = new int[n + 1];
-            int[] b = new int[n + 1];
-            for (int i = 1; i <= n; i++) {
-                b[i] = in.nextInt();
-                add(a, i, b[i]);
+        int n, k;
+        while (true) {
+            try {
+                n = in.nextInt();
+            } catch (Exception e) {
+                break;
             }
 
-            if (tc != 1) out.println();
-            out.println("Case " + tc + ":");
+            k = in.nextInt();
+            for (int i = 0; i < n; i++)
+                seq[i] = in.nextInt();
+            buildST(0, 0, n - 1);
 
-            String op;
-            while (!(op = in.nextString()).equals("END")) {
-                if (op.charAt(0) == 'S') {
-                    int idx = in.nextInt();
-                    int val = in.nextInt();
-                    add(a, idx, val - b[idx]);
-                    b[idx] = val;
+            while (k-- > 0) {
+                String op = in.nextString();
+                int a = in.nextInt() - 1, b = in.nextInt();
+                if (op.charAt(0) == 'C') {
+                    if (b != seq[a] && b * seq[a] <= 0)
+                        update(0, 0, n - 1, a, b);
                 } else {
-                    int l = in.nextInt() - 1;
-                    int r = in.nextInt();
-                    out.println(diff(a, l, r));
+                    int ret = query(0, 0, n - 1, a, b - 1);
+                    out.print(ret == 0 ? '0' : ret == -1 ? '-' : '+');
                 }
             }
-
-            tc++;
+            out.println();
         }
     }
-
-    static void add(int[] a, int i, int val) {
-        for (; i < a.length; i += i & -i) {
-            a[i] += val;
-        }
-    }
-
-    static int sum(int[] a, int i) {
-        int ret = 0;
-        for (; i > 0; i -= i & -i)
-            ret += a[i];
-        return ret;
-    }
-
-    static int diff(int[] a, int i, int j) {
-        int ret = 0;
-        while (i != j) {
-            if (i > j) {
-                ret -= a[i];
-                i -= i & -i;
-            } else {
-                ret += a[j];
-                j -= j & -j;
-            }
-        }
-        return ret;
-    }
-
 
     static InputReader in;
     static PrintWriter out;
