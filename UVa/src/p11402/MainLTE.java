@@ -106,7 +106,75 @@ public class MainLTE {
         }
     }
 
+    static void testUpdate(char[] str, int a, int b, int act) {
+        for(int i = a; i <=b ; i++) {
+            if (act == 1) {
+                str[i] = '0';
+            } else if (act == 2)
+                str[i] = '1';
+            else if (act == 3)
+                str[i] = str[i] == '1' ? '0' : '1';
+        }
+    }
+
+    static int testQuery(char[] str, int a, int b) {
+        int ret = 0;
+        for(int i = a; i <= b;i++)
+            if (str[i] == '1')
+                ret++;
+        return ret;
+    }
+
     static void go() {
+        long start = System.currentTimeMillis();
+        boolean debug = false;
+        char[] ops = {'F', 'E', 'I', 'S'};
+
+        for(int j = 0; j < 100; j++) {
+
+            int n = 1024000;
+            StringBuilder sb = new StringBuilder(1024000);
+            for (int i = 0; i < n; i++)
+                sb.append('0');
+
+            char[] test = sb.toString().toCharArray();
+
+            SegmentTree st = new SegmentTree(sb.toString());
+            Random ran = new Random();
+            for (int i = 0; i < 1000; i++) {
+                int opi = ran.nextInt(4);
+                int a = ran.nextInt(100);
+                int b = ran.nextInt(1000) + 1023000;
+                //int a = ran.nextInt(n), b = ran.nextInt(n);
+                //if (a > b) {
+                //    int c = a;
+                //    a = b;
+                //    b = c;
+                //}
+                if (ops[opi] == 'E') {
+                    st.update(a, b, 1);
+                    if (debug) testUpdate(test, a, b, 1);
+                } else if (ops[opi] == 'F') {
+                    st.update(a, b, 2);
+                    if (debug) testUpdate(test, a, b, 2);
+                } else if (ops[opi] == 'I') {
+                    st.update(a, b, 3);
+                    if (debug) testUpdate(test, a, b, 3);
+                } else {
+                    if (!debug) out.println(st.query(a, b));
+                    if (debug) {
+                        int my = st.query(a, b);
+                        int testret = testQuery(test, a, b);
+                        if (my != testret)
+                            out.println("Wrong!");
+                    }
+                    //else
+                    //out.println("Correct!");
+                }
+            }
+        }
+        out.println("total time: " + (System.currentTimeMillis() - start));
+        /*
         int t = in.nextInt();
         for (int tt = 1; tt <= t; tt++) {
             out.printf("Case %d:\n", tt);
@@ -138,6 +206,7 @@ public class MainLTE {
                 }
             }
         }
+        */
     }
 
     static InputReader in;
