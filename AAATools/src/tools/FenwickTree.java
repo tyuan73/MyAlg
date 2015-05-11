@@ -26,9 +26,17 @@ public class FenwickTree {
 
     // assume i < j
     static private int fenwickDiff(int[] ft, int i, int j) {
+        assert i <= j;
         int ret = 0;
-        for (; i != j; i -= i & -i, j -= j & -j)
-            ret += ft[j] - ft[i];
+        while(i != j) {
+            if (i < j) {
+                ret += ft[j];
+                j -= j & -j;
+            } else {
+                ret -= ft[i];
+                i -= i & -i;
+            }
+        }
         return ret;
     }
 
