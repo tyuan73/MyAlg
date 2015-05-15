@@ -74,7 +74,7 @@ public class A2 {
             for (int s : scores) {
                 sb.append(s).append(", ");
             }
-            return sb.substring(0, sb.length() - 1).toString();
+            return sb.substring(0, sb.length() - 2).toString();
         }
     }
 
