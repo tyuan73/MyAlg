@@ -1,7 +1,7 @@
 package p00927;
 
 /**
- * Created by yuantian on 5/27/15.
+Created by yuantian on 5/27/15.
  */
 
 /*
@@ -14,6 +14,33 @@ import java.io.*;
 public class Main {
     static void go() {
         int t = in.nextInt();
+        while (t-- > 0) {
+            int n = in.nextInt();
+            int[] a = new int[n+1];
+            for (int i = 0; i <= n; i++) {
+                a[i] = in.nextInt();
+            }
+            int d = in.nextInt();
+            int k = in.nextInt() - 1;
+            int p = k / d * 2;
+            long l = 0, r = (long) Math.sqrt(p);
+            while (l < r) {
+                long mid = (l + r + 1) / 2;
+                if (mid * (mid + 1) > p) {
+                    r = mid - 1;
+                } else {
+                    l = mid;
+                }
+            }
+            l++;
+            long ans = 0;
+            long base = 1;
+            for(int i = 0; i <= n; i++) {
+                ans += a[i] * base;
+                base *= l;
+            }
+            out.println(ans);
+        }
     }
 
     static InputReader in;
@@ -157,45 +184,44 @@ input:
 3
  */
 
-/**
- 12
- 4 3 0 0 0 23
- 25
- 100
- 1 0 1
- 1
- 6
- 3 0 1 5 7
- 7
- 43
- 3 0 1 5 7
- 7
- 1
- 3 0 1 5 7
- 7
- 16
- 3 0 1 5 7
- 7
- 42
- 3 0 1 5 7
- 7
- 7
- 3 0 1 5 7
- 7
- 1000000
- 5 1 1 1 1 1 1
- 1
- 1000000
- 20 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
- 100000
- 1000000
- 1 1 1
- 2
- 1000000
- 20 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
- 1
- 21
-
+/*
+12
+4 3 0 0 0 23
+25
+100
+1 0 1
+1
+6
+3 0 1 5 7
+7
+43
+3 0 1 5 7
+7
+1
+3 0 1 5 7
+7
+16
+3 0 1 5 7
+7
+42
+3 0 1 5 7
+7
+7
+3 0 1 5 7
+7
+1000000
+5 1 1 1 1 1 1
+1
+1000000
+20 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+100000
+1000000
+1 1 1
+2
+1000000
+20 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+1
+21
  */
 
 /*
