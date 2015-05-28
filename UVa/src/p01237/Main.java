@@ -1,45 +1,58 @@
-package p00927;
+package p01237;
 
 /**
-Created by yuantian on 5/27/15.
+ * Created with IntelliJ IDEA.
+ * User: yuantian
+ * Date: 5/27/15
+ * Time: 11:43 PM
+ * Copyright (c) 2013 All Right Reserved, http://github.com/tyuan73
  */
 
-/*
+import java.util.*;
 
-*/
 
 import java.util.*;
 import java.io.*;
 
 public class Main {
+    static class Maker {
+        String name;
+        int l, h;
+
+        Maker(String nm, int l, int h) {
+            this.name = nm;
+            this.l = l;
+            this.h = h;
+        }
+    }
+
     static void go() {
         int t = in.nextInt();
         while (t-- > 0) {
             int n = in.nextInt();
-            int[] a = new int[n+1];
-            for (int i = 0; i <= n; i++) {
-                a[i] = in.nextInt();
+            Maker[] all = new Maker[n];
+            for (int i = 0; i < n; i++) {
+                all[i] = new Maker(in.nextString(), in.nextInt(), in.nextInt());
             }
-            int d = in.nextInt();
-            int k = in.nextInt() - 1;
-            int p = k / d * 2;
-            long l = 0, r = (long) Math.sqrt(p);
-            while (l < r) {
-                long mid = (l + r + 1) / 2;
-                if (mid * (mid + 1) > p) {
-                    r = mid - 1;
+            int q = in.nextInt();
+            for (int i = 0; i < q; i++) {
+                int p = in.nextInt();
+                int count = 0, idx = -1;
+                for (int j = 0; j < n; j++) {
+                    if (p >= all[j].l && p <= all[j].h) {
+                        count++;
+                        idx = j;
+                        if (count >= 2)
+                            break;
+                    }
+                }
+                if (count == 1) {
+                    out.println(all[idx].name);
                 } else {
-                    l = mid;
+                    out.println("UNDETERMINED");
                 }
             }
-            l++;
-            long ans = 0;
-            long base = 1;
-            for(int i = 0; i <= n; i++) {
-                ans += a[i] * base;
-                base *= l;
-            }
-            out.println(ans);
+            if (t > 0) out.println();
         }
     }
 
@@ -167,75 +180,3 @@ public class Main {
         }
     }
 }
-
-/*
-input:
-2
-4 3 0 0 0 23
-25
-100
-1 0 1
-1
-6
- */
-
-/*
-1866
-3
- */
-
-/*
-12
-4 3 0 0 0 23
-25
-100
-1 0 1
-1
-6
-3 0 1 5 7
-7
-43
-3 0 1 5 7
-7
-1
-3 0 1 5 7
-7
-16
-3 0 1 5 7
-7
-42
-3 0 1 5 7
-7
-7
-3 0 1 5 7
-7
-1000000
-5 1 1 1 1 1 1
-1
-1000000
-20 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-100000
-1000000
-1 1 1
-2
-1000000
-20 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
-1
-21
- */
-
-/*
-output:
-1866
-3
-532
-13
-78
-237
-13
-1073344285
-5656584705361395
-1466015503701
-1001
-3656158440062976
- */
