@@ -1,40 +1,37 @@
-package p10976;
+package p01260;
 
 /**
- * Created by yuantian on 5/28/15.
+ * Created with IntelliJ IDEA.
+ * User: yuantian
+ * Date: 5/28/15
+ * Time: 10:14 PM
+ * Copyright (c) 2013 All Right Reserved, http://github.com/tyuan73
  */
 
-/*
-
-*/
-
-import java.util.*;
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.util.InputMismatchException;
 
 public class Main {
     static void go() {
-        while (true) {
-            int k;
-            try {
-                k = in.nextInt();
-            } catch (Exception e) {
-                break;
+        int t = in.nextInt();
+        while (t-- > 0) {
+            int n = in.nextInt();
+            int[] a = new int[n + 1];
+            int ans = 0;
+            for (int i = 1; i <= n; i++) {
+                int x = in.nextInt();
+                int j = i - 1;
+                while (a[j] > x) {
+                    a[j + 1] = a[j];
+                    j--;
+                }
+                ans += j++;
+                a[j] = x;
             }
 
-            ArrayList<Integer> ans = new ArrayList<>();
-            int y = k + 1, x = y + 1;
-            while (x > y) {
-                x = k * y / (y - k);
-                if (x * (y - k) == k * y) {
-                    ans.add(x);
-                    ans.add(y);
-                }
-                y++;
-            }
-            out.println(ans.size() / 2);
-            for(int i = 0; i < ans.size(); i += 2) {
-                out.printf("1/%d = 1/%d + 1/%d\n", k, ans.get(i), ans.get(i+1));
-            }
+            out.println(ans);
         }
     }
 

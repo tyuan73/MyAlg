@@ -1,40 +1,40 @@
-package p10976;
+package p11242;
 
 /**
- * Created by yuantian on 5/28/15.
+ * Created with IntelliJ IDEA.
+ * User: yuantian
+ * Date: 5/28/15
+ * Time: 10:52 PM
+ * Copyright (c) 2013 All Right Reserved, http://github.com/tyuan73
  */
 
-/*
+import java.util.*;
 
-*/
 
 import java.util.*;
 import java.io.*;
 
 public class Main {
     static void go() {
-        while (true) {
-            int k;
-            try {
-                k = in.nextInt();
-            } catch (Exception e) {
-                break;
+        int r, f;
+        while ((f = in.nextInt()) != 0) {
+            r = in.nextInt();
+            int[] front = in.nextIntArray(f);
+            int[] rear = in.nextIntArray(r);
+            double[] rt = new double[r * f];
+            int idx = 0;
+            for (int i = 0; i < f; i++) {
+                double a = (double) front[i];
+                for (int j = 0; j < r; j++)
+                    rt[idx++] = rear[j] / a;
             }
+            Arrays.sort(rt);
 
-            ArrayList<Integer> ans = new ArrayList<>();
-            int y = k + 1, x = y + 1;
-            while (x > y) {
-                x = k * y / (y - k);
-                if (x * (y - k) == k * y) {
-                    ans.add(x);
-                    ans.add(y);
-                }
-                y++;
+            double max = 1.0;
+            for (int i = 1; i < r * f; i++) {
+                max = Math.max(max, rt[i] / rt[i - 1]);
             }
-            out.println(ans.size() / 2);
-            for(int i = 0; i < ans.size(); i += 2) {
-                out.printf("1/%d = 1/%d + 1/%d\n", k, ans.get(i), ans.get(i+1));
-            }
+            out.printf("%.2f\n", max);
         }
     }
 

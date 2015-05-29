@@ -1,40 +1,46 @@
-package p10976;
+package p10487;
 
 /**
- * Created by yuantian on 5/28/15.
+ * Created with IntelliJ IDEA.
+ * User: yuantian
+ * Date: 5/28/15
+ * Time: 10:31 PM
+ * Copyright (c) 2013 All Right Reserved, http://github.com/tyuan73
  */
 
-/*
+import java.util.*;
 
-*/
 
 import java.util.*;
 import java.io.*;
 
 public class Main {
     static void go() {
-        while (true) {
-            int k;
-            try {
-                k = in.nextInt();
-            } catch (Exception e) {
-                break;
-            }
-
-            ArrayList<Integer> ans = new ArrayList<>();
-            int y = k + 1, x = y + 1;
-            while (x > y) {
-                x = k * y / (y - k);
-                if (x * (y - k) == k * y) {
-                    ans.add(x);
-                    ans.add(y);
+        int n = 0;
+        int tc = 1;
+        while ((n = in.nextInt()) != 0) {
+            out.println("Case " + tc + ":");
+            int[] a = in.nextIntArray(n);
+            Arrays.sort(a);
+            int m = in.nextInt();
+            for (int i = 0; i < m; i++) {
+                int ans = a[0] + a[n - 1];
+                int k = in.nextInt();
+                int l = 0, r = n - 1;
+                while (l < r && a[l] != a[r]) {
+                    int sum = a[l] + a[r];
+                    if (Math.abs(sum - k) < Math.abs(ans - k))
+                        ans = sum;
+                    if (sum > k) {
+                        r--;
+                    } else if (sum < k) {
+                        l++;
+                    } else
+                        break;
                 }
-                y++;
+                out.printf("Closest sum to %d is %d.\n", k, ans);
             }
-            out.println(ans.size() / 2);
-            for(int i = 0; i < ans.size(); i += 2) {
-                out.printf("1/%d = 1/%d + 1/%d\n", k, ans.get(i), ans.get(i+1));
-            }
+            tc++;
         }
     }
 

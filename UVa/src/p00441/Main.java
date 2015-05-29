@@ -1,39 +1,42 @@
-package p10976;
+package p00441;
 
 /**
- * Created by yuantian on 5/28/15.
+ * Created with IntelliJ IDEA.
+ * User: yuantian
+ * Date: 5/28/15
+ * Time: 11:13 PM
+ * Copyright (c) 2013 All Right Reserved, http://github.com/tyuan73
  */
 
-/*
+import java.util.*;
 
-*/
 
 import java.util.*;
 import java.io.*;
 
 public class Main {
     static void go() {
-        while (true) {
-            int k;
-            try {
-                k = in.nextInt();
-            } catch (Exception e) {
-                break;
+        boolean first = true;
+        int n;
+        while ((n = in.nextInt()) != 0) {
+            if (first) {
+                first = false;
+            } else {
+                out.println();
             }
-
-            ArrayList<Integer> ans = new ArrayList<>();
-            int y = k + 1, x = y + 1;
-            while (x > y) {
-                x = k * y / (y - k);
-                if (x * (y - k) == k * y) {
-                    ans.add(x);
-                    ans.add(y);
+            int[] a = in.nextIntArray(n);
+            for (int i1 = 0; i1 < n - 5; i1++) {
+                for (int i2 = i1 + 1; i2 < n - 4; i2++) {
+                    for (int i3 = i2 + 1; i3 < n - 3; i3++) {
+                        for (int i4 = i3 + 1; i4 < n - 2; i4++) {
+                            for (int i5 = i4 + 1; i5 < n - 1; i5++) {
+                                for (int i6 = i5 + 1; i6 < n; i6++) {
+                                    out.printf("%d %d %d %d %d %d\n", a[i1], a[i2], a[i3], a[i4], a[i5], a[i6]);
+                                }
+                            }
+                        }
+                    }
                 }
-                y++;
-            }
-            out.println(ans.size() / 2);
-            for(int i = 0; i < ans.size(); i += 2) {
-                out.printf("1/%d = 1/%d + 1/%d\n", k, ans.get(i), ans.get(i+1));
             }
         }
     }
