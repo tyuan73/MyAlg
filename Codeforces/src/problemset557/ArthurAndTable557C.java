@@ -19,49 +19,51 @@ public class ArthurAndTable557C {
         //long start = System.currentTimeMillis();
         int L = 100000, D = 200;
         int n = in.nextInt();
-        int[][] info = new int[n][2];
-        for (int i = 0; i < n; i++) {
-            info[i][0] = in.nextInt();
-        }
-        for (int i = 0; i < n; i++) {
-            info[i][1] = in.nextInt();
-        }
+        int[][] info = new int[2][];
+        info[0] = in.nextIntArray(n);
+        info[1] = in.nextIntArray(n);
+        int[] lc = new int[L + 1];
+        int[] ld = new int[L + 1];
 
         int[][] count = new int[L + 1][D + 1];
-        int[][] cost = new int[L + 1][D + 1];
         for (int i = 0; i < n; i++) {
-            count[info[i][0]][info[i][1]]++;
-            //cost[info[i][0]][info[i][1]] += info[i][1];
+            int l = info[0][i], d = info[1][i];
+            count[l][d]++;
+            lc[l]++;
+            ld[l] += d;
         }
         for (int i = 1; i <= L; i++) {
             for (int j = 1; j <= D; j++) {
-                cost[i][j] = count[i][j] * j + cost[i - 1][j] + cost[i][j - 1] - cost[i - 1][j - 1];
-                count[i][j] = count[i][j] + count[i - 1][j] + count[i][j - 1] - count[i - 1][j - 1];
+                count[i][j] += count[i - 1][j];
             }
+            lc[i] += lc[i - 1];
         }
 
         int min = Integer.MAX_VALUE;
+        int pred = 0;
         for (int i = L; i > 0; i--) {
-
-            int c = count[i][D] - count[i - 1][D];
+            int c = lc[i] - lc[i - 1];
             if (c == 0) continue;
-            int total = cost[L][D] - cost[i][D];
-            if (total >= min) break;
-            if (c <= count[i - 1][D]) {
-                c = count[i - 1][D] - c;
-                int j = i - 1;
-                int l = 0, r = D;
-                while (l < r) {
-                    int m = (l + r) / 2;
-                    if (count[j][m] <= c) {
-                        l = m + 1;
+            if (pred >= min) break;
+
+            int cost = 0;
+            if (c <= lc[i - 1]) {
+                int diff = lc[i - 1] - c;
+                int x = 0, j = 1;
+                for (; j <= D; j++) {
+                    x += count[i - 1][j];
+                    if (x <= diff) {
+                        cost += count[i - 1][j] * j;
                     } else {
-                        r = m;
+                        x -= count[i - 1][j];
+                        break;
                     }
                 }
-                total += cost[j][l - 1] + (c + 1 - count[j][l - 1]) * l;
+                cost += (diff - x + 1) * j;
             }
-            min = Math.min(min, total);
+
+            min = Math.min(min, cost + pred);
+            pred += ld[i];
         }
         out.println(min);
         //out.println(System.currentTimeMillis() - start);
