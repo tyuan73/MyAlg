@@ -8,16 +8,13 @@ package problemset557;
  * Copyright (c) 2013 All Right Reserved, http://github.com/tyuan73
  */
 
-import java.util.*;
-
 
 import java.util.*;
 import java.io.*;
 
 public class VitalyAndCycle557D {
     static List<Integer>[] tree = null;
-    static boolean[] visited = null;
-    static int[] parent = null;
+    static int[][] children = null;
     static int[] dist = null;
     static boolean hasOddCircle = false;
 
@@ -50,32 +47,43 @@ public class VitalyAndCycle557D {
             return;
         }
 
-        visited = new boolean[n];
-        parent = new int[n];
+        children = new int[n][2];
         dist = new int[n];
-        Arrays.fill(parent, -1);
+        Arrays.fill(dist, -1);
         hasOddCircle = false;
-        for(int i = 0; i < n; i++) {
-            if (!visited[i]) {
-                dfs(i, 0);
+        long total = 0;
+        for (int i = 0; i < n; i++) {
+            if (dist[i] == -1) {
+                dfs(i, 0, -1);
                 if (hasOddCircle) {
                     out.println("0 1");
                     return;
                 }
+                long t = children[i][0];
+                total += t * (t - 1) / 2;
+                t = children[i][1];
+                total += t * (t - 1) / 2;
             }
         }
+        out.println("1 " + total);
     }
 
-    static void dfs(int idx, int d) {
-        visited[idx] = true;
+    static void dfs(int idx, int d, int p) {
         dist[idx] = d;
-        for(int next : tree[idx]) {
-            if (visited[next]) {
-                if (((dist[idx] + dist[next]) & 1) == 0)    {
+        children[idx][0] = 1;
+        for (int next : tree[idx]) {
+            if (dist[next] != -1) {
+                if (((dist[idx] + dist[next]) & 1) == 0) {
                     hasOddCircle = true;
                     return;
                 }
+            } else {
+                dfs(next, d + 1, idx);
             }
+        }
+        if (p != -1) {
+            children[p][0] += children[idx][1];
+            children[p][1] += children[idx][0];
         }
     }
 
