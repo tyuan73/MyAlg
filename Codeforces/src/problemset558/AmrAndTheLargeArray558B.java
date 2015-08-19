@@ -10,28 +10,30 @@ import java.io.*;
 public class AmrAndTheLargeArray558B {
     static void go() {
         int n = in.nextInt();
-        int[][] t = new int[1000001][3];
+        int[] t = new int[1000001];
+        int[] l = new int[1000001];
+        int[] r = new int[1000001];
         int max = 0, min = Integer.MAX_VALUE, index = 0;
         for (int i = 1; i <= n; i++) {
             int x = in.nextInt();
-            t[x][0]++;
-            if (t[x][0] == 1) {
-                t[x][1] = i;
-                t[x][2] = i;
+            t[x]++;
+            if (t[x] == 1) {
+                l[x] = i;
+                r[x] = i;
             } else {
-                t[x][2] = i;
+                r[x] = i;
             }
-            if (t[x][0] > max) {
+            if (t[x] > max) {
                 index = x;
-                max = t[x][0];
-                min = t[x][2] - t[x][1];
-            } else if (t[x][0] == max && t[x][2] - t[x][1] < min) {
+                max = t[x];
+                min = r[x] - l[x];
+            } else if (t[x] == max && r[x] - l[x] < min) {
                 index = x;
-                min = t[x][2] - t[x][1];
+                min = r[x] - l[x];
             }
         }
 
-        out.println(t[index][1] + " " + t[index][2]);
+        out.println(l[index] + " " + r[index]);
     }
 
     static InputReader in;
