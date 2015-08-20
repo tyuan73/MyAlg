@@ -33,7 +33,7 @@ public class GuessYourWayOut558D {
     static void go() {
         int h = in.nextInt();
         int q = in.nextInt();
-        long il = 1 << (h - 1), ir = (1 << h) - 1;
+        long il = 1L << (h - 1), ir = (1L << h) - 1;
         ArrayList<Segment> ex = new ArrayList<>();
         for (int i = 0; i < q; i++) {
             int x = in.nextInt();
@@ -42,7 +42,7 @@ public class GuessYourWayOut558D {
             int ans = in.nextInt();
 
             lx <<= (h - x);
-            rx = ((rx + 1) << (h - x)) - 1;
+            rx = ((rx + 1L) << (h - x)) - 1L;
             if (ans == 1) {
                 il = Math.max(il, lx);
                 ir = Math.min(ir, rx);
@@ -217,3 +217,40 @@ public class GuessYourWayOut558D {
         }
     }
 }
+
+
+/*
+Test case:
+=============
+37 26
+5 22 30 1
+37 68735550337 130875901633 1
+2 2 2 0
+13 7877 8087 0
+33 5730923451 7817433876 1
+9 477 509 0
+33 6804677061 8090894611 1
+7 78 118 1
+24 14698390 15729456 0
+7 85 87 0
+37 110098947730 137427446900 1
+4 11 13 1
+1 1 1 1
+1 1 1 1
+33 7571380051 8004155005 0
+19 289863 384223 0
+8 195 231 1
+36 40409479970 55134314244 0
+13 5143 6757 0
+2 3 3 1
+27 73240546 87847689 0
+7 111 122 1
+15 31302 31523 0
+20 924951 927050 0
+31 1388544184 1991091658 1
+11 1367 1884 1
+
+output:
+===========
+Data not sufficient!
+ */
