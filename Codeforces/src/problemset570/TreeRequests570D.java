@@ -9,7 +9,7 @@ import java.io.*;
 
 public class TreeRequests570D {
     static int[] level = null;
-    static int[] parent = null;
+    static int[][] parents = null;
 
     static void go() {
         int n = in.nextInt();
@@ -24,20 +24,23 @@ public class TreeRequests570D {
             int from = in.nextInt();
             tree[from].add(i);
         }
-        tree[0].add(1);
 
         char[] seq = in.nextCharArray(n);
 
         level = new int[n + 1];
-        parent = new int[n + 1];
+        int[] parent = new int[n + 1];
         int[] map = new int[n + 1]; // original to new
         int[] rmap = new int[n + 1]; // new to original
-        int idx = 1;
+        int idx = 2;
 
-        int start = 0, end = 0;
-        int layer = 1;
+        int start = 1, end = 1;
+        map[1] = 1;
+        rmap[1] = 1;
+        level[1] = 1;
+        int layer = 2;
         int[][] bit = new int[26][n + 1];
         ArrayList<Integer> delim = new ArrayList<Integer>();
+        delim.add(1);
         while (start <= end) {
             delim.add(idx);
             for (int i = start; i <= end; i++) {
@@ -57,6 +60,17 @@ public class TreeRequests570D {
             end = idx - 1;
         }
 
+        int maxL = 0;
+        while ((1 << maxL) <= delim.size())
+            maxL++;
+        parents = new int[maxL][n + 1];
+        parents[0] = parent;
+        for (int i = 1; i < maxL; i++) {
+            for (int j = 1; j <= n; j++) {
+                parents[i][j] = parents[i - 1][parents[i - 1][j]];
+            }
+        }
+
         for (int i = 0; i < m; i++) {
             int nidx = map[in.nextInt()];
             int h = in.nextInt();
@@ -67,12 +81,12 @@ public class TreeRequests570D {
 
             int ll = delim.get(h - 1);
             int rr = delim.get(h) - 1;
-            int l = getLeft(ll, rr, nidx);
+            int l = getLeft(ll, rr, level[nidx], nidx);
             if (l == -1) {
                 out.println("Yes");
                 continue;
             }
-            int r = getRight(ll, rr, nidx);
+            int r = getRight(ll, rr, level[nidx], nidx);
 
             int oddcount = 0;
             for (int c = 0; c < 26; c++) {
@@ -88,27 +102,25 @@ public class TreeRequests570D {
         }
     }
 
-    static int getLeft(int ll, int rr, int target) {
-        int lev = level[target];
+    static int getLeft(int ll, int rr, int lev, int target) {
         while (ll < rr) {
             int mid = (ll + rr) / 2;
-            if (getParent(level, parent, mid, lev) < target) {
+            if (getParent(mid, lev) < target) {
                 ll = mid + 1;
             } else {
                 rr = mid;
             }
         }
-        if (getParent(level, parent, ll, lev) == target)
+        if (getParent(ll, lev) == target)
             return ll;
         else
             return -1;
     }
 
-    static int getRight(int ll, int rr, int target) {
-        int lev = level[target];
+    static int getRight(int ll, int rr, int lev, int target) {
         while (ll < rr) {
             int mid = (ll + rr + 1) / 2;
-            if (getParent(level, parent, mid, lev) > target) {
+            if (getParent(mid, lev) > target) {
                 rr = mid - 1;
             } else {
                 ll = mid;
@@ -117,12 +129,19 @@ public class TreeRequests570D {
         return ll;
     }
 
-    static int getParent(int[] level, int[] parent, int p, int lev) {
+    static int getParent(int p, int lev) {
+        int diff = level[p] - lev;
+        for (int i = 0, bit = 1; bit <= diff; i++, bit <<= 1) {
+            if ((diff & bit) > 0)
+                p = parents[i][p];
+        }
+        /*
         int mylev = level[p];
         while (mylev > lev) {
-            p = parent[p];
+            p = parents[0][p];
             mylev--;
         }
+        */
         return p;
     }
 
@@ -273,7 +292,7 @@ public class TreeRequests570D {
 
 /**
  * input:
- * <p>
+ * <p/>
  * 5 6
  * 1 2 2 1
  * baabb
@@ -283,19 +302,19 @@ public class TreeRequests570D {
  * 4 1
  * 4 2
  * 3 2
- * <p>
+ * <p/>
  * output:
- * <p>
+ * <p/>
  * Yes
  * No
  * Yes
  * Yes
  * Yes
  * Yes
- * <p>
- * <p>
+ * <p/>
+ * <p/>
  * input:
- * <p>
+ * <p/>
  * 5 9
  * 1 1 1 2
  * edbcb
@@ -308,9 +327,9 @@ public class TreeRequests570D {
  * 1 1
  * 1 3
  * 2 1
- * <p>
+ * <p/>
  * output:
- * <p>
+ * <p/>
  * Yes
  * Yes
  * Yes
@@ -320,8 +339,8 @@ public class TreeRequests570D {
  * Yes
  * Yes
  * Yes
- * <p>
- * <p>
+ * <p/>
+ * <p/>
  * 5 1
  * 1 1 1 2
  * edbcb
