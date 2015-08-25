@@ -8,6 +8,9 @@ import java.util.*;
 import java.io.*;
 
 public class TreeRequests570D {
+    static int[] level = null;
+    static int[] parent = null;
+
     static void go() {
         int n = in.nextInt();
         int m = in.nextInt();
@@ -21,30 +24,28 @@ public class TreeRequests570D {
             int from = in.nextInt();
             tree[from].add(i);
         }
+        tree[0].add(1);
 
         char[] seq = in.nextCharArray(n);
 
-        int[][] node = new int[n + 1][3];
+        level = new int[n + 1];
+        parent = new int[n + 1];
         int[] map = new int[n + 1]; // original to new
         int[] rmap = new int[n + 1]; // new to original
-        int idx = 2;
+        int idx = 1;
 
-        int start = 1, end = 1;
-        map[1] = 1;
-        rmap[1] = 1;
-        node[1][0] = 1;
-        int layer = 2;
+        int start = 0, end = 0;
+        int layer = 1;
         int[][] bit = new int[26][n + 1];
+        ArrayList<Integer> delim = new ArrayList<Integer>();
         while (start <= end) {
+            delim.add(idx);
             for (int i = start; i <= end; i++) {
                 for (int next : tree[rmap[i]]) {
                     rmap[idx] = next;
                     map[next] = idx;
-                    node[idx][0] = layer;
-                    if (node[i][1] == 0) {
-                        node[i][1] = idx;
-                    }
-                    node[i][2] = idx;
+                    level[idx] = layer;
+                    parent[idx] = i;
 
                     add(bit[seq[next - 1] - 'a'], idx);
 
@@ -56,22 +57,26 @@ public class TreeRequests570D {
             end = idx - 1;
         }
 
-        for(int[] nx : node) {
-            out.println(nx[0] + " " + nx[1] + " " + nx[2]);
-        }
-
         for (int i = 0; i < m; i++) {
             int nidx = map[in.nextInt()];
             int h = in.nextInt();
-            if (h <= node[nidx][0]) {
+            if (h <= level[nidx] || h >= delim.size()) {
                 out.println("Yes");
                 continue;
             }
-            int[] range = getRange(node, nidx, h);
-            System.out.println("range = " + range[0] + " - " + range[1]);
+
+            int ll = delim.get(h - 1);
+            int rr = delim.get(h) - 1;
+            int l = getLeft(ll, rr, nidx);
+            if (l == -1) {
+                out.println("Yes");
+                continue;
+            }
+            int r = getRight(ll, rr, nidx);
+
             int oddcount = 0;
             for (int c = 0; c < 26; c++) {
-                int count = get(bit[c], range[0] - 1, range[1]);
+                int count = get(bit[c], l - 1, r);
                 if ((count & 1) > 0)
                     oddcount++;
             }
@@ -83,16 +88,42 @@ public class TreeRequests570D {
         }
     }
 
-    static int[] getRange(int[][] node, int idx, int h) {
-        int left = node[idx][1], right = node[idx][2];
-        int layer = node[left][0];
-        while (layer < h) {
-            left = node[left][1];
-            right = node[right][2];
-            layer++;
+    static int getLeft(int ll, int rr, int target) {
+        int lev = level[target];
+        while (ll < rr) {
+            int mid = (ll + rr) / 2;
+            if (getParent(level, parent, mid, lev) < target) {
+                ll = mid + 1;
+            } else {
+                rr = mid;
+            }
         }
-        int[] ret = {left, right};
-        return ret;
+        if (getParent(level, parent, ll, lev) == target)
+            return ll;
+        else
+            return -1;
+    }
+
+    static int getRight(int ll, int rr, int target) {
+        int lev = level[target];
+        while (ll < rr) {
+            int mid = (ll + rr + 1) / 2;
+            if (getParent(level, parent, mid, lev) > target) {
+                rr = mid - 1;
+            } else {
+                ll = mid;
+            }
+        }
+        return ll;
+    }
+
+    static int getParent(int[] level, int[] parent, int p, int lev) {
+        int mylev = level[p];
+        while (mylev > lev) {
+            p = parent[p];
+            mylev--;
+        }
+        return p;
     }
 
     static void add(int[] a, int i) {
@@ -241,59 +272,58 @@ public class TreeRequests570D {
 }
 
 /**
- input:
-
- 5 6
- 1 2 2 1
- baabb
- 1 1
- 1 2
- 5 1
- 4 1
- 4 2
- 3 2
-
- output:
-
- Yes
- No
- Yes
- Yes
- Yes
- Yes
-
-
- input:
-
- 5 9
- 1 1 1 2
- edbcb
- 1 3
- 2 1
- 1 3
- 2 1
- 2 2
- 2 2
- 1 1
- 1 3
- 2 1
-
- output:
-
- Yes
- Yes
- Yes
- Yes
- Yes
- Yes
- Yes
- Yes
- Yes
-
-
- 5 1
- 1 1 1 2
- edbcb
- 1 3
-
+ * input:
+ * <p>
+ * 5 6
+ * 1 2 2 1
+ * baabb
+ * 1 1
+ * 1 2
+ * 5 1
+ * 4 1
+ * 4 2
+ * 3 2
+ * <p>
+ * output:
+ * <p>
+ * Yes
+ * No
+ * Yes
+ * Yes
+ * Yes
+ * Yes
+ * <p>
+ * <p>
+ * input:
+ * <p>
+ * 5 9
+ * 1 1 1 2
+ * edbcb
+ * 1 3
+ * 2 1
+ * 1 3
+ * 2 1
+ * 2 2
+ * 2 2
+ * 1 1
+ * 1 3
+ * 2 1
+ * <p>
+ * output:
+ * <p>
+ * Yes
+ * Yes
+ * Yes
+ * Yes
+ * Yes
+ * Yes
+ * Yes
+ * Yes
+ * Yes
+ * <p>
+ * <p>
+ * 5 1
+ * 1 1 1 2
+ * edbcb
+ * 1 3
  */
