@@ -52,7 +52,7 @@ public class PigAndPalindromes570E {
                 int col1 = dist - i;
                 if (col1 < 0) break;
                 if (col1 >= m) continue;
-                for (int j = i, col2 = m + n - dist - 2 - j; j <= Math.min(n - 1, i + diff); j++, col2--) {
+                for (int j = i, col2 = col1 + diff; j <= Math.min(n - 1, i + diff); j++, col2--) {
                     if (col2 >= m) continue;
                     if (col2 < 0) break;
 
