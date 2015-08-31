@@ -8,6 +8,35 @@ import java.util.*;
 import java.io.*;
 
 public class CaseOfFugitive555B {
+    static class Range implements Comparable<Range> {
+        long min, max;
+        int idx;
+
+        Range(long a, long b, int i) {
+            this.min = a;
+            this.max = b;
+            this.idx = i;
+        }
+
+        public int compareTo(Range r) {
+            return Long.compare(this.min, r.min);
+        }
+    }
+
+    static class Bridge implements Comparable<Bridge> {
+        long len;
+        int idx;
+
+        Bridge(long a, int i) {
+            this.len = a;
+            this.idx = i;
+        }
+
+        public int compareTo(Bridge b) {
+            return Long.compare(this.len, b.len);
+        }
+    }
+
     static void go() {
         int n = in.nextInt();
         int m = in.nextInt();
@@ -17,64 +46,57 @@ public class CaseOfFugitive555B {
             return;
         }
 
-        long[][] range = new long[n - 1][4];
-        long[][] bridge = new long[m][3];
+        Range[] range = new Range[n - 1];
+        Bridge[] bridge = new Bridge[m];
         long preL = in.nextLong(), preR = in.nextLong();
         for (int i = 0; i < n - 1; i++) {
             long l = in.nextLong(), r = in.nextLong();
-            range[i][0] = l - preR;
-            range[i][1] = r - preL;
-            preR = r;
+            range[i] = new Range(l - preR, r - preL, i);
             preL = l;
-            range[i][2] = i;
+            preR = r;
         }
+
         for (int i = 0; i < m; i++) {
-            bridge[i][0] = in.nextLong();
-            bridge[i][1] = i + 1;
+            bridge[i] = new Bridge(in.nextLong(), i + 1);
         }
-        Arrays.sort(range, new Comparator<long[]>() {
+
+        Arrays.sort(range);
+        Arrays.sort(bridge);
+        PriorityQueue<Range> pq = new PriorityQueue<>(2 * n, new Comparator<Range>() {
             @Override
-            public int compare(long[] longs, long[] t1) {
-                if (longs[1] > t1[1])
-                    return 1;
-                else if (longs[1] < t1[1])
-                    return -1;
-                else if (longs[0] < t1[0])
-                    return -1;
-                else if (longs[0] > t1[0])
-                    return 1;
-                return 0;
+            public int compare(Range r1, Range r2) {
+                return Long.compare(r1.max, r2.max);
             }
         });
 
-        Arrays.sort(bridge, new Comparator<long[]>() {
-            @Override
-            public int compare(long[] longs, long[] t1) {
-                if (longs[0] > t1[0])
-                    return 1;
-                else if (longs[0] < t1[0])
-                    return -1;
-                return 0;
+        int[] ans = new int[n - 1];
+        int index = 0;
+        int matched = 0;
+        for (Bridge b : bridge) {
+            while (index < n - 1 && b.len >= range[index].min) {
+                pq.add(range[index++]);
             }
-        });
-
-        for (int i = 0; i < n - 1; i++) {
-
-        }
-
-    }
-
-    static int bSearch(long[][] b, long t) {
-        int l = 0, r = b.length - 1;
-        while (l < r) {
-            int mid = (l + r) / 2;
-            if (b[mid][0] >= t) {
-                r = mid;
-            } else {
-                l = mid + 1;
+            if (!pq.isEmpty()) {
+                Range rg = pq.poll();
+                if (b.len <= rg.max) {
+                    matched++;
+                    ans[rg.idx] = b.idx;
+                } else {
+                    out.println("No");
+                    return;
+                }
             }
         }
-        return l;
+
+        if (matched == n - 1) {
+            out.println("Yes");
+            for (int a : ans) {
+                out.print(a + " ");
+            }
+            out.println();
+        } else {
+            out.println("No");
+        }
     }
 
     static InputReader in;
