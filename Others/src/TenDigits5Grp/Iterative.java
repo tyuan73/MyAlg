@@ -26,7 +26,7 @@ public class Iterative {
                 int r2 = r1 - b;
                 mask |= bits[b];
 
-                for (c = b + 1; c < Math.min(102, r2 / 3); c++) {
+                for (c = b + 1; c < Math.min(99, r2 / 3); c++) {
                     if (bits[c] == 0 || ((bits[c] | mask) != bits[c] + mask)) continue;
 
                     int r3 = r2 - c;
