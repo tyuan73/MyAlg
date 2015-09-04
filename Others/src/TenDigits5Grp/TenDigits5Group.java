@@ -1,4 +1,4 @@
-/**
+package TenDigits5Grp; /**
  * Created with IntelliJ IDEA.
  * User: yuantian
  * Date: 9/3/15
@@ -11,30 +11,34 @@ import java.util.*;
 public class TenDigits5Group {
     static int[] list;
     static int[] del;
+    static int count = 0;
+    final static int N = 4;
 
     public static void main(String[] args) {
         //Scanner in = new Scanner(System.in);
-        list = new int[10];
-        for (int i = 0; i < 10; i++)
+        list = new int[N];
+        for (int i = 0; i < N; i++)
             list[i] = i;
 
         permutation(0);
+        System.out.println(count);
     }
 
     static void permutation(int idx) {
-        if (idx >= 10) {
-            for(int i : list)
+        if (idx >= N) {
+            for (int i : list)
                 System.out.print(i);
             System.out.println();
-            del = new int[6];
-            del[5] = 10;
-            check(1, 0);
+            count++;
+            //del = new int[6];
+            //del[5] = 10;
+            //check(1, 0);
             return;
         }
 
-        for (int i = idx; i < 10; i++) {
+        for (int i = idx; i < N; i++) {
             swap(i, idx);
-            permutation(i + 1);
+            permutation(idx + 1);
             swap(i, idx);
         }
     }
@@ -56,11 +60,14 @@ public class TenDigits5Group {
     }
 
     static void printAns() {
+        //count++;
+        /*
         for (int i = 1; i < 6; i++) {
             int num = cal(i);
             System.out.print(num + " + ");
         }
         System.out.println();
+        */
     }
 
     static int cal(int idx) {
