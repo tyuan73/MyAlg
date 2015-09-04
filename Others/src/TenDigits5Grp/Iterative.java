@@ -26,14 +26,14 @@ public class Iterative {
                 int r2 = r1 - b;
                 mask |= bits[b];
 
-                for (c = b + 1; c < Math.min(99, r2 / 3); c++) {
+                for (c = b + 1; c <= Math.min(99, r2 / 3); c++) {
                     if (bits[c] == 0 || ((bits[c] | mask) != bits[c] + mask)) continue;
 
                     int r3 = r2 - c;
                     mask |= bits[c];
 
                     int last = MAX ^ mask;
-                    for (d = c + 1, e = r3 - d; d < r3 / 2; e = r3 - ++d) {
+                    for (d = c + 1, e = r3 - d; d <= r3 / 2; e = r3 - ++d) {
                         if (bits[e] == 0 || bits[d] == 0 || (bits[e] & bits[d]) != 0 || last != (bits[d] | bits[e]))
                             continue;
 
