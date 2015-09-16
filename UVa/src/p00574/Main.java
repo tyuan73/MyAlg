@@ -17,6 +17,7 @@ public class Main {
     static int idx = 0;
     static int s = 0;
     static int n = 0;
+    static boolean none = true;
 
     static void go() {
         while ((s = in.nextInt()) != 0) {
@@ -24,27 +25,34 @@ public class Main {
             nums = in.nextIntArray(n);
             ans = new int[n];
             idx = 0;
+            none = true;
 
+            out.printf("Sums of %d:\n", s);
             check(0, 0);
+            if (none)
+                out.println("NONE");
         }
     }
 
     static void check(int cur, int total) {
-        if (total > s || cur >= n)
-            return;
         if (total == s) {
+            none = false;
             out.print(ans[0]);
             for (int i = 1; i < idx; i++)
                 out.print("+" + ans[i]);
             out.println();
             return;
         }
+        if (total > s || cur >= n)
+            return;
 
-        for(int i = cur; i < n; i++) {
-            ans[idx++] = nums[i];
-            check(i + 1, total + nums[i]);
-            idx--;
-        }
+        ans[idx++] = nums[cur];
+        check(cur + 1, total + nums[cur]);
+        idx--;
+        for (cur++; cur < n; cur++)
+            if (nums[cur] != nums[cur - 1])
+                break;
+        check(cur, total);
     }
 
     static InputReader in;
