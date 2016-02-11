@@ -1,4 +1,4 @@
-public class BestTimeStockIII {
+public class OJ123BestTimeToBuyStockIII {
     public int maxProfit(int[] prices) {
         if (prices == null || prices.length == 0)
             return 0;
