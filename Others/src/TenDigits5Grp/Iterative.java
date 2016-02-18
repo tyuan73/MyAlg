@@ -17,7 +17,7 @@ public class Iterative {
         int a, b, c, d, e;
         int mask = 0, count = 0;
         StringBuilder sb = new StringBuilder();
-        for (a = 0; a < 10; a++) {
+        for (a = 1; a < 10; a++) {
             mask |= bits[a];
             int r1 = 1089 - a;
             for (b = a + 1; b < 99; b++) {
