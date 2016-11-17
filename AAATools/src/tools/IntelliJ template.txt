@@ -113,6 +113,13 @@ public class ${NAME} {
             return sb.toString();
         }
 
+        public char nextChar() {
+            int c = read();
+            while (isSpaceChar(c))
+                c = read();
+            return (char) c;
+        }
+
         public String nextString() {
             int c = read();
             while (isSpaceChar(c))
