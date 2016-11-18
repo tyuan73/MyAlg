@@ -15,9 +15,8 @@ public class Socks731C {
     static List<Integer>[] g = null;
     static boolean[] visited = null;
     static int total = 0;
-    static int max = 0;
-    static int[] count = null;
     static int[] color = null;
+    static HashMap<Integer, Integer> map = null;
 
     static void go() {
         int n = in.nextInt();
@@ -37,17 +36,20 @@ public class Socks731C {
         }
 
         visited = new boolean[n];
-        count = new int[k];
+        map = new HashMap<>();
 
         int ans = 0;
         for (int i = 0; i < n; i++) {
             if (!visited[i]) {
                 dfs(i);
             }
+            int max = 0;
+            for(int j : map.keySet()) {
+                max = Math.max(max, map.get(j));
+            }
             ans += total - max;
+            map.clear();
             total = 0;
-            max = 0;
-            Arrays.fill(count, 0);
         }
         out.println(ans);
     }
@@ -55,9 +57,11 @@ public class Socks731C {
     static void dfs(int idx) {
         visited[idx] = true;
         total++;
-        int x = color[idx] - 1;
-        count[x]++;
-        max = Math.max(max, count[x]);
+        int key = color[idx];
+        if (map.containsKey(key)) {
+            map.put(key, map.get(key) + 1);
+        } else
+            map.put(key, 1);
         for (int next : g[idx]) {
             if (!visited[next])
                 dfs(next);
