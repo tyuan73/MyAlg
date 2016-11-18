@@ -13,10 +13,11 @@ import java.io.*;
 
 public class Socks731C {
     static List<Integer>[] g = null;
-    static boolean[] visited = null;
+    static int[] visited = null;
     static int total = 0;
+    static int max = 0;
+    static int[] count = null;
     static int[] color = null;
-    static HashMap<Integer, Integer> map = null;
 
     static void go() {
         int n = in.nextInt();
@@ -35,36 +36,43 @@ public class Socks731C {
             g[r].add(l);
         }
 
-        visited = new boolean[n];
-        map = new HashMap<>();
+        visited = new int[n];
+        count = new int[k];
 
         int ans = 0;
         for (int i = 0; i < n; i++) {
-            if (!visited[i]) {
+            if (visited[i] == 0) {
                 dfs(i);
+
+                ans += total - max;
+                total = 0;
+                max = 0;
+                //Arrays.fill(count, 0);
+                clean(i);
             }
-            int max = 0;
-            for(int j : map.keySet()) {
-                max = Math.max(max, map.get(j));
-            }
-            ans += total - max;
-            map.clear();
-            total = 0;
         }
         out.println(ans);
     }
 
     static void dfs(int idx) {
-        visited[idx] = true;
+        visited[idx] = 1;
         total++;
-        int key = color[idx];
-        if (map.containsKey(key)) {
-            map.put(key, map.get(key) + 1);
-        } else
-            map.put(key, 1);
+        int x = color[idx] - 1;
+        count[x]++;
+        max = Math.max(max, count[x]);
         for (int next : g[idx]) {
-            if (!visited[next])
+            if (visited[next] == 0)
                 dfs(next);
+        }
+    }
+
+    static void clean(int idx) {
+        visited[idx] = 2;
+        int x = color[idx] - 1;
+        count[x] = 0;
+        for (int next : g[idx]) {
+            if (visited[next] == 1)
+                clean(next);
         }
     }
 
