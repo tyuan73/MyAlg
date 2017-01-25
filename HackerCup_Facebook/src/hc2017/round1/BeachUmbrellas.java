@@ -12,11 +12,18 @@ public class BeachUmbrellas {
     PrintWriter out;
     static long P = 1000000007;
     static long[] F = new long[2001];
+    static long[] H = new long[2001];
+    static long[] G = null;
 
     static {
         F[0] = 1;
         for (int i = 1; i <= 2000; i++) {
             F[i] = (F[i - 1] * i) % P;
+        }
+
+        H[0] = 1;
+        for (int i = 1; i <= 2000; i++) {
+            H[i] = (inverse(i) * H[i - 1]) % P;
         }
     }
 
@@ -33,39 +40,50 @@ public class BeachUmbrellas {
             }
 
             if (n == 1) {
-                System.out.println(m);
+                //System.out.println(m);
+                out.printf("Case #%d: %d\n", t, m);
                 continue;
+            }
+
+            Arrays.sort(U);
+            int min = m - (2 * total - U[0] - U[1]) - n;
+            int max = m - (2 * total - U[n - 2] - U[n - 1]) + n - 1;
+            if (max < n) {
+                //System.out.println(0);
+                out.printf("Case #%d: %d\n", t, 0);
+                continue;
+            }
+            min = Math.max(min, 0);
+            G = new long[max - min + 1];
+            G[0] = min == 0 ? ++min : min++;
+            for (int i = 1; i < G.length; i++) {
+                G[i] = (G[i - 1] * min++) % P;
             }
 
             long ans = 0;
             for (int i = 0; i < n; i++) {
                 for (int j = i + 1; j < n; j++) {
-                    int col = m - (2 * total - U[i] - U[j]);
-                    if (col < 0) continue;
-                    long c = calculate(n, col);
+                    int ava = m - (2 * total - U[i] - U[j]) - 1;
+                    if (ava < 0) continue;
+                    long c = C(ava + n, n, max);
                     c = (c * F[n - 2]) % P;
                     ans = (ans + 2 * c) % P;
                 }
             }
-            System.out.println(ans);
+            //System.out.println(ans);
+            out.printf("Case #%d: %d\n", t, ans);
         }
     }
 
-    long calculate(int row, int col) {
-        long[] dp = new long[col + 1];
-        Arrays.fill(dp, 1L);
-        for (int i = 0; i < row; i++) {
-            dp[0] = 0;
-            for (int j = 1; j <= col; j++) {
-                dp[j] += dp[j - 1];
-                dp[j] %= P;
-            }
-        }
-        return dp[col];
+    long C(int ava, int sel, int max) {
+        int lastIdx = G.length - (max - ava) - 1;
+        int firstIdx = lastIdx - sel;
+        long ret = G[lastIdx] * inverse(G[firstIdx]) % P;
+        ret = (ret * H[sel]) % P;
+        return ret;
     }
 
-    /*
-    long inverse(long x) {
+    static long inverse(long x) {
         long ret = 1;
         long pow = P - 2;
         while (pow > 0) {
@@ -77,11 +95,10 @@ public class BeachUmbrellas {
         }
         return ret;
     }
-    */
 
     public void run() {
         try {
-            in = new FastScanner(new File("/home/yuantian/IdeaProjects/MyAlg/HackerCup_Facebook/src/hc2017/round1/BeachUmbrellas_small.in"));
+            in = new FastScanner(new File("/Users/Helena/Documents/IntelliJ Projects/MyAlg/HackerCup_Facebook/src/hc2017/round1/BeachUmbrellas.in"));
             out = new PrintWriter(new File("/tmp/test/BeachUmbrellas.out"));
 
             solve();
