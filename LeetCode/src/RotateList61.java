@@ -48,12 +48,12 @@ public class RotateList61 {
         for (len = 1; last.next != null; len++)   // count len of the list
             last = last.next;
 
-        last.next = head;
-        len -= k % len;                           //calculate how many nodes need to skip
+        last.next = head;                         // link the last to head to make a loop
+        len -= k % len;                           // calculate how many nodes need to skip
         for (int i = 0; i < len; i++)             // skip nodes
             last = last.next;
 
-        head = last.next;                         // break link
+        head = last.next;                         // break loop
         last.next = null;
 
         return head;
