@@ -5,7 +5,7 @@
  * Time: 11:18 PM
  * To change this template use File | Settings | File Templates.
  */
-public class ReverseLinkedListII {
+public class ReverseLinkedListII92 {
     public ListNode reverseBetween(ListNode head, int m, int n) {
         // add a dummy node prior to head
         ListNode start = new ListNode(0);

@@ -5,7 +5,7 @@
  * Time: 10:17 AM
  * Copyright (c) 2013 All Right Reserved, http://github.com/tyuan73
  */
-public class ReverseLinkedList {
+public class ReverseLinkedList206 {
     public ListNode reverse(ListNode head) {
         ListNode cur = head;
         ListNode pre = null;
@@ -36,5 +36,24 @@ public class ReverseLinkedList {
         ListNode newHead = reverse(next);
         next.next = head;
         return newHead;
+    }
+
+    /**
+     * Another way to do recursive.
+     */
+    ListNode tail = null;
+    public ListNode reverseList2(ListNode head) {
+        if (head == null)
+            return null;
+
+        if (head.next == null) {
+            tail = head;
+            return head;
+        }
+        ListNode n = reverseList2(head.next);
+        tail.next = head;
+        head.next = null;
+        tail = head;
+        return n;
     }
 }
