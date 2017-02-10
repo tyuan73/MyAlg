@@ -5,6 +5,8 @@
 import java.util.*;
 
 /**
+ * For more details: https://discuss.leetcode.com/topic/30572/share-some-thoughts
+ *
  * for test:
 
  Input:
@@ -42,7 +44,7 @@ public class MinimumHeightTrees310 {
         while ((n -= ans.size()) > 0) { // if there is no non-leaves left - meaning all remaining nodes are leaves
             temp.clear();
             for (int i : ans) {
-                for (int next : tree[i]) { // only one element, but just for convinent.
+                for (int next : tree[i]) { // only one element, but just for convenient.
                     tree[next].remove(i);
                     if (tree[next].size() == 1)
                         temp.add(next);
