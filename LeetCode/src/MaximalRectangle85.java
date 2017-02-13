@@ -6,10 +6,13 @@
  * To change this template use File | Settings | File Templates.
  */
 
-import java.util.Stack;
+import java.util.*;
 
-public class MaximalRectangle {
+public class MaximalRectangle85 {
 
+    /**
+     * Solution 1: use stack.
+     */
     class Element {
         int index;
         int value;
@@ -70,6 +73,54 @@ public class MaximalRectangle {
             max = Math.max(max, area);
         }
 
+        return max;
+    }
+
+    /**
+     * Solution 2: DP
+     * https://discuss.leetcode.com/topic/6650/share-my-dp-solution
+     */
+    public int maximalRectangleDP(char[][] matrix) {
+        if (matrix == null || matrix.length == 0) return 0;
+        int m = matrix[0].length;
+        int[] height = new int[m], left = new int[m], right = new int[m];
+        Arrays.fill(right, m);
+        int max = 0;
+        for (char[] row : matrix) {
+            // calculate height
+            for (int i = 0; i < m; i++) {
+                if (row[i] == '0')
+                    height[i] = 0;
+                else
+                    height[i]++;
+            }
+
+            // find left most "1" in continuous "1"s
+            int cur_left = 0;
+            for (int i = 0; i < m; i++) {
+                if (row[i] == '1')
+                    left[i] = Math.max(cur_left, left[i]);
+                else {
+                    cur_left = i + 1;
+                    left[i] = 0;
+                }
+            }
+
+            // find the first "0" after continuous "1"s
+            int cur_right = m;
+            for (int i = m - 1; i >= 0; i--) {
+                if (row[i] == '1')
+                    right[i] = Math.min(cur_right, right[i]);
+                else {
+                    cur_right = i;
+                    right[i] = m;
+                }
+            }
+
+            // calculate area: (right - left) * height
+            for (int i = 0; i < m; i++)
+                max = Math.max(max, (right[i] - left[i]) * height[i]);
+        }
         return max;
     }
 }
