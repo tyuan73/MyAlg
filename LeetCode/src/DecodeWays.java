@@ -65,6 +65,56 @@ public class DecodeWays {
     }
 
     /**
+     * DP with constant space.
+     *
+     * @param s
+     * @return
+     */
+
+    public int numDecodings3(String s) {
+        int n = s.length();
+        if (n == 0) return 0;
+        s = s + "9";                    // add an 9 to the end does not change the answer.
+        //int[] dp = new int[n + 2];    // dp with O(n) space
+        //dp[n] = 1;
+        int dp1 = 1, dp2 = 0;
+        for (int i = n - 1; i >= 0; i--) {
+            switch (s.charAt(i)) {
+                case '0':
+                    dp2 = dp1;
+                    dp1 = 0;
+                    break;
+                case '1':
+                    //dp = dp1 + dp2;
+                    //dp2 = dp1;
+                    //dp1 = dp;
+                    dp1 = dp2 + (dp2 = dp1);
+                    //dp[i] = dp[i+1] + dp[i+2];  // the equavlent of dp with O(n) space
+                    break;
+                case '2':
+                    if (s.charAt(i + 1) <= '6') {
+                        //dp = dp1 + dp2;
+                        //dp2 = dp1;
+                        //dp1 = dp;
+                        dp1 = dp2 + (dp2 = dp1);
+                        //dp[i] = dp[i+1] + dp[i+2];  // the equalent of dp with O(n) space
+                    } else {
+                        //dp[i] = dp[i+1];
+                        //dp = dp1;           // the equalent of dp with O(n) space
+                        dp2 = dp1;
+                    }
+                    break;
+                default:
+                    //dp[i] = dp[i+1];     // the equalent of dp with O(n) space
+                    //dp = dp1;
+                    dp2 = dp1;
+            }
+
+        }
+        return dp1;
+    }
+
+    /**
      * Recursive ways. not efficient. Will over time limit if s is considerable long.
      */
     public int numDecodingsRecursive(String s) {
