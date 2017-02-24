@@ -1,46 +1,27 @@
-import java.util.ArrayList;
-import java.util.Arrays;
+
+import java.util.*;
 
 public class ThreeSum {
-    public ArrayList<ArrayList<Integer>> threeSum(int[] num) {
-        ArrayList<ArrayList<Integer>> ret = new ArrayList<ArrayList<Integer>>();
-
-        if (num == null || num.length == 0)
-            return ret;
-
-        Arrays.sort(num);
-        int n = num.length;
-        for (int i = 0; i < n - 2; ) {
-            int l = i + 1, r = n - 1;
-            while (l < r) {
-                int sum = num[i] + num[l] + num[r];
-                if (sum == 0) {
-                    ArrayList<Integer> x = new ArrayList<Integer>();
-                    x.add(num[i]);
-                    x.add(num[l]);
-                    x.add(num[r]);
-                    ret.add(x);
-                    l = nextI(num, l, true);
-                    r = nextI(num, r, false);
-                } else if (sum > 0)
-                    r = nextI(num, r, false);
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> ans = new ArrayList<>();
+        Arrays.sort(nums);
+        for (int i = 0; i < nums.length - 2; i++) {
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
+            int sum = -nums[i];
+            int j = i + 1, k = nums.length - 1;
+            while (j < k) {
+                int val = nums[j] + nums[k];
+                if (val == sum) {
+                    ans.add(Arrays.asList(nums[i], nums[j], nums[k]));
+                    while (j < k && nums[j + 1] == nums[j]) j++;
+                    j++;
+                    k--;        // no need
+                } else if (val < sum)
+                    j++;
                 else
-                    l = nextI(num, l, true);
+                    k--;
             }
-            i = nextI(num, i, true);
         }
-
-        return ret;
-    }
-
-    int nextI(int[] num, int i, boolean up) {
-        int step = up ? 1 : -1;
-        i += step;
-        while (i >= 0 && i < num.length) {
-            if (num[i] != num[i - step])
-                break;
-            i += step;
-        }
-        return i;
+        return ans;
     }
 }
