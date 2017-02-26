@@ -6,8 +6,7 @@
  * Copyright (c) 2013 All Right Reserved, http://github.com/tyuan73
  */
 
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 
 public class SpiralMatrix {
     public ArrayList<Integer> spiralOrder(int[][] matrix) {
@@ -33,6 +32,32 @@ public class SpiralMatrix {
             l++;
         }
         return ret;
+    }
+
+    public List<Integer> spiralOrder1(int[][] matrix) {
+        List<Integer> ans = new ArrayList<>();
+        if (matrix.length == 0 || matrix[0].length == 0) return ans;
+        int row = matrix.length, col = matrix[0].length;
+        int x = 0, y = -1;
+        while (true) {
+            for (int i = 0; i < col; i++) {
+                ans.add(matrix[x][++y]);
+            }
+            if (--row == 0) break;
+            for (int i = 0; i < row; i++) {
+                ans.add(matrix[++x][y]);
+            }
+            if (--col == 0) break;
+            for (int i = 0; i < col; i++) {
+                ans.add(matrix[x][--y]);
+            }
+            if (--row == 0) break;
+            for (int i = 0; i < row; i++) {
+                ans.add(matrix[--x][y]);
+            }
+            if (--col == 0) break;
+        }
+        return ans;
     }
 
     public static void main(String[] args) {

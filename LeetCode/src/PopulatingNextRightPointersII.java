@@ -36,4 +36,28 @@ public class PopulatingNextRightPointersII {
         }
         return null;
     }
+
+    /**
+     * A better solution to use a fake header as next line header
+     */
+    public void connect1(TreeLinkNode root) {
+        TreeLinkNode lineHead = new TreeLinkNode(0);
+        TreeLinkNode travel = lineHead;
+        while (root != null) {
+            travel = lineHead;
+            lineHead.next = null;
+            while (root != null) {
+                if (root.left != null) {
+                    travel.next = root.left;
+                    travel = travel.next;
+                }
+                if (root.right != null) {
+                    travel.next = root.right;
+                    travel = travel.next;
+                }
+                root = root.next;
+            }
+            root = lineHead.next;
+        }
+    }
 }
