@@ -30,7 +30,8 @@ public class ShortestDistancefromAllBuildings317 {
         }
 
         int min = Integer.MAX_VALUE;
-        l1: for (int e : empty) {
+        l1:
+        for (int e : empty) {
             int total = 0;
             //boolean valid = true;
             for (int b : building) {
