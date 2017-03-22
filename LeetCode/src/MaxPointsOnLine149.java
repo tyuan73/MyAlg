@@ -4,9 +4,9 @@
 
 import java.util.*;
 
-public class MaxPointsOnLine {
+public class MaxPointsOnLine149 {
     public static void main(String[] args) {
-        MaxPointsOnLine mp = new MaxPointsOnLine();
+        MaxPointsOnLine149 mp = new MaxPointsOnLine149();
 
         Point[] p = new Point[3];
 
@@ -26,52 +26,43 @@ public class MaxPointsOnLine {
     }
 
     public int maxPoints(Point[] points) {
+        //if (points.length == 0) return 0;
+        HashMap<ArrayList<Integer>, Integer> map = new HashMap<>();
         int max = 0;
-        HashMap<Slop, Integer> map = new HashMap<Slop, Integer>();
         for (int i = 0; i < points.length; i++) {
-            int cur = 1, overlap = 0;
             map.clear();
+            int samepoints = 1;
+            int val = 0;
             for (int j = i + 1; j < points.length; j++) {
                 int x = points[j].x - points[i].x;
                 int y = points[j].y - points[i].y;
                 if (x == 0 && y == 0) {
-                    overlap++;
+                    ++samepoints;
                     continue;
                 }
-
-                int g = gcd(x, y);
-                Slop slop = new Slop(x / g, y / g);
-                int count = map.containsKey(slop) ? map.get(slop) + 1 : 2;
-                map.put(slop, count);
-                cur = Math.max(cur, count);
+                int gcd = gcd(x, y);
+                ArrayList<Integer> key = new ArrayList<>();
+                //if (x == 0) {
+                //    key.add(0);
+                //    key.add(1);
+                //} else if (y == 0) {
+                //    key.add(1);
+                //    key.add(0);
+                //} else {
+                key.add(x / gcd);
+                key.add(y / gcd);
+                //}
+                map.put(key, map.getOrDefault(key, 0) + 1);
+                val = Math.max(val, map.get(key));
             }
-            max = Math.max(max, cur + overlap);
+            max = Math.max(max, val + samepoints);
         }
         return max;
     }
 
-    public int gcd(int x, int y) {
-        if (x == 0) return y;
-        if (y == 0) return x;
-        return gcd(y % x, x);
-    }
-
-    class Slop {
-        int x;
-        int y;
-
-        Slop(int a, int b) {
-            x = a;
-            y = b;
-        }
-
-        public boolean equals(Object other) {
-            return (other != null && other instanceof Slop && ((Slop) other).x == x && ((Slop) other).y == y);
-        }
-
-        public int hashCode() {
-            return x + y;
-        }
+    int gcd(int a, int b) {
+        if (b == 0) return a;
+        return gcd(b, a % b);
     }
 
     static class Point {
