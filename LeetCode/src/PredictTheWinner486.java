@@ -38,4 +38,34 @@ public class PredictTheWinner486 {
             return nums[l];
         return Math.max(nums[l] - check(nums, l + 1, r), nums[r] - check(nums, l, r - 1));
     }
+
+    /**
+     * DP 1
+     */
+    public boolean PredictTheWinner2(int[] nums) {
+        int n = nums.length;
+        int[][] dp = new int[n][n];
+        for (int i = n - 1; i >= 0; i--) {
+            dp[i][i] = nums[i];
+            for (int j = i + 1; j < n; j++) {
+                dp[i][j] = Math.max(nums[i] - dp[i + 1][j], nums[j] - dp[i][j - 1]);
+            }
+        }
+        return dp[0][n - 1] >= 0;
+    }
+
+    /**
+     * DP 2, improved space O(n)
+     */
+    public boolean PredictTheWinner3(int[] nums) {
+        int n = nums.length;
+        int[] dp = new int[n];
+        for (int i = n - 1; i >= 0; i--) {
+            dp[i] = nums[i];
+            for (int j = i + 1; j < n; j++) {
+                dp[j] = Math.max(nums[i] - dp[j], nums[j] - dp[j - 1]);
+            }
+        }
+        return dp[n - 1] >= 0;
+    }
 }
