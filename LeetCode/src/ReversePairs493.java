@@ -7,20 +7,21 @@ import java.util.*;
 public class ReversePairs493 {
     public int reversePairs(int[] nums) {
         int n = nums.length;
-        long[] map = new long[n + 2];
-        map[n] = Long.MIN_VALUE;
-        map[n + 1] = Long.MAX_VALUE;
-        for (int i = 0; i < n; i++)
-            map[i] = nums[i];
+        int[] map = new int[n + 1];
+        map[n] = Integer.MIN_VALUE;
+        System.arraycopy(nums, 0, map, 0, n);
         Arrays.sort(map);
 
-        int[] bit = new int[n + 3];
+        int[] bit = new int[n + 1];
         int ans = 0;
-        for (int x : nums) {
-            int i = index(map, x);
-            int j = index(map, x * 2l);
-            ans += sum(bit, j);
-            add(bit, i);
+        for (int i = n - 1; i >= 0; i--) {
+            int x = nums[i];
+            int y = x / 2;
+            if (x < 0 || (x & 1) == 0)
+                y--;
+            ans += sum(bit, index(map, y));
+
+            add(bit, index(map, x));
         }
 
         return ans;
@@ -32,20 +33,13 @@ public class ReversePairs493 {
     }
 
     private int sum(int[] bit, int i) {
-        int sum = 0, j = bit.length - 1;
-        while (i != j) {
-            if (i > j) {
-                sum -= bit[i];
-                i -= i & -i;
-            } else {
-                sum += bit[j];
-                j -= j & -j;
-            }
-        }
+        int sum = 0;
+        for (; i > 0; i -= i & -i)
+            sum += bit[i];
         return sum;
     }
 
-    private int index(long[] map, long x) {
+    private int index(int[] map, int x) {
         int l = 0, r = map.length - 1;
         while (l < r) {
             int mid = (l + r + 1) / 2;
@@ -58,3 +52,31 @@ public class ReversePairs493 {
         return l;
     }
 }
+
+/*
+Test cases:
+[1,3,2,3,1]
+[-2147483648,0]
+[0, -2147483648]
+[0, 3,-2147483648]
+[7,4]
+[8,4]
+[9,4]
+[-7,-4]
+[-8,-4]
+[-9, -4]
+[-10,-4]
+
+output:
+2
+0
+1
+2
+0
+0
+1
+1
+0
+0
+0
+ */
