@@ -32,4 +32,28 @@ public class IncreasingSubsequences491 {
         }
         path.remove(path.size() - 1);
     }
+
+    /**
+     * A little better solution
+     */
+    public List<List<Integer>> findSubsequences1(int[] nums) {
+        Set<List<Integer>> ans = new HashSet<>();
+        List<Integer> path = new ArrayList<>();
+        getSeq(nums, 0, path, ans);
+
+        return new ArrayList(ans);
+    }
+
+    private void getSeq(int[] nums, int idx, List<Integer> path, Set<List<Integer>> ans) {
+        //if (idx == nums.length) return;
+
+        for (int i = idx; i < nums.length; i++) {
+            if (path.size() > 0 && nums[i] < path.get(path.size() - 1)) continue;
+
+            path.add(nums[i]);
+            if (path.size() > 1) ans.add(new ArrayList(path));
+            getSeq(nums, i + 1, path, ans);
+            path.remove(path.size() - 1);
+        }
+    }
 }
