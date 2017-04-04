@@ -34,4 +34,23 @@ public class ValidParentheses {
 
         return (stack.size() == 1);
     }
+
+    /**
+     * A more concise version
+     */
+    public boolean isValid1(String s) {
+        Stack<Character> sk = new Stack<>();
+        sk.push('0');
+        for (char ch : s.toCharArray()) {
+            if (ch == '(') {
+                sk.push(')');
+            } else if (ch == '[') {
+                sk.push(']');
+            } else if (ch == '{') {
+                sk.push('}');
+            } else if (ch != sk.pop())
+                return false;
+        }
+        return sk.pop() == '0';
+    }
 }
