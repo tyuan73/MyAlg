@@ -41,7 +41,7 @@ public class LRUCache146 {
         size++;
     }
 
-    public LRUCache(int capacity) {
+    public LRUCache146(int capacity) {
         this.capacity = capacity;
         this.size = 0;
         this.map = new HashMap<>();
