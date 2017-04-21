@@ -11,23 +11,27 @@ package problemset797;
 import java.util.*;
 import java.io.*;
 
-public class ArrayQueries797E {
-    /**
-     * Time Limit Exceeded.
-     */
+public class OddSum797B {
     static void go() {
         int n = in.nextInt();
-        int[] a = in.nextIntArray(n);
-        int q = in.nextInt();
-        while (q-- > 0) {
-            int p = in.nextInt(), k = in.nextInt();
-            int op = 0;
-            while (p <= n) {
-                p += a[p - 1] + k;
-                op++;
+        int total = 0, maxN = -100000, minP = 100000;
+        for (int i = 0; i < n; i++) {
+            int num = in.nextInt();
+            if (num > 0) {
+                total += num;
+                if ((num & 1) == 1)
+                    minP = Math.min(minP, num);
+            } else if (num < 0) {
+                if ((num & 1) == 1)
+                    maxN = Math.max(maxN, num);
             }
-            out.println(op);
         }
+        if ((total & 1) == 1) {
+            out.println(total);
+            return;
+        }
+
+        out.println(Math.max(total + maxN, total - minP));
     }
 
     static InputReader in;

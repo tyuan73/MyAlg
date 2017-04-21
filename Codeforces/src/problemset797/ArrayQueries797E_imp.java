@@ -11,23 +11,36 @@ package problemset797;
 import java.util.*;
 import java.io.*;
 
-public class ArrayQueries797E {
-    /**
-     * Time Limit Exceeded.
-     */
+public class ArrayQueries797E_imp {
     static void go() {
         int n = in.nextInt();
-        int[] a = in.nextIntArray(n);
+        int[] a = new int[n];
+        for (int i = 0; i < n; i++) {
+            a[i] = in.nextInt();
+            a[i] += i + 1;
+        }
+
+        HashMap<Integer, Integer>[] map = new HashMap[n];
+        for (int i = 0; i < n; i++)
+            map[i] = new HashMap<>();
+
         int q = in.nextInt();
         while (q-- > 0) {
-            int p = in.nextInt(), k = in.nextInt();
-            int op = 0;
-            while (p <= n) {
-                p += a[p - 1] + k;
-                op++;
-            }
+            int p = in.nextInt() - 1, k = in.nextInt();
+            int op = getOp(map, a, p, k);
             out.println(op);
         }
+    }
+
+    static int getOp(HashMap<Integer, Integer>[] map, int[] a, int idx, int k) {
+        if (map[idx].containsKey(k)) return map[idx].get(k);
+        if (a[idx] + k > a.length) {
+            map[idx].put(k, 1);
+            return 1;
+        }
+        int op = getOp(map, a, a[idx] + k-1, k) + 1;
+        map[idx].put(k, op);
+        return op;
     }
 
     static InputReader in;
