@@ -1,7 +1,7 @@
 package problemset797;
 
 /**
- * Created by yuantian on 4/21/17.
+ * Created by yuantian on 4/24/17.
  */
 
 /*
@@ -11,41 +11,55 @@ package problemset797;
 import java.util.*;
 import java.io.*;
 
-public class ArrayQueries797E_imp {
+public class ArrayQueries797E_imp1 {
     static void go() {
         int n = in.nextInt();
         int[] a = new int[n + 1];
         for (int i = 1; i <= n; i++) {
-            a[i] = in.nextInt();
-            a[i] += i;
+            a[i] = in.nextInt() + i;
         }
-        int m = (int) Math.sqrt(n);
-        int[][] dp = new int[n + 1][m + 1];
-        for (int i = n; i >= 1; i--) {
-            for (int j = m; j >= 1; j--) {
-                if (a[i] + j > n) {
-                    dp[i][j] = 1;
-                } else {
-                    dp[i][j] = dp[a[i] + j][j] + 1;
-                }
-            }
-        }
-        int q = in.nextInt();
-        while (q-- > 0) {
-            int p = in.nextInt(), k = in.nextInt();
-            if (k <= m) {
-                out.println(dp[p][k]);
-            } else {
-                int step = 1;
-                while (a[p] + k <= n) {
-                    p = a[p] + k;
-                    step++;
-                }
-                out.println(step);
-            }
-        }
-    }
 
+        int q = in.nextInt();
+        int[][] Q = new int[q][3];
+        for (int i = 0; i < q; i++) {
+            Q[i][0] = in.nextInt(); // p
+            Q[i][1] = in.nextInt(); // k
+            Q[i][2] = i;
+        }
+        Arrays.sort(Q, (x, y) -> (x[1] == y[1] ? x[0] - y[0] : x[1] - y[1]));
+        int[] ret = new int[q];
+        int[] dp = new int[n + 1];
+        int preK = -1;
+        int m = (int) Math.sqrt(n);
+        for (int i = 0; i < q; i++) {
+            int k = Q[i][1];
+            if (k > m) {
+                int op = 0;
+                int p = Q[i][0];
+                while (p <= n) {
+                    p = a[p] + k;
+                    op++;
+                }
+                ret[Q[i][2]] = op;
+            } else {
+                if (k != preK) {
+                    preK = k;
+                    int minP = Q[i][0];
+                    for (int j = n; j >= minP; j--) {
+                        if (a[j] + k > n) {
+                            dp[j] = 1;
+                        } else {
+                            dp[j] = dp[a[j] + k] + 1;
+                        }
+                    }
+                }
+                ret[Q[i][2]] = dp[Q[i][0]];
+            }
+        }
+
+        for (int z : ret)
+            out.println(z);
+    }
 
     static InputReader in;
     static PrintWriter out;
