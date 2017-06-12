@@ -9,8 +9,10 @@ package tools;
  */
 public class KMP {
     public static void main(String[] args) {
-        String t = "adhadfd";              // the text string
-        String p = "adfd";              // the pattern
+        //String t = "adhadfdadfd";              // the text string
+        //String p = "adfd";              // the pattern
+        String t = "ttttt";
+        String p = "tt";
 
         int[] prefix = getPrefix(p);
         int j = 0;
@@ -20,8 +22,13 @@ public class KMP {
             if (p.charAt(j) == t.charAt(i))
                 j++;
             if (j == p.length()) {
-                System.out.println("pattern found");
-                return;
+                System.out.println("pattern found: " + i);
+                j = prefix[j - 1];
+                // try the difference between "j = prefix[j-1]" and "j = 0"
+                // j = 0;
+
+                // if you just want to find one matching, return here.
+                //return;
             }
         }
         System.out.println("not found");
