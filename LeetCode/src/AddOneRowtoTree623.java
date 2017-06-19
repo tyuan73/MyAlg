@@ -26,4 +26,29 @@ public class AddOneRowtoTree623 {
             add(node.right, dep + 1, v, d);
         }
     }
+
+    /**
+     * Without helper.
+     */
+    boolean left = true;
+
+    public TreeNode addOneRow1(TreeNode root, int v, int d) {
+        if (d == 1) {
+            TreeNode parent = new TreeNode(v);
+            if (left)
+                parent.left = root;
+            else
+                parent.right = root;
+            return parent;
+        }
+
+        if (root == null) return null;
+
+        left = true;
+        root.left = addOneRow(root.left, v, d - 1);
+        left = false;
+        root.right = addOneRow(root.right, v, d - 1);
+
+        return root;
+    }
 }
