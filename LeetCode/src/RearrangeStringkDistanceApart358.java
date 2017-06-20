@@ -54,4 +54,49 @@ public class RearrangeStringkDistanceApart358 {
         }
         return sb.toString();
     }
+
+    /**
+     * I think this is much faster.
+     */
+    public String rearrangeString1(String s, int k) {
+        int len = s.length();
+        int[][] count = new int[26][2];
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            count[ch - 'a'][0]++;
+            count[ch - 'a'][1] = ch;
+        }
+        Arrays.sort(count, new Comparator<int[]>() {
+            // sort in reverse order
+            public int compare(int[] a, int[] b) {
+                return b[0] - a[0];
+            }
+        });
+
+        int max = count[0][0], maxCount = 0;
+        for (int i = 0; i < 26; i++) {
+            if (count[i][0] == max) maxCount++;
+            else break;
+        }
+
+        if (len - maxCount < (max - 1) * k) return "";
+        if (max == 1) return s;
+
+        int ext = (len - maxCount) % (max - 1);
+        int col = (len - maxCount) / (max - 1);
+        char[] ans = new char[len];
+        int start = 0, r = 0, next = 0;
+        for (int idx = 0; idx < 26; idx++) {
+            while (count[idx][0]-- > 0) {
+                ans[next] = (char) count[idx][1];
+                if (r++ < ext) next += col + 1;
+                else next += col;
+                if (next >= len) {
+                    r = 0;
+                    next = ++start;
+                }
+            }
+        }
+        return new String(ans);
+    }
 }
