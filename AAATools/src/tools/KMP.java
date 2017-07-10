@@ -12,9 +12,13 @@ public class KMP {
         //String t = "adhadfdadfd";              // the text string
         //String p = "adfd";              // the pattern
         String t = "ttttt";
-        String p = "tt";
+        String p = "catac#catac";
 
         int[] prefix = getPrefix(p);
+        for(int i = 0; i < prefix.length; i++) {
+            System.out.print(prefix[i] + " ");
+        }
+        /*
         int j = 0;
         for (int i = 0; i < t.length(); i++) {
             while (j > 0 && p.charAt(j) != t.charAt(i))
@@ -32,6 +36,7 @@ public class KMP {
             }
         }
         System.out.println("not found");
+        */
     }
 
     static int[] getPrefix(String p) {
