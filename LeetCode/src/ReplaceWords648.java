@@ -5,20 +5,20 @@
 import java.util.*;
 
 public class ReplaceWords648 {
-    class TriNode {
-        TriNode[] list;
+    class TrieNode {
+        TrieNode[] list;
         boolean isWord;
 
-        TriNode() {
-            this.list = new TriNode[26];
+        TrieNode() {
+            this.list = new TrieNode[26];
             this.isWord = false;
         }
     }
 
-    TriNode root = null;
+    TrieNode root = null;
 
     public String replaceWords(List<String> dict, String sentence) {
-        root = new TriNode();
+        root = new TrieNode();
 
         for (String str : dict)
             insert(str);
@@ -36,7 +36,7 @@ public class ReplaceWords648 {
     }
 
     private int search(String w) {
-        TriNode node = root;
+        TrieNode node = root;
         for (int i = 0; i < w.length(); i++) {
             int ch = w.charAt(i) - 'a';
             if (node.list[ch] == null) return -1;
@@ -47,11 +47,11 @@ public class ReplaceWords648 {
     }
 
     private void insert(String str) {
-        TriNode node = root;
+        TrieNode node = root;
         for (int i = 0; i < str.length(); i++) {
             int ch = str.charAt(i) - 'a';
             if (node.list[ch] == null)
-                node.list[ch] = new TriNode();
+                node.list[ch] = new TrieNode();
             node = node.list[ch];
         }
         node.isWord = true;
