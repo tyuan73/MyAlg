@@ -58,15 +58,11 @@ public class SplitArrayintoConsecutiveSubsequences659 {
     public boolean isPossible1(int[] nums) {
         int n = nums.length;
         int[] count = new int[n + 1];
-        count[0] = 1;
-        int size = 0;
-        for (int i = 1; i < n; i++) {
-            if (nums[i] == nums[i - 1])
-                count[size]++;
-            else {
+        int size = -1;
+        for (int i = 0; i < n; i++) {
+            if (i == 0 || nums[i] != nums[i - 1])
                 nums[++size] = nums[i];
-                count[size] = 1;
-            }
+            count[size]++;
         }
 
         int[] len = new int[n];
