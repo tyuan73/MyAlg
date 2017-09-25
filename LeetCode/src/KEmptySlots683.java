@@ -102,4 +102,31 @@ public class KEmptySlots683 {
         return min == 1000000 ? -1 : min;
     }
 
+    /**
+     * O(n) solution using buckets
+     */
+    public int kEmptySlots4(int[] flowers, int k) {
+        int n = flowers.length;
+        int nb = n / (k + 1) + (n % (k + 1) == 0 ? 0 : 1);
+        int[] maxs = new int[nb];
+        int[] mins = new int[nb];
+        Arrays.fill(maxs, Integer.MIN_VALUE);
+        Arrays.fill(mins, Integer.MAX_VALUE);
+        for (int i = 0; i < n; i++) {
+            int cur = flowers[i] - 1;
+            int b = cur / (k + 1);
+            maxs[b] = Math.max(maxs[b], cur);
+            mins[b] = Math.min(mins[b], cur);
+
+            if (mins[b] == cur && b > 0) {
+                // check the previous bucket
+                if (maxs[b - 1] == cur - k - 1) return i + 1;
+            }
+            if (maxs[b] == cur && b < nb - 1) {
+                // check the next bucket
+                if (mins[b + 1] == cur + k + 1) return i + 1;
+            }
+        }
+        return -1;
+    }
 }
