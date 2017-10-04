@@ -8,46 +8,55 @@ package problemset862;
 import java.util.*;
 import java.io.*;
 
-public class MahmoudandEhabandthebipartiteness862B {
+public class MahmoudandEhabandthebipartiteness862B_UnionFind_disjointset {
+    /**
+     * Union-Find, or Disjoint set. Much faster than DFS or BFS.
+     * Use "other" to remember the target/tag for the other group.
+     * When given a pair (a, b), just join "other[a]" with "b"; then join "a" with "other[b]".
+     */
     static void go() {
         int n = in.nextInt();
-        List<Integer>[] tree = new List[n];
-        for (int i = 0; i < n; i++)
-            tree[i] = new ArrayList<>();
+        int[] ds = new int[n + 1], other = new int[n + 1];
+        int a = 0, b = 0;
         for (int i = 0; i < n - 1; i++) {
-            int a = in.nextInt() - 1, b = in.nextInt() - 1;
-            tree[a].add(b);
-            tree[b].add(a);
+            a = in.nextInt();
+            b = in.nextInt();
+            join(ds, other, a, b);
         }
-        int[] count = {0, 0};
-        boolean[] visited = new boolean[n];
-        Deque<Integer> q = new ArrayDeque<>();
-        q.offerLast(0);
-        int flag = 0;
-        while (q.size() > 0) {
-            int m = q.size();
-            count[flag] += m;
-            flag ^= 1;
-            for (int i = 0; i < m; i++) {
-                int node = q.pollFirst();
-                visited[node] = true;
-                for (int next : tree[node]) {
-                    if (!visited[next]) {
-                        q.offerLast(next);
-                    }
-                }
-            }
-        }
+        a = find(ds, a);
+        int ca = 0, cb = 0;
+        for (int i = 1; i <= n; i++)
+            if (find(ds, i) == a) ca++;
+            else cb++;
 
-        out.println(count[0] * (long) count[1] - n + 1);
+        out.println(ca * (long) cb - n + 1);
     }
 
-    static void dfs(List<Integer>[] tree, int i, int[] group, int g) {
-        group[i] = g;
-        for (int next : tree[i]) {
-            if (group[next] == 0)
-                dfs(tree, next, group, 3 - g);
+    static void join(int[] ds, int[] other, int a, int b) {
+        if (other[a] == 0) {
+            other[a] = b;
+        } else {
+            int a1 = find(ds, other[a]);
+            int b1 = find(ds, b);
+            if (a1 != b1) {
+                ds[a1] = b1;
+                other[a] = b1;
+            }
         }
+        if (other[b] == 0) {
+            other[b] = a;
+        } else {
+            int a1 = find(ds, a);
+            int b1 = find(ds, other[b]);
+            if (a1 != b1) {
+                ds[a1] = b1;
+                other[b] = b1;
+            }
+        }
+    }
+
+    static int find(int[] ds, int i) {
+        return ds[i] == 0 ? i : (ds[i] = find(ds, ds[i]));
     }
 
     static InputReader in;
