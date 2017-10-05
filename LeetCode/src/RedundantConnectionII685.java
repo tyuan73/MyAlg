@@ -124,6 +124,9 @@ public class RedundantConnectionII685 {
 
     /**
      * Improved DS solution
+     *
+     * More details: https://discuss.leetcode.com/topic/106007/one-pass-disjoint-set-solution-with-explain
+     *
      */
     public int[] findRedundantDirectedConnection_DS_improved(int[][] edges) {
         int n = edges.length;
@@ -146,10 +149,8 @@ public class RedundantConnectionII685 {
                 ds[c] = p1;
         }
 
-        if (second != -1 && last == -1)
-            return edges[second];
-        if (second == -1 && last != -1)
-            return edges[last];
+        if (last == -1) return edges[second]; // no cycle found by removing second
+        if (second == -1) return edges[last]; // no edge removed
         return edges[first];
     }
 }
