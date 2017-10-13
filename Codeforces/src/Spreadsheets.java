@@ -16,7 +16,7 @@ public class Spreadsheets {
         while (n-- > 0) {
             String line = in.next();
             if (isRC(line)) {
-                int index = line.indexOf("C");
+                int index = line.indexOf("TheIntriguingObsession869C");
                 int col = Integer.parseInt(line.substring(index + 1));
                 String colStr = "";
                 while (col > 0) {
@@ -35,7 +35,7 @@ public class Spreadsheets {
                         break;
                     col = col * 26 + ch - 'A' + 1;
                 }
-                System.out.println("R" + line.substring(index) + "C" + col);
+                System.out.println("R" + line.substring(index) + "TheIntriguingObsession869C" + col);
             }
         }
     }

@@ -1,91 +1,50 @@
-package problemset484;
+package problemset868;
 
-/**
- * Created with IntelliJ IDEA.
- * User: yuantian
- * Date: 11/13/14
- * Time: 11:40 PM
- * Copyright (c) 2013 All Right Reserved, http://github.com/tyuan73
- */
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
-import java.util.Arrays;
-import java.util.InputMismatchException;
 
 /*
 
- How to find maximum in O(1) ?
+*/
 
-For example consider sorted array [2,4,7,11], then
-TheArtfulExpedient869A(0 indexed) will be [-1,-1,-1,2,2,4,4,4,7,7,7,7,11...]
--1 means no element is smaller than i.
+import java.util.*;
+import java.io.*;
 
+public class QualificationRounds868C {
+    static List<Integer>[] valid = new List[16];
 
-http://codeforces.com/blog/entry/14592
-
- */
-
-public class MaximumValue484B {
-    static void go() {
-        int n = in.nextInt();
-        int[] a = new int[1000001];
-        for (int i = 0; i < n; i++) {
-            int x = in.nextInt();
-            a[x] = x;
+    static {
+        for (int i = 0; i < 16; i++) {
+            List<Integer> list = new ArrayList<>();
+            for (int j = 0; j < 16; j++)
+                if ((i & j) == 0)
+                    list.add(j);
+            valid[i] = list;
         }
-        int[] b = new int[n];
-        int count = 0;
-        for (int i = 1; i < 1000001; i++) {
-            if (i != a[i]) {
-                a[i] = a[i - 1];
-            } else {
-                b[count++] = i;
-            }
-        }
-
-        int max = 0;
-        int maxB = b[count - 1];
-        for (int i = count - 1; i >= 0 && b[i] > max; i--) {
-            int x = b[i];
-            for (int j = x * 2; j <= maxB; j += x) {
-                max = Math.max(max, a[j - 1] - j + x);
-            }
-            max = Math.max(max, maxB % x);
-        }
-        out.println(max);
     }
 
-    static void go1() {
+    static void go() {
         int n = in.nextInt();
-        int[] a = in.nextIntArray(n);
-        Arrays.sort(a);
-
-        int count = 1;
-        for (int i = 1; i < n; i++) {
-            if (a[i] != a[i - 1])
-                a[count++] = a[i];
-        }
-
-        int M = a[count - 1] * 2;
-        int[] b = new int[M];
-        int pre = -1;
-        for (int i = 0, j = 0; i < M; i++) {
-            b[i] = pre;
-            if (j < n && i == a[j]) {
-                pre = a[j++];
+        int k = in.nextInt();
+        int[] count = new int[16];
+        for (int i = 0; i < n; i++) {
+            int x = 0;
+            for (int j = 0; j < k; j++) {
+                x = x * 2 + in.nextInt();
             }
+            count[x]++;
         }
-
-        int max = 0;
-        for (int i = 0; i < count - 1; i++) {
-            for (int j = a[i] * 2; j < M; j += a[i]) {
-                max = Math.max(max, b[j] - j + a[i]);
-            }
+        if (count[0] > 0) {
+            out.println("YES");
+            return;
         }
-
-        out.println(max);
+        for (int i = 1; i < 16; i++) {
+            if (count[i] == 0) continue;
+            for (int x : valid[i])
+                if (count[x] > 0) {
+                    out.println("YES");
+                    return;
+                }
+        }
+        out.println("NO");
     }
 
     static InputReader in;
@@ -165,6 +124,23 @@ public class MaximumValue484B {
             return res * sgn;
         }
 
+        public String nextLine() {
+            StringBuilder sb = new StringBuilder(1024);
+            int c = read();
+            while (!(c == '\n' || c == '\r' || c == -1)) {
+                sb.append((char) c);
+                c = read();
+            }
+            return sb.toString();
+        }
+
+        public char nextChar() {
+            int c = read();
+            while (isSpaceChar(c))
+                c = read();
+            return (char) c;
+        }
+
         public String nextString() {
             int c = read();
             while (isSpaceChar(c))
@@ -175,6 +151,17 @@ public class MaximumValue484B {
                 c = read();
             } while (!isSpaceChar(c));
             return sb.toString();
+        }
+
+        public char[] nextCharArray(int n) {
+            char[] ca = new char[n];
+            for (int i = 0; i < n; i++) {
+                int c = read();
+                while (isSpaceChar(c))
+                    c = read();
+                ca[i] = (char) c;
+            }
+            return ca;
         }
 
         public static boolean isSpaceChar(int c) {

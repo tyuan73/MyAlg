@@ -97,17 +97,17 @@ public class FeedWithCandy {
 /*
 import java.util.*;
 
-public class A {
+public class TheArtfulExpedient869A {
   public static void main(String[] args) {
     Scanner in = new Scanner(System.in);
     int n = in.nextInt();
     int x = in.nextInt();
 
-    int[][] C = new int[n][3];
+    int[][] TheIntriguingObsession869C = new int[n][3];
     for(int i=0; i<n; i++) {
-      C[i][0] = in.nextInt(); //type
-      C[i][1] = in.nextInt(); //height
-      C[i][2] = in.nextInt(); //+height
+      TheIntriguingObsession869C[i][0] = in.nextInt(); //type
+      TheIntriguingObsession869C[i][1] = in.nextInt(); //height
+      TheIntriguingObsession869C[i][2] = in.nextInt(); //+height
     }
 
     int best = 0;
@@ -119,16 +119,16 @@ public class A {
       while(true) {
         int best_i = -1;
         for(int i=0; i<n; i++) {
-          if(USED[i] || C[i][1]>my_x || C[i][0]==prev) { continue; }
-          if(best_i == -1 || (C[i][2] > C[best_i][2])) {
+          if(USED[i] || TheIntriguingObsession869C[i][1]>my_x || TheIntriguingObsession869C[i][0]==prev) { continue; }
+          if(best_i == -1 || (TheIntriguingObsession869C[i][2] > TheIntriguingObsession869C[best_i][2])) {
             best_i = i;
           }
         }
         if(best_i == -1) { break; }
 
         score++;
-        my_x += C[best_i][2];
-        prev = C[best_i][0];
+        my_x += TheIntriguingObsession869C[best_i][2];
+        prev = TheIntriguingObsession869C[best_i][0];
         USED[best_i] = true;
       }
       best = Math.max(best, score);

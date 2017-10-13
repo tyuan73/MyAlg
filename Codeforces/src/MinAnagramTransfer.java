@@ -5,7 +5,7 @@
  * Time: 12:31 AM
  * To change this template use File | Settings | File Templates.
  *
- *                          C. Anagram
+ *                          TheIntriguingObsession869C. Anagram
  * http://www.codeforces.com/problemset/problem/254/C
  *
  */
