@@ -13,28 +13,20 @@ public class ModifiedSubsequenceSum {
     static int start = 0, end = 0;
 
     static long modifiedSubsequenceSum(int n, int k, long[] a) {
-
-        int l = 0, r = n-1;
-        while(l < n && a[l] <= 0)l++;
-        while(r > l && a[r] <= 0) r--;
-        if (l >= r) {
-            long max = a[0];
-            for(long x: a)
-                max = Math.max(max, x);
-            return max;
-        }
-
         lines = new long[n][];
         start = 0;
         end = 0;
-        long[][] dp = new long[n][2];
-        dp[0][1] = a[0];
+        long[][] dp = new long[n + 1][2];
+        // init dp. Init dp[0][0] to Long.MIN_VALUE so that the output won't be 0 if every element in a <= 0
+        dp[0] = new long[]{Long.MIN_VALUE, a[0]};
+        // init lines
+        // line function: yj(x) = 2k(j+1) * x - k(j+1)^2 + dp[j][1]
         lines[0] = new long[]{2 * k, -k + a[0]};
         for (int i = 1; i < n; i++) {
             dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1]);
 
             dp[i][1] = Math.max(a[i], query(i) + a[i] - k * (long) i * (long) i);
-            add(2l * k * (i + 1), -k * (i + 1) * (i + 1) + dp[i][1]);
+            add(2l * k * (i + 1), -k * (long) (i + 1) * (i + 1) + dp[i][1]);
         }
 
         return Math.max(dp[n - 1][0], dp[n - 1][1]);
@@ -55,7 +47,7 @@ public class ModifiedSubsequenceSum {
     }
 
     static boolean isBad(long[] a, long[] b, long[] c) {
-        return (a[1] - c[1]) * (b[0] - a[0]) < (a[1] - b[1]) * (c[0] - a[0]);
+        return (a[1] - b[1]) * (c[0] - b[0]) > (b[1] - c[1]) * (b[0] - a[0]);
     }
 
     static void go() {
@@ -205,5 +197,17 @@ Test case #5:
 
 Expect:
 2563388115
+
+Test case:
+6 1
+1 -3 -5 -1 1 10
+
+Expect: 11
+
+
+test case:
+5 3
+-1 -3 -2 -5 -7
+expect: -1
 
  */
