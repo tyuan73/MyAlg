@@ -106,4 +106,108 @@ public class PartitiontoKEqualSumSubsets698 {
             if (getsum(nums, i) == sum) list.add(i);
         return dfs(k, m - 1);
     }
+
+    /**
+     * Backtracking solution 1 - LTE
+     */
+    public boolean canPartitionKSubsets_LTE(int[] nums, int k) {
+        int n = nums.length;
+        int total = 0;
+        for (int x : nums) total += x;
+        if (total % k != 0) return false;
+        return partition(nums, 0, total / k, new boolean[n], k);
+    }
+
+    private boolean partition(int[] nums, int sum, int target, boolean[] used, int rem) {
+        //if (sum > target) return false;
+        if (rem == 0) return true;
+        if (sum == target) return partition(nums, 0, target, used, rem - 1);
+        for (int i = 0; i < nums.length; i++) {
+            if (used[i] || sum + nums[i] > target) continue;
+            used[i] = true;
+            if (partition(nums, sum + nums[i], target, used, rem))
+                return true;
+            used[i] = false;
+        }
+        return false;
+    }
+
+    /**
+     * Backtracking solution 2 , better than previous one , but still LTE
+     */
+    public boolean canPartitionKSubsets_LTE1(int[] nums, int k) {
+        int n = nums.length;
+        int total = 0;
+        for (int x : nums) total += x;
+        if (total % k != 0) return false;
+        return partition(nums, new int[k], 0, total / k);
+    }
+
+    private boolean partition(int[] nums, int[] sum, int idx, int target) {
+        if (idx >= nums.length) {
+            for (int s : sum)
+                if (s != target) return false;
+            return true;
+        }
+        for (int i = 0; i < sum.length; i++) {
+            if (nums[idx] + sum[i] > target) continue;
+            sum[i] += nums[idx];
+            if (partition(nums, sum, idx + 1, target))
+                return true;
+            sum[i] -= nums[idx];
+        }
+        return false;
+    }
+
+    /**
+     * ACed solution modified from KakaHiguain's
+     */
+    public boolean canPartitionKSubsets_ac(int[] nums, int k) {
+        int n = nums.length;
+        int total = 0;
+        for (int x : nums) total += x;
+        if (total % k != 0) return false;
+
+        int target = total / k;
+        list = new ArrayList<>();
+        outer:
+        for (int i = (1 << n) - 1; i > 0; i--) {
+            int j = i, sum = 0;
+            while (j > 0) {
+                int idx = Integer.numberOfTrailingZeros(j);
+                if (sum + nums[idx] > target) continue outer;
+                sum += nums[idx];
+                j -= j & -j;
+            }
+            if (sum == target) list.add(i);
+        }
+        return dfs1(k, (1 << n) - 1);
+    }
+
+    private boolean dfs1(int rem, int bits) {
+        if (rem == 0) return true;
+        for (int x : list) {
+            if ((bits & x) == x && dfs(rem - 1, bits - x)) return true;
+        }
+        return false;
+    }
+
+    // TEST
+    public static void main(String[] args) {
+        PartitiontoKEqualSumSubsets698 test = new PartitiontoKEqualSumSubsets698();
+        int[] data = {7628, 3147, 7137, 2578, 7742, 2746, 4264, 7704, 9532, 9679, 8963, 3223, 2133, 7792, 5911, 3979};
+        int k = 6;
+        //data = new int[]{129, 17, 74, 57, 1421, 99, 92, 285, 1276, 218, 1588, 215, 369, 117, 153, 22};
+        //k = 3;
+        //data = new int[]{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,6};
+        //k= 4;
+
+        long start = System.currentTimeMillis();
+        //test.canPartitionKSubsets1(data, k);
+        //test.canPartitionKSubsets_LTE(data, k);
+        //test.canPartitionKSubsets_LTE1(data, k);
+        test.canPartitionKSubsets(data, k);
+        //test.canPartitionKSubsets_ac(data, k);
+        System.out.println(System.currentTimeMillis() - start);
+    }
 }
