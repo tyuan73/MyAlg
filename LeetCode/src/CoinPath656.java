@@ -2,18 +2,18 @@
 import java.util.*;
 
 public class CoinPath656 {
+    /**
+     * O(n*b)
+     */
     public List<Integer> cheapestJump(int[] A, int B) {
         int n = A.length;
         int[] dp = new int[n];
-        int[] next = new int[n];
-        Arrays.fill(next, -1);
         Arrays.fill(dp, 1000000);
-        dp[n - 1] = A[n - 1];
-        next[n - 1] = n;
-        for (int i = n - 1; i >= 0; i--) {
+        if (A[n - 1] != -1) dp[n - 1] = 0;
+        int[] next = new int[n];
+        for (int i = n - 2; i >= 0; i--) {
             if (A[i] == -1) continue;
             for (int j = Math.min(n - 1, i + B); j > i; j--) {
-                if (A[j] == -1) continue;
                 if (A[i] + dp[j] <= dp[i]) {
                     dp[i] = A[i] + dp[j];
                     next[i] = j;
@@ -21,13 +21,11 @@ public class CoinPath656 {
             }
         }
         List<Integer> ans = new ArrayList<>();
-        if (next[0] == -1) return ans;
-        ans.add(1);
-        int i = next[0];
-        while (i != n) {
+        if (dp[0] == 1000000) return ans;
+
+        for (int i = 0; i != n - 1; i = next[i])
             ans.add(i + 1);
-            i = next[i];
-        }
+        ans.add(n);
         return ans;
     }
 
