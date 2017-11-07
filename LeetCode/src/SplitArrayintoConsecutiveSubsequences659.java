@@ -85,4 +85,42 @@ public class SplitArrayintoConsecutiveSubsequences659 {
         return true;
     }
 
+    /**
+     * O(n) with O(0) space
+     *
+     * This is basically an improved DP solution.
+     * pre[0] is the count of sequences ending with previous element with length 1
+     * pre[1] is the count of sequences ending with previous element with length 2
+     * pre[2] is the total count of sequences ending with previous element (including pre[0] and pre[1])
+
+     * cur[] is the same definition as pre.
+     */
+    public boolean isPossible2(int[] nums) {
+        int n = nums.length;
+        int[] pre = {0, 0, 0}, cur = {1, 0, 1};
+        for (int i = 1; i < n; i++) {
+            if (nums[i] > nums[i - 1] + 1) {
+                if (cur[0] > 0 || cur[1] > 0) return false;
+                pre = new int[]{0, 0, 0};
+                cur = new int[]{1, 0, 1};
+                continue;
+            } else if (nums[i] == nums[i - 1] + 1) {
+                if (pre[0] > 0 || pre[1] > 0) return false;
+                pre = cur;
+                cur = new int[]{0, 0, 0};
+            }
+
+            if (pre[0] > 0) {
+                pre[0]--;
+                cur[1]++;
+            } else if (pre[1] > 0) {
+                pre[1]--;
+            } else if (cur[2] >= pre[2]) {
+                cur[0]++;
+            }
+            cur[2]++;
+        }
+
+        return cur[0] == 0 && cur[1] == 0;
+    }
 }
