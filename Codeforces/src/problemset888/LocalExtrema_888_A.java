@@ -1,4 +1,4 @@
-package problemset884;
+package problemset888;
 
 
 /*
@@ -8,21 +8,14 @@ package problemset884;
 import java.util.*;
 import java.io.*;
 
-public class BertownSubway_884C {
+public class LocalExtrema_888_A {
     static void go() {
-        String str = in.nextString();
-        int[] last = new int[128];
-        int[] k = new int[128];
-        int n = str.length(), ans = n;
-        for (int i = 0; i < n; i++) {
-            char ch = str.charAt(i);
-            k[ch] = Math.max(k[ch], i + 1 - last[ch]);
-            last[ch] = i + 1;
+        int n = in.nextInt();
+        int[] a = in.nextIntArray(n);
+        int ans = 0;
+        for (int i = 1; i < n - 1; i++) {
+            if ((a[i] > a[i - 1] && a[i + 1] < a[i]) || (a[i] < a[i - 1] && a[i + 1] > a[i])) ans++;
         }
-        for (int i = 0; i < 128; i++) {
-            ans = Math.min(ans, Math.max(n + 1 - last[i], k[i]));
-        }
-
         out.println(ans);
     }
 

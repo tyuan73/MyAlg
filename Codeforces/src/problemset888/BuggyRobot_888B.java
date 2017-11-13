@@ -1,4 +1,4 @@
-package problemset884;
+package problemset888;
 
 
 /*
@@ -8,7 +8,7 @@ package problemset884;
 import java.util.*;
 import java.io.*;
 
-public class JapaneseCrosswordsStrikeBack_884B {
+public class BuggyRobot_888B {
     static void go() {
         int n = in.nextInt();
         String str = in.nextString();
