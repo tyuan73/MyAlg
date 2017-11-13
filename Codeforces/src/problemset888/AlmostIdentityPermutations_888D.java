@@ -1,4 +1,4 @@
-package problemset884;
+package problemset888;
 
 
 /*
@@ -8,7 +8,7 @@ package problemset884;
 import java.util.*;
 import java.io.*;
 
-public class BoxesAndBalls_884D {
+public class AlmostIdentityPermutations_888D {
     static void go() {
         int n = in.nextInt(), k = in.nextInt();
         long[] x = new long[k + 1];
