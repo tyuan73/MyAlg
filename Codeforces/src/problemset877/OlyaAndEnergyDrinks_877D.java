@@ -8,95 +8,44 @@ package problemset877;
 import java.util.*;
 import java.io.*;
 
-public class D {
+public class OlyaAndEnergyDrinks_877D {
+    final static int[][] steps = {{0, 1}, {1, 0}, {-1, 0}, {0, -1}};
+
     static void go() {
         int n = in.nextInt(), m = in.nextInt(), k = in.nextInt();
         char[][] map = new char[n][m];
-        for(int i = 0; i < n; i++)
-            for(int j = 0; j < m; j++)
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < m; j++)
                 map[i][j] = in.nextChar();
-        int x1 = in.nextInt()-1, y1 = in.nextInt()-1, x2 = in.nextInt()-1, y2 = in.nextInt()-1;
-        int[][] dir = new int[n*m][4];
-        for(int i = 0; i < n; i++) {
-            int next = 0;
-            for(int j = 0; j < m; j++) {
-                if (map[i][j] == '#')
-                    next = j + 1;
-                else
-                    dir[i*m + j][0] = Math.max(next, j-k);
-            }
-        }
-        for(int i = 0; i < n; i++) {
-            int next = m-1;
-            for(int j = m-1; j >= 0; j--) {
-                if (map[i][j] == '#')
-                    next = j - 1;
-                else
-                    dir[i*m + j][1] = Math.min(next, j+k);
-            }
-        }
+        int x1 = in.nextInt() - 1, y1 = in.nextInt() - 1, x2 = in.nextInt() - 1, y2 = in.nextInt() - 1;
 
-        for(int j = 0; j < m; j++) {
-            int next = 0;
-            for(int i = 0; i < n; i++) {
-                if (map[i][j] == '#')
-                    next = i + 1;
-                else
-                    dir[i*m + j][2] = Math.max(next, i-k);
+        int[][] dist = new int[n][m];
+        for (int i = 0; i < n; i++)
+            Arrays.fill(dist[i], 10000000);
+
+        dist[x1][y1] = 0;
+        int[] list = new int[n * m];
+        int size = 1;
+        list[0] = x1 << 10 | y1;
+        for (int i = 0; i < size; i++) {
+            int x = list[i] >> 10, y = list[i] & 1023;
+            if (x == x2 && y == y2) {
+                out.println(dist[x][y]);
+                return;
             }
-        }
-        for(int j = 0; j < m; j++) {
-            int next = n-1;
-            for(int i = n-1; i >= 0; i--) {
-                if (map[i][j] == '#')
-                    next = i - 1;
-                else
-                    dir[i*m + j][3] = Math.min(next, i+k);
-            }
-        }
-
-
-
-        int step = 0;
-        boolean[] visited = new boolean[n*m];
-        List<Integer> list = new ArrayList<>();
-        list.add(x1 * m + y1);
-        while(list.size() > 0) {
-            List<Integer> next = new ArrayList<>();
-            for(int pos : list) {
-                int x3 = pos / m, y3 = pos % m;
-                if (x3 == x2 && y3 == y2) {
-                    out.println(step);
-                    return;
-                }
-                for(int i = dir[pos][0]; i < y3; i++) {
-                    if (!visited[x3 * m + i]) {
-                        visited[x3 * m + i] = true;
-                        next.add(x3 * m + i);
-                    }
-                }
-                for(int i = y3+1; i <= dir[pos][1]; i++) {
-                    if (!visited[x3 * m + i]) {
-                        visited[x3 * m + i] = true;
-                        next.add(x3 * m + i);
-                    }
-                }
-                for(int i = dir[pos][2]; i < x3; i++) {
-                    if (!visited[i * m + y3]) {
-                        visited[i * m + y3] = true;
-                        next.add(i * m + y3);
-                    }
-                }
-                for(int i = x3 + 1; i <= dir[pos][3]; i++) {
-                    if (!visited[i * m + y3]) {
-                        visited[i * m + y3] = true;
-                        next.add(i * m + y3);
+            for (int[] s : steps) {
+                for (int j = 1; j <= k; j++) {
+                    int nX = x + j * s[0], nY = y + j * s[1];
+                    if (nX < 0 || nX >= n || nY < 0 || nY >= m || map[nX][nY] == '#' || dist[nX][nY] < dist[x][y] + 1)
+                        break;
+                    if (dist[nX][nY] > dist[x][y] + 1) {
+                        list[size++] = nX << 10 | nY;
+                        dist[nX][nY] = dist[x][y] + 1;
                     }
                 }
             }
-            list = next;
-            step++;
         }
+
         out.println("-1");
     }
 
