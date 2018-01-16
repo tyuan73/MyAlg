@@ -10,10 +10,47 @@ import java.io.*;
 
 public class C {
     static void go() {
-        //int  = in.nextInt();
         long a = in.nextLong(), b = in.nextLong();
         String A = Long.toString(a);
+        int[] count = new int[10];
+        for (int i = 0; i < A.length(); i++)
+            count[A.charAt(i) - '0']++;
 
+        long c = (long) Math.pow(10, A.length());
+        boolean less = (b / c) > 0, back = false;
+        StringBuilder sb = new StringBuilder();
+        while (c > 1) {
+            if (less) {
+                cons(sb, count);
+                break;
+            }
+            int up = (int) ((b % c) / (c / 10));
+            int j = back ? up - 1 : up;
+            while (j >= 0 && count[j] == 0) j--;
+            if (j < 0) {
+                c *= 10;
+                back = true;
+                count[sb.charAt(sb.length() - 1) - '0']++;
+                sb.setLength(sb.length() - 1);
+                continue;
+            }
+            count[j]--;
+            sb.append((char) (j + '0'));
+            if (j < up) {
+                less = true;
+            }
+            c /= 10;
+        }
+        out.println(sb);
+    }
+
+    static void cons(StringBuilder sb, int[] count) {
+        for (int i = 9; i >= 0; i--) {
+            while (count[i] > 0) {
+                sb.append((char) (i + '0'));
+                count[i]--;
+            }
+        }
     }
 
     static InputReader in;
