@@ -1,4 +1,4 @@
-package edu.round37;
+package problemset920;
 
 
 /*
@@ -8,7 +8,7 @@ package edu.round37;
 import java.util.*;
 import java.io.*;
 
-public class B {
+public class TeaQueue920B {
     static void go() {
         int t = in.nextInt();
         while (t-- > 0) {
@@ -22,7 +22,7 @@ public class B {
             }
             Arrays.sort(s, (a, b) -> (a[0] == b[0] ? a[2] - b[2] : a[0] - b[0]));
             int time = 1;
-            for(int[] ss : s) {
+            for (int[] ss : s) {
                 if (ss[0] <= time && time <= ss[1]) {
                     ans[ss[2]] = time;
                     time++;
@@ -32,7 +32,7 @@ public class B {
                     time++;
                 }
             }
-            for(int x : ans)
+            for (int x : ans)
                 out.print(x + " ");
             out.println();
         }

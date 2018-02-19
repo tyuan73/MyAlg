@@ -1,4 +1,4 @@
-package edu.round37;
+package problemset920;
 
 
 /*
@@ -8,7 +8,7 @@ package edu.round37;
 import java.util.*;
 import java.io.*;
 
-public class A {
+public class WaterTheGarden920A {
     static void go() {
         int t = in.nextInt();
         while (t-- > 0) {

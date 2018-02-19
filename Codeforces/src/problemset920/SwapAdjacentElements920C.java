@@ -1,4 +1,4 @@
-package edu.round37;
+package problemset920;
 
 
 /*
@@ -8,7 +8,7 @@ package edu.round37;
 import java.util.*;
 import java.io.*;
 
-public class C {
+public class SwapAdjacentElements920C {
     static void go() {
         int n = in.nextInt();
         int[] a = in.nextIntArray(n);
