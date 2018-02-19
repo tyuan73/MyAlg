@@ -8,7 +8,7 @@ package problemset938;
 import java.util.*;
 import java.io.*;
 
-public class C {
+public class ConstructingTests938C {
     static void go() {
         int t = in.nextInt();
         outter:

@@ -1,4 +1,4 @@
-package problemset938;ß
+package problemset938;
 
 
 /*
@@ -8,7 +8,7 @@ package problemset938;ß
 import java.util.*;
 import java.io.*;
 
-public class D {
+public class BuyATicket938D {
     static class Road {
         int d;
         long w;

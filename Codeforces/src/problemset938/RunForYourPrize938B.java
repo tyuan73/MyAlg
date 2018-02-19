@@ -8,7 +8,7 @@ package problemset938;
 import java.util.*;
 import java.io.*;
 
-public class B {
+public class RunForYourPrize938B {
     static void go() {
         int n = in.nextInt();
         int[] p = in.nextIntArray(n);
