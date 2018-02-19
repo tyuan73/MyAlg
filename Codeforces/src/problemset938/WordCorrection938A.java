@@ -1,4 +1,4 @@
-package edu.round38;
+package problemset938;
 
 
 /*
@@ -8,7 +8,7 @@ package edu.round38;
 import java.util.*;
 import java.io.*;
 
-public class A {
+public class WordCorrection938A {
     final static Set<Character> vow = new HashSet<>();
 
     static {
@@ -37,19 +37,41 @@ public class A {
     static PrintWriter out;
 
     public static void main(String[] args) {
-        in = new InputReader(System.in);
-        out = new PrintWriter(System.out);
+        if (!System.getenv().containsKey("RUN_LOCAL")) {
+            in = new InputReader(System.in);
+            out = new PrintWriter(System.out);
 
-        go();
+            go();
 
-        out.close();
+            out.close();
+        } else {
+            String testFiles = System.getenv().get("TEST_FILES");
+            if (testFiles == null) {
+                System.out.println("Test files are not specified!");
+                return;
+            }
+            out = new PrintWriter(System.out);
+            try {
+                for (String fileName : testFiles.split("\\n")) {
+                    File testFile = new File(fileName);
+                    in = new InputReader(new FileInputStream(testFile));
+
+                    go();
+                    out.flush();
+                }
+            } catch (FileNotFoundException e) {
+                System.out.println("Test file can not be found!");
+            } finally {
+                out.close();
+            }
+        }
     }
 
     static class InputReader {
         private InputStream stream;
-        private byte[] buf = new byte[1024];
-        private int curChar;
-        private int numChars;
+        private byte[]      buf = new byte[1024];
+        private int         curChar;
+        private int         numChars;
 
         public InputReader(InputStream stream) {
             this.stream = stream;
@@ -87,7 +109,7 @@ public class A {
 
 
         public int nextInt() {
-            return (int) nextLong();
+            return (int)nextLong();
         }
 
         public long nextLong() {
@@ -114,7 +136,7 @@ public class A {
             StringBuilder sb = new StringBuilder(1024);
             int c = read();
             while (!(c == '\n' || c == '\r' || c == -1)) {
-                sb.append((char) c);
+                sb.append((char)c);
                 c = read();
             }
             return sb.toString();
@@ -124,7 +146,7 @@ public class A {
             int c = read();
             while (isSpaceChar(c))
                 c = read();
-            return (char) c;
+            return (char)c;
         }
 
         public String nextString() {
@@ -133,7 +155,7 @@ public class A {
                 c = read();
             StringBuilder sb = new StringBuilder(1024);
             do {
-                sb.append((char) c);
+                sb.append((char)c);
                 c = read();
             } while (!isSpaceChar(c));
             return sb.toString();
@@ -145,7 +167,7 @@ public class A {
                 int c = read();
                 while (isSpaceChar(c))
                     c = read();
-                ca[i] = (char) c;
+                ca[i] = (char)c;
             }
             return ca;
         }
