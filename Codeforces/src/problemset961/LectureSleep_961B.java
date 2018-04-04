@@ -8,7 +8,7 @@ package problemset961;
 import java.util.*;
 import java.io.*;
 
-public class LectureSleep_962B {
+public class LectureSleep_961B {
     static void go() {
         int n = in.nextInt(), k = in.nextInt();
         int[] a = in.nextIntArray(n), t = in.nextIntArray(n);
